@@ -22,7 +22,8 @@ public class UserService {
     @Transactional
     public User registerUser(String email, String username, String rawPassword) {
         if (this.userRepository.findByUsername(username).isPresent()) {
-            throw new IllegalArgumentException(String.format("Username %s already exists", username));
+            throw new IllegalArgumentException(
+                    String.format("Username %s already exists", username));
         }
 
         if (this.userRepository.findByEmail(email).isPresent()) {
@@ -31,6 +32,8 @@ public class UserService {
 
         String hashedPassword = this.passwordHasher.hash(rawPassword);
 
-        return new User(username, hashedPassword, email);
+        User user = new User(username, hashedPassword, email);
+
+        return this.userRepository.save(user);
     }
 }

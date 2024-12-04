@@ -23,6 +23,11 @@ public class UserJpaRepositoryAdapter implements UserRepository {
 
     @Override
     public Optional<User> findByEmail(String email) {
-        return Optional.empty();
+        return this.repository.findByEmail(email);
+    }
+
+    @Override
+    public User save(User user) {
+        return this.repository.save(user);
     }
 }

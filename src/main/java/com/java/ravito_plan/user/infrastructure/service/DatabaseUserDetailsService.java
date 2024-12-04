@@ -1,6 +1,6 @@
 package com.java.ravito_plan.user.infrastructure.service;
 
-import com.java.ravito_plan.user.domain.ports.outbound.repository.UserRepository;
+import com.java.ravito_plan.user.domain.ports.outbound.UserRepository;
 import com.java.ravito_plan.user.domain.model.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

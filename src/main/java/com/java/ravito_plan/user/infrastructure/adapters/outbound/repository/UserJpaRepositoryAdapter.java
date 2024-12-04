@@ -1,6 +1,6 @@
 package com.java.ravito_plan.user.infrastructure.adapters.outbound.repository;
 
-import com.java.ravito_plan.user.domain.repository.UserRepository;
+import com.java.ravito_plan.user.domain.ports.outbound.repository.UserRepository;
 import com.java.ravito_plan.user.domain.model.User;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;

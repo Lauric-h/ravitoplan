@@ -1,6 +1,6 @@
 package com.java.ravito_plan.config;
 
-import com.java.ravito_plan.user.infrastructure.adapters.outbound.DatabaseUserDetailsService;
+import com.java.ravito_plan.user.infrastructure.service.DatabaseUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

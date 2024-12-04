@@ -1,4 +1,4 @@
-package com.java.ravito_plan.user.domain.repository;
+package com.java.ravito_plan.user.domain.ports.outbound.repository;
 
 import com.java.ravito_plan.user.domain.model.User;
 import java.util.Optional;

@@ -20,4 +20,23 @@ public class Section {
     @GeneratedValue
     @Column(nullable = false)
     private Long id;
+
+//    @Column(nullable = false)
+//    private int distance;
+//
+//    @Column(nullable = false)
+//    private int elevationPositive;
+//
+//    @Column(nullable = false)
+//    private int elevationNegative;
+//
+//    @Column(nullable = false)
+//    private int estimatedMinuteTime;
+//
+//    @Column(nullable = false)
+//    private String startName;
+//
+//    @Column(nullable = false)
+//    private String endName;
+
 }

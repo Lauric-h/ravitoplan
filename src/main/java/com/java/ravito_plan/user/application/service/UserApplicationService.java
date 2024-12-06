@@ -39,4 +39,9 @@ public class UserApplicationService {
         User savedUser = this.userRepository.save(user);
         return new UserDto(savedUser.getUsername(), savedUser.getEmail());
     }
+
+    public UserDto getUserById(Long id) {
+        User user = this.userRepository.getById(id).orElseThrow();
+        return new UserDto(user.getUsername(), user.getEmail());
+    }
 }

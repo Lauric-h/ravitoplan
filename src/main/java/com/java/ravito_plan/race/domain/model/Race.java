@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -29,18 +30,27 @@ public class Race {
     @Column(nullable = false)
     private int distance;
 
-    @Column()
+    @Column(nullable = false)
     private int elevationPositive;
 
-    @Column()
+    @Column(nullable = false)
     private int elevationNegative;
-
-    @OneToMany(mappedBy = "race")
-    private List<Section> sections;
 
     @Column(nullable = false)
     private String city;
 
     @Column(nullable = false)
     private String postalCode;
+
+    @OneToMany(orphanRemoval = true)
+    private List<Section> sections;
+
+    public Race(String name, int distance, int elevationPositive, int elevationNegative, String city, String postalCode) {
+        this.name = name;
+        this.distance = distance;
+        this.elevationPositive = elevationPositive;
+        this.elevationNegative = elevationNegative;
+        this.city = city;
+        this.postalCode = postalCode;
+    }
 }

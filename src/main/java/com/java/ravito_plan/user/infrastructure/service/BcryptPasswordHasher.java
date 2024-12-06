@@ -1,4 +1,4 @@
-package com.java.ravito_plan.user.infrastructure.adapters.outbound.repository;
+package com.java.ravito_plan.user.infrastructure.service;
 
 import com.java.ravito_plan.user.domain.ports.outbound.PasswordHasher;
 import org.springframework.security.crypto.password.PasswordEncoder;

@@ -1,6 +1,7 @@
 package com.java.ravito_plan.user.application.service;
 
 import com.java.ravito_plan.user.application.dto.UserDto;
+import com.java.ravito_plan.user.application.dto.auth.RegisterRequest;
 import com.java.ravito_plan.user.domain.model.User;
 import com.java.ravito_plan.user.domain.ports.outbound.UserRepository;
 import com.java.ravito_plan.user.domain.service.UserDomainService;
@@ -21,20 +22,21 @@ public class UserApplicationService {
     }
 
     @Transactional
-    public User registerUser(UserDto userDto) {
-        if (this.userRepository.findByUsername(userDto.username).isPresent()) {
+    public UserDto registerUser(RegisterRequest userRequest) {
+        if (this.userRepository.findByUsername(userRequest.username).isPresent()) {
             throw new IllegalArgumentException(
-                    String.format("Username %s already exists", userDto.username));
+                    String.format("Username %s already exists", userRequest.username));
         }
 
-        if (this.userRepository.findByEmail(userDto.email).isPresent()) {
+        if (this.userRepository.findByEmail(userRequest.email).isPresent()) {
             throw new IllegalArgumentException(
-                    String.format("Email %s already exists", userDto.email));
+                    String.format("Email %s already exists", userRequest.email));
         }
 
-        User user = this.userService.createUserWithHashedPassword(userDto.email, userDto.username,
-                userDto.password);
+        User user = this.userService.createUserWithHashedPassword(userRequest.email,
+                userRequest.username, userRequest.password);
 
-        return this.userRepository.save(user);
+        User savedUser = this.userRepository.save(user);
+        return new UserDto(savedUser.getUsername(), savedUser.getEmail());
     }
 }

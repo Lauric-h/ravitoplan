@@ -4,14 +4,14 @@ import com.java.ravito_plan.user.domain.ports.outbound.UserRepository;
 import com.java.ravito_plan.user.domain.model.User;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-@Service
+@Component
 public class UserJpaRepositoryAdapter implements UserRepository {
 
     private final ImportedUserJpaRepository repository;
 
-    @Autowired
     public UserJpaRepositoryAdapter(ImportedUserJpaRepository importedUserJpaRepository) {
         this.repository = importedUserJpaRepository;
     }

@@ -42,6 +42,9 @@ public class Race {
     @Column(nullable = false)
     private String postalCode;
 
+    @Column(nullable = false)
+    private Long userId;
+
     @OneToMany(orphanRemoval = true)
     private List<Section> sections;
 

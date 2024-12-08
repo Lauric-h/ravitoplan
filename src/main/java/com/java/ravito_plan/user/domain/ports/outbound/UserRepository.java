@@ -8,4 +8,5 @@ public interface UserRepository {
     Optional<User> findByEmail(String email);
     Optional<User> getById(Long id);
     User save(User user);
+    boolean existsById(Long id);
 }

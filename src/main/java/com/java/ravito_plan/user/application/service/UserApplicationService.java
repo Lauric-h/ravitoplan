@@ -44,4 +44,8 @@ public class UserApplicationService {
         User user = this.userRepository.getById(id).orElseThrow();
         return new UserDto(user.getUsername(), user.getEmail());
     }
+
+    public boolean userExistsById(Long id) {
+        return this.userRepository.existsById(id);
+    }
 }

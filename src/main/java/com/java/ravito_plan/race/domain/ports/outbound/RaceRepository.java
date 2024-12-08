@@ -6,11 +6,7 @@ import java.util.List;
 public interface RaceRepository {
 
     Race save(Race race);
-
-    // TODO
-    // getAllByUserId
-    // getByUserIdAndId
-    // getByUserIdAndName
-    //
     List<Race> findAllByUserId(Long userId);
+    Race findById(Long id);
+    void deleteById(Long id);
 }

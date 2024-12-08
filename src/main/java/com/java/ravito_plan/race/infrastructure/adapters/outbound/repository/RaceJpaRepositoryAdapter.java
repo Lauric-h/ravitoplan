@@ -2,7 +2,6 @@ package com.java.ravito_plan.race.infrastructure.adapters.outbound.repository;
 
 import com.java.ravito_plan.race.domain.model.Race;
 import com.java.ravito_plan.race.domain.ports.outbound.RaceRepository;
-import java.util.Collections;
 import java.util.List;
 import org.springframework.stereotype.Component;
 
@@ -23,5 +22,15 @@ public class RaceJpaRepositoryAdapter implements RaceRepository {
     @Override
     public List<Race> findAllByUserId(Long userId) {
         return this.importedRaceRepository.findAllByUserId(userId);
+    }
+
+    @Override
+    public Race findById(Long id) {
+        return this.importedRaceRepository.findById(id).orElseThrow();
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        this.importedRaceRepository.deleteById(id);
     }
 }

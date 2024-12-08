@@ -6,4 +6,5 @@ import com.java.ravito_plan.user.application.dto.UserDto;
 public interface UserPort {
 
     ExternalUserDto getUserById(Long userId);
+    boolean userExistsById(Long userId);
 }

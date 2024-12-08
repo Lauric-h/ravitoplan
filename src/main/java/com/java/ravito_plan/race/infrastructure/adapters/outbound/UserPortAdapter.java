@@ -16,14 +16,14 @@ public class UserPortAdapter implements UserPort {
     }
 
     @Override
-    public ExternalUserDto getUserById(Long userId) {
-        UserDto user = this.userApplicationService.getUserById(userId);
+    public ExternalUserDto getByUsername(String username) {
+        UserDto user = this.userApplicationService.getByUsername(username);
 
-        return new ExternalUserDto(userId, user.username);
+        return new ExternalUserDto(user.id, user.username);
     }
 
     @Override
-    public boolean userExistsById(Long userId) {
-        return this.userApplicationService.userExistsById(userId);
+    public boolean userExistsByUsername(String username) {
+        return this.userApplicationService.existsByUsername(username);
     }
 }

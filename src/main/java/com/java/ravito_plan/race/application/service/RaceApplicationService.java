@@ -1,5 +1,6 @@
 package com.java.ravito_plan.race.application.service;
 
+import com.java.ravito_plan.race.application.dto.ExternalUserDto;
 import com.java.ravito_plan.race.application.dto.RaceDto;
 import com.java.ravito_plan.race.application.mapper.RaceMapper;
 import com.java.ravito_plan.race.domain.model.Race;
@@ -19,35 +20,46 @@ public class RaceApplicationService {
         this.userPort = userPort;
     }
 
-    private void verifyUserExists(Long userId) {
-        if (!this.userPort.userExistsById(userId)) {
-            // TODO throw better exception
-            throw new IllegalArgumentException("User not found");
+    private void verifyUserExists(String username) {
+        if (!this.userPort.userExistsByUsername(username)) {
+            throw new IllegalArgumentException("User Not Found");
         }
     }
 
-    public List<RaceDto> getRacesForUser(Long userId) {
-        this.verifyUserExists(userId);
+    private ExternalUserDto getUserByUsername(String username) {
+        ExternalUserDto user = this.userPort.getByUsername(username);
+        if (null == user) {
+            throw new IllegalArgumentException("User Not Found");
+        }
 
-        List<Race> races = this.raceRepository.findAllByUserId(userId);
+        return user;
+    }
+
+    public List<RaceDto> getAllUserRaces(String username) {
+        ExternalUserDto user = this.getUserByUsername(username);
+
+        List<Race> races = this.raceRepository.findAllByUserId(user.id);
         return races.stream().map(RaceMapper::toRaceDto).toList();
     }
 
-    public RaceDto getRaceById(Long raceId, Long userId) {
-        this.verifyUserExists(userId);
+    public RaceDto getUserRaceById(Long raceId, String username) {
+        this.verifyUserExists(username);
 
         Race race = this.raceRepository.findById(raceId);
         return RaceMapper.toRaceDto(race);
     }
 
-    public void createRace(RaceDto raceDto, Long userId) {
-        this.verifyUserExists(userId);
+    public void createRace(RaceDto raceDto, String username) {
+        ExternalUserDto user = this.getUserByUsername(username);
 
-        this.raceRepository.save(RaceMapper.toRace(raceDto));
+        Race race = RaceMapper.toRace(raceDto);
+        race.setUserId(user.id);
+
+        this.raceRepository.save(race);
     }
 
-    public void updateRace(Long raceId, RaceDto raceDto, Long userId) {
-        this.verifyUserExists(userId);
+    public void updateRace(Long raceId, RaceDto raceDto, String username) {
+        this.verifyUserExists(username);
 
         Race race = this.raceRepository.findById(raceId);
         if (race == null) {
@@ -60,9 +72,9 @@ public class RaceApplicationService {
         this.raceRepository.save(updatedRace);
     }
 
-    public void deleteRace(Long raceId, Long userId) {
-        this.verifyUserExists(userId);
+    public void deleteRace(Long raceId, String username) {
+        this.verifyUserExists(username);
 
-        this.raceRepository.deleteById(raceId) ;
+        this.raceRepository.deleteById(raceId);
     }
 }

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <title>Race list</title>
+</head>
+<body>
+
+<ul>
+  <li th:each="race: ${races}" th:text="${race.name}"></li>
+</ul>
+</body>
+</html>

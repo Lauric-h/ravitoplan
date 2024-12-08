@@ -2,6 +2,9 @@ package com.java.ravito_plan.user.infrastructure.service;
 
 import com.java.ravito_plan.user.domain.ports.outbound.UserRepository;
 import com.java.ravito_plan.user.domain.model.User;
+import java.util.Collection;
+import java.util.List;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,6 +21,7 @@ public class DatabaseUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username));
+
         return org.springframework.security.core.userdetails.User.builder()
                 .username(user.getUsername())
                 .password(user.getPassword())

@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,6 +29,9 @@ public class Race {
     private String name;
 
     @Column(nullable = false)
+    private LocalDateTime date;
+
+    @Column(nullable = false)
     private int distance;
 
     @Column(nullable = false)
@@ -48,8 +52,9 @@ public class Race {
     @OneToMany(orphanRemoval = true)
     private List<Section> sections;
 
-    public Race(String name, int distance, int elevationPositive, int elevationNegative, String city, String postalCode) {
+    public Race(String name, LocalDateTime date, int distance, int elevationPositive, int elevationNegative, String city, String postalCode) {
         this.name = name;
+        this.date = date;
         this.distance = distance;
         this.elevationPositive = elevationPositive;
         this.elevationNegative = elevationNegative;

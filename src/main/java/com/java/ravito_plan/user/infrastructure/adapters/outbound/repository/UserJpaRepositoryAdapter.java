@@ -35,4 +35,9 @@ public class UserJpaRepositoryAdapter implements UserRepository {
     public User save(User user) {
         return this.repository.save(user);
     }
+
+    @Override
+    public boolean existsById(Long id) {
+       return this.repository.existsById(id);
+    }
 }

@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class RaceController {
@@ -18,7 +19,6 @@ public class RaceController {
         this.raceApplicationService = raceApplicationService;
     }
 
-    // findAllRacesByUserId
     @GetMapping("/races")
     public String getRaces(@AuthenticationPrincipal UserDetails userDetails, Model model) {
         List< RaceDto> races = this.raceApplicationService.getAllUserRaces(userDetails.getUsername());
@@ -26,7 +26,12 @@ public class RaceController {
         return "race/list";
     }
 
-    // readOneRaceForUser
+    @GetMapping("/races/{id}")
+    public String getRace(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long id, Model model) {
+        RaceDto race = this.raceApplicationService.getUserRaceById(id, userDetails.getUsername());
+        model.addAttribute("race", race);
+        return "race/race";
+    }
 
     // createOneRaceForUser
 

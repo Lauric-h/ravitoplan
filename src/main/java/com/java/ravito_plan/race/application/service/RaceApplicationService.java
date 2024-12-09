@@ -43,9 +43,9 @@ public class RaceApplicationService {
     }
 
     public RaceDto getUserRaceById(Long raceId, String username) {
-        this.verifyUserExists(username);
+        ExternalUserDto user = this.getUserByUsername(username);
 
-        Race race = this.raceRepository.findById(raceId);
+        Race race = this.raceRepository.findByIdAndUserId(raceId, user.id);
         return RaceMapper.toRaceDto(race);
     }
 
@@ -59,9 +59,9 @@ public class RaceApplicationService {
     }
 
     public void updateRace(Long raceId, RaceDto raceDto, String username) {
-        this.verifyUserExists(username);
+        ExternalUserDto user = this.getUserByUsername(username);
 
-        Race race = this.raceRepository.findById(raceId);
+        Race race = this.raceRepository.findByIdAndUserId(raceId, user.id);
         if (race == null) {
             throw new IllegalArgumentException("Race not found");
         }

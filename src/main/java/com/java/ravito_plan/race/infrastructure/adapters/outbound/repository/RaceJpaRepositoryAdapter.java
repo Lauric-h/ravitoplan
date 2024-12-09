@@ -25,8 +25,8 @@ public class RaceJpaRepositoryAdapter implements RaceRepository {
     }
 
     @Override
-    public Race findById(Long id) {
-        return this.importedRaceRepository.findById(id).orElseThrow();
+    public Race findByIdAndUserId(Long id, Long userId) {
+        return this.importedRaceRepository.findByIdAndUserId(id, userId).orElseThrow();
     }
 
     @Override

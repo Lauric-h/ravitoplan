@@ -1,6 +1,7 @@
 package com.java.ravito_plan.race.application.dto;
 
 
+import com.java.ravito_plan.race.domain.model.Race;
 import java.time.LocalDateTime;
 
 public class RaceDto {
@@ -18,6 +19,8 @@ public class RaceDto {
     public String city;
 
     public String postalCode;
+
+    public RaceDto() {}
 
     public RaceDto(String name, LocalDateTime date,int distance, int elevationPositive, int elevationNegative,
             String city, String postalCode) {

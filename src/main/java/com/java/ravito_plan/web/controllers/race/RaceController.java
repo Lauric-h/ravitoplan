@@ -36,8 +36,14 @@ public class RaceController {
         return "race/race";
     }
 
-    // createOneRaceForUser
-    @PostMapping("/races")
+    @GetMapping("/races/create")
+    public String getCreateRace(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+        RaceDto race = new RaceDto();
+        model.addAttribute("race", race);
+        return "race/create";
+    }
+
+    @PostMapping("/races/create")
     public String createRace(@AuthenticationPrincipal UserDetails userDetails, @ModelAttribute("race") @Valid RaceDto raceDto) {
         RaceDto race = this.raceApplicationService.createRace(raceDto, userDetails.getUsername());
         return "redirect:/races";

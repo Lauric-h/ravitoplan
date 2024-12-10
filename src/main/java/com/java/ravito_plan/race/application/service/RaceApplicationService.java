@@ -49,13 +49,14 @@ public class RaceApplicationService {
         return RaceMapper.toRaceDto(race);
     }
 
-    public void createRace(RaceDto raceDto, String username) {
+    public RaceDto createRace(RaceDto raceDto, String username) {
         ExternalUserDto user = this.getUserByUsername(username);
 
         Race race = RaceMapper.toRace(raceDto);
         race.setUserId(user.id);
 
-        this.raceRepository.save(race);
+        Race createdRace = this.raceRepository.save(race);
+        return RaceMapper.toRaceDto(createdRace);
     }
 
     public void updateRace(Long raceId, RaceDto raceDto, String username) {

@@ -6,6 +6,8 @@ import com.java.ravito_plan.race.application.mapper.RaceMapper;
 import com.java.ravito_plan.race.domain.model.Race;
 import com.java.ravito_plan.race.domain.ports.outbound.RaceRepository;
 import com.java.ravito_plan.race.domain.ports.outbound.UserPort;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
@@ -49,10 +51,13 @@ public class RaceApplicationService {
         return RaceMapper.toRaceDto(race);
     }
 
-    public RaceDto createRace(RaceDto raceDto, String username) {
+    public RaceDto createRace(String name, LocalDate date, int distance, int elevationPositive,
+            int elevationNegative, String city, String postalCode, String username) {
         ExternalUserDto user = this.getUserByUsername(username);
 
-        Race race = RaceMapper.toRace(raceDto);
+        Race race = RaceMapper.toRace(
+                new RaceDto(name, date, distance, elevationPositive, elevationNegative, city,
+                        postalCode));
         race.setUserId(user.id);
 
         Race createdRace = this.raceRepository.save(race);

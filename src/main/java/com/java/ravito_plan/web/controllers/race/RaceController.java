@@ -1,8 +1,11 @@
 package com.java.ravito_plan.web.controllers.race;
 
 import com.java.ravito_plan.race.application.dto.RaceDto;
+import com.java.ravito_plan.race.application.dto.RaceFormRequest;
 import com.java.ravito_plan.race.application.service.RaceApplicationService;
 import jakarta.validation.Valid;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,13 +27,15 @@ public class RaceController {
 
     @GetMapping("/races")
     public String getRaces(@AuthenticationPrincipal UserDetails userDetails, Model model) {
-        List< RaceDto> races = this.raceApplicationService.getAllUserRaces(userDetails.getUsername());
+        List<RaceDto> races = this.raceApplicationService.getAllUserRaces(
+                userDetails.getUsername());
         model.addAttribute("races", races);
         return "race/list";
     }
 
     @GetMapping("/races/{id}")
-    public String getRace(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long id, Model model) {
+    public String getRace(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long id,
+            Model model) {
         RaceDto race = this.raceApplicationService.getUserRaceById(id, userDetails.getUsername());
         model.addAttribute("race", race);
         return "race/race";
@@ -38,14 +43,17 @@ public class RaceController {
 
     @GetMapping("/races/create")
     public String getCreateRace(@AuthenticationPrincipal UserDetails userDetails, Model model) {
-        RaceDto race = new RaceDto();
+        RaceFormRequest race = new RaceFormRequest();
         model.addAttribute("race", race);
         return "race/create";
     }
 
     @PostMapping("/races/create")
-    public String createRace(@AuthenticationPrincipal UserDetails userDetails, @ModelAttribute("race") @Valid RaceDto raceDto) {
-        RaceDto race = this.raceApplicationService.createRace(raceDto, userDetails.getUsername());
+    public String createRace(@AuthenticationPrincipal UserDetails userDetails,
+            @ModelAttribute @Valid RaceFormRequest race) {
+        RaceDto raceDto = this.raceApplicationService.createRace(race.getName(), LocalDate.parse(race.getDate()),
+                race.getDistance(), race.getElevationPositive(), race.getElevationNegative(),
+                race.getCity(), race.getPostalCode(), userDetails.getUsername());
         return "redirect:/races";
     }
 

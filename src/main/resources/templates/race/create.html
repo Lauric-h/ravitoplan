@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <title>create</title>
+</head>
+<body>
+
+<form action="#" th:action="@{/races/create}" th:object="${race}" method="post">
+  <div>
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name" th:field="*{name}" required>
+  </div>
+  <div>
+    <label for="city">City</label>
+    <input type="text" id="city" city="city" th:field="*{city}" required>
+  </div>
+  <div>
+    <label for="postalCode">Postal Code</label>
+    <input type="text" id="postalCode" postalCode="postalCode" th:field="*{postalCode}" required>
+  </div>
+  <div>
+    <label for="distance">Distance</label>
+    <input type="number" id="distance" distance="distance" th:field="*{distance}" required>
+  </div>
+  <div>
+    <label for="elevationPositive">Elevation positive</label>
+    <input type="number" id="elevationPositive" elevationPositive="elevationPositive" th:field="*{elevationPositive}" required>
+  </div>
+  <div>
+    <label for="elevationNegative">Elevation negative</label>
+    <input type="number" id="elevationNegative" elevationNegative="elevationNegative" th:field="*{elevationNegative}" required>
+  </div>
+  <div>
+    <label for="date">Date</label>
+    <input type="date" id="date" th:field="*{date}" required>
+  </div>
+  <button type="submit">Enregistrer</button>
+</form>
+
+
+</body>
+</html>

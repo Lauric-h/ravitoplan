@@ -37,6 +37,15 @@ public class UserApplicationService {
                 userRequest.username, userRequest.password);
 
         User savedUser = this.userRepository.save(user);
-        return new UserDto(savedUser.getUsername(), savedUser.getEmail());
+        return new UserDto(savedUser.getId(), savedUser.getUsername(), savedUser.getEmail());
+    }
+
+    public UserDto getByUsername(String username) {
+        User user = this.userRepository.findByUsername(username).orElseThrow();
+        return new UserDto(user.getId(), user.getUsername(), user.getEmail());
+    }
+
+    public boolean existsByUsername(String username) {
+        return this.userRepository.existsByUsername(username);
     }
 }

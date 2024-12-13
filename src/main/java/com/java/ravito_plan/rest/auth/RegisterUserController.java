@@ -1,6 +1,6 @@
 package com.java.ravito_plan.rest.auth;
 
-import com.java.ravito_plan.rest.view.RegisterUserRequest;
+import com.java.ravito_plan.rest.view.auth.RegisterUserRequest;
 import com.java.ravito_plan.user.application.service.UserApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

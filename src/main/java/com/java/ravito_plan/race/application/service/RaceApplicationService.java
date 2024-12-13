@@ -7,7 +7,6 @@ import com.java.ravito_plan.race.domain.model.Race;
 import com.java.ravito_plan.race.domain.ports.outbound.RaceRepository;
 import com.java.ravito_plan.race.domain.ports.outbound.UserPort;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
@@ -51,7 +50,7 @@ public class RaceApplicationService {
         return RaceMapper.toRaceDto(race);
     }
 
-    public RaceDto createRace(String name, LocalDate date, int distance, int elevationPositive,
+    public RaceDto createRaceForUser(String name, LocalDate date, int distance, int elevationPositive,
             int elevationNegative, String city, String postalCode, String username) {
         ExternalUserDto user = this.getUserByUsername(username);
 
@@ -64,7 +63,7 @@ public class RaceApplicationService {
         return RaceMapper.toRaceDto(createdRace);
     }
 
-    public void updateRace(Long raceId, RaceDto raceDto, String username) {
+    public void updateRaceForUser(Long raceId, RaceDto raceDto, String username) {
         ExternalUserDto user = this.getUserByUsername(username);
 
         Race race = this.raceRepository.findByIdAndUserId(raceId, user.id);
@@ -78,7 +77,7 @@ public class RaceApplicationService {
         this.raceRepository.save(updatedRace);
     }
 
-    public void deleteRace(Long raceId, String username) {
+    public void deleteRaceForUser(Long raceId, String username) {
         this.verifyUserExists(username);
 
         this.raceRepository.deleteById(raceId);

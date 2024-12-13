@@ -5,7 +5,6 @@ import com.java.ravito_plan.race.application.dto.RaceFormRequest;
 import com.java.ravito_plan.race.application.service.RaceApplicationService;
 import jakarta.validation.Valid;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,11 +16,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-public class RaceController {
+public class RaceWebController {
 
     private final RaceApplicationService raceApplicationService;
 
-    public RaceController(RaceApplicationService raceApplicationService) {
+    public RaceWebController(RaceApplicationService raceApplicationService) {
         this.raceApplicationService = raceApplicationService;
     }
 
@@ -51,7 +50,7 @@ public class RaceController {
     @PostMapping("/races/create")
     public String createRace(@AuthenticationPrincipal UserDetails userDetails,
             @ModelAttribute @Valid RaceFormRequest race) {
-        RaceDto raceDto = this.raceApplicationService.createRace(race.getName(), LocalDate.parse(race.getDate()),
+        RaceDto raceDto = this.raceApplicationService.createRaceForUser(race.getName(), LocalDate.parse(race.getDate()),
                 race.getDistance(), race.getElevationPositive(), race.getElevationNegative(),
                 race.getCity(), race.getPostalCode(), userDetails.getUsername());
         return "redirect:/races";

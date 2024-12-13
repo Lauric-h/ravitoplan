@@ -50,8 +50,9 @@ public class RaceApplicationService {
         return RaceMapper.toRaceDto(race);
     }
 
-    public RaceDto createRaceForUser(String name, LocalDate date, int distance, int elevationPositive,
-            int elevationNegative, String city, String postalCode, String username) {
+    public RaceDto createRaceForUser(String name, LocalDate date, int distance,
+            int elevationPositive, int elevationNegative, String city, String postalCode,
+            String username) {
         ExternalUserDto user = this.getUserByUsername(username);
 
         Race race = RaceMapper.toRace(
@@ -63,7 +64,9 @@ public class RaceApplicationService {
         return RaceMapper.toRaceDto(createdRace);
     }
 
-    public void updateRaceForUser(Long raceId, RaceDto raceDto, String username) {
+    public void updateRaceForUser(Long raceId, String name, LocalDate date, int distance,
+            int elevationPositive, int elevationNegative, String city, String postalCode,
+            String username) {
         ExternalUserDto user = this.getUserByUsername(username);
 
         Race race = this.raceRepository.findByIdAndUserId(raceId, user.id);
@@ -71,10 +74,10 @@ public class RaceApplicationService {
             throw new IllegalArgumentException("Race not found");
         }
 
-        Race updatedRace = RaceMapper.toRace(raceDto);
-        updatedRace.setId(raceId);
+        race.updateFields(name, date, distance, elevationPositive, elevationNegative, city,
+                postalCode);
 
-        this.raceRepository.save(updatedRace);
+        this.raceRepository.save(race);
     }
 
     public void deleteRaceForUser(Long raceId, String username) {

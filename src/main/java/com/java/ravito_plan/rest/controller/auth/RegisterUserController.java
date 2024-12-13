@@ -1,4 +1,4 @@
-package com.java.ravito_plan.rest.auth;
+package com.java.ravito_plan.rest.controller.auth;
 
 import com.java.ravito_plan.rest.view.auth.RegisterUserRequest;
 import com.java.ravito_plan.user.application.service.UserApplicationService;

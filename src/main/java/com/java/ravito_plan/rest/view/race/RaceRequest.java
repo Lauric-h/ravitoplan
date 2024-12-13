@@ -3,7 +3,7 @@ package com.java.ravito_plan.rest.view.race;
 import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
-public class CreateRaceRequest {
+public class RaceRequest {
 
     @NotBlank
     public String name;

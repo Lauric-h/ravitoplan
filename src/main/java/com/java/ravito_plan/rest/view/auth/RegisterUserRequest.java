@@ -1,4 +1,4 @@
-package com.java.ravito_plan.rest.view;
+package com.java.ravito_plan.rest.view.auth;
 
 import jakarta.validation.constraints.NotBlank;
 

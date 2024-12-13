@@ -21,9 +21,4 @@ public class UserPortAdapter implements UserPort {
 
         return new ExternalUserDto(user.id, user.username);
     }
-
-    @Override
-    public boolean userExistsByUsername(String username) {
-        return this.userApplicationService.existsByUsername(username);
-    }
 }

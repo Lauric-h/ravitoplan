@@ -9,8 +9,6 @@ import java.net.URI;
 import java.util.List;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,53 +30,42 @@ public class RaceController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<RaceDto>> getUserRaces(
-            @AuthenticationPrincipal UserDetails userDetails) {
-        List<RaceDto> races = this.raceApplicationService.getAllUserRaces(
-                userDetails.getUsername());
-
+    public ResponseEntity<List<RaceDto>> getUserRaces() {
+        List<RaceDto> races = this.raceApplicationService.getAllUserRaces();
         return ResponseEntity.ok(races);
     }
 
     @PostMapping()
-    public ResponseEntity<RaceDto> createUserRace(@AuthenticationPrincipal UserDetails userDetails,
-            @RequestBody RaceRequest raceRequest) {
+    public ResponseEntity<RaceDto> createUserRace(@RequestBody RaceRequest raceRequest) {
         RaceDto race = this.raceApplicationService.createRaceForUser(raceRequest.name,
                 raceRequest.date, raceRequest.distance, raceRequest.elevationPositive,
-                raceRequest.elevationNegative, raceRequest.city, raceRequest.postalCode,
-                userDetails.getUsername());
-
+                raceRequest.elevationNegative, raceRequest.city, raceRequest.postalCode);
         return ResponseEntity.ok(race);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RaceDto> getUserRace(@AuthenticationPrincipal UserDetails userDetails,
-            @PathVariable Long id) {
-        RaceDto race = this.raceApplicationService.getUserRaceById(id, userDetails.getUsername());
+    public ResponseEntity<RaceDto> getUserRace(@PathVariable Long id) {
+        RaceDto race = this.raceApplicationService.getUserRaceById(id);
         return ResponseEntity.ok(race);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> editUserRace(@AuthenticationPrincipal UserDetails userDetails,
-            @PathVariable Long id, @RequestBody RaceRequest raceRequest) {
-        this.raceApplicationService.updateRaceForUser(id, raceRequest.name,
-                raceRequest.date, raceRequest.distance, raceRequest.elevationPositive,
-                raceRequest.elevationNegative, raceRequest.city, raceRequest.postalCode,
-                userDetails.getUsername());
+    public ResponseEntity<Void> editUserRace(@PathVariable Long id,
+            @RequestBody RaceRequest raceRequest) {
+        this.raceApplicationService.updateRaceForUser(id, raceRequest.name, raceRequest.date,
+                raceRequest.distance, raceRequest.elevationPositive, raceRequest.elevationNegative,
+                raceRequest.city, raceRequest.postalCode);
 
-        URI location =
-                ServletUriComponentsBuilder.fromCurrentRequest()
-                        .path("")
-                        .buildAndExpand(id)
-                        .toUri();
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("").buildAndExpand(id)
+                .toUri();
 
-        return ResponseEntity.status(OK).header(HttpHeaders.LOCATION, String.valueOf(location)).build();
+        return ResponseEntity.status(OK).header(HttpHeaders.LOCATION, String.valueOf(location))
+                .build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteRace(@AuthenticationPrincipal UserDetails userDetails,
-            @PathVariable Long id) {
-        this.raceApplicationService.deleteRaceForUser(id, userDetails.getUsername());
+    public ResponseEntity<Void> deleteRace(@PathVariable Long id) {
+        this.raceApplicationService.deleteRaceForUser(id);
         return ResponseEntity.noContent().build();
     }
 }

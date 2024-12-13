@@ -1,5 +1,6 @@
 package com.java.ravito_plan.race.domain.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -48,8 +49,8 @@ public class Race {
     @Column(nullable = false)
     private Long userId;
 
-    @OneToMany(orphanRemoval = true)
-    private List<Section> sections;
+    @OneToMany(mappedBy = "race", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Segment> segments;
 
     public Race(String name, LocalDate date, int distance, int elevationPositive,
             int elevationNegative, String city, String postalCode) {

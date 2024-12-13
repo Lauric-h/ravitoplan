@@ -11,49 +11,29 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RaceApplicationService {
-
-    private final RaceRepository raceRepository;
-    private final UserPort userPort;
+public class RaceApplicationService extends BaseApplicationService {
 
     public RaceApplicationService(RaceRepository raceRepository, UserPort userPort) {
-        this.raceRepository = raceRepository;
-        this.userPort = userPort;
+        super(raceRepository, userPort);
     }
 
-    private void verifyUserExists(String username) {
-        if (!this.userPort.userExistsByUsername(username)) {
-            throw new IllegalArgumentException("User Not Found");
-        }
-    }
-
-    private ExternalUserDto getUserByUsername(String username) {
-        ExternalUserDto user = this.userPort.getByUsername(username);
-        if (null == user) {
-            throw new IllegalArgumentException("User Not Found");
-        }
-
-        return user;
-    }
-
-    public List<RaceDto> getAllUserRaces(String username) {
-        ExternalUserDto user = this.getUserByUsername(username);
+    public List<RaceDto> getAllUserRaces() {
+        ExternalUserDto user = this.getCurrentUser();
 
         List<Race> races = this.raceRepository.findAllByUserId(user.id);
         return races.stream().map(RaceMapper::toRaceDto).toList();
     }
 
-    public RaceDto getUserRaceById(Long raceId, String username) {
-        ExternalUserDto user = this.getUserByUsername(username);
+    public RaceDto getUserRaceById(Long raceId) {
+        ExternalUserDto user = this.getCurrentUser();
 
         Race race = this.raceRepository.findByIdAndUserId(raceId, user.id);
         return RaceMapper.toRaceDto(race);
     }
 
     public RaceDto createRaceForUser(String name, LocalDate date, int distance,
-            int elevationPositive, int elevationNegative, String city, String postalCode,
-            String username) {
-        ExternalUserDto user = this.getUserByUsername(username);
+            int elevationPositive, int elevationNegative, String city, String postalCode) {
+        ExternalUserDto user = this.getCurrentUser();
 
         Race race = RaceMapper.toRace(
                 new RaceDto(name, date, distance, elevationPositive, elevationNegative, city,
@@ -65,9 +45,8 @@ public class RaceApplicationService {
     }
 
     public void updateRaceForUser(Long raceId, String name, LocalDate date, int distance,
-            int elevationPositive, int elevationNegative, String city, String postalCode,
-            String username) {
-        ExternalUserDto user = this.getUserByUsername(username);
+            int elevationPositive, int elevationNegative, String city, String postalCode) {
+        ExternalUserDto user = this.getCurrentUser();
 
         Race race = this.raceRepository.findByIdAndUserId(raceId, user.id);
         if (race == null) {
@@ -80,8 +59,8 @@ public class RaceApplicationService {
         this.raceRepository.save(race);
     }
 
-    public void deleteRaceForUser(Long raceId, String username) {
-        this.verifyUserExists(username);
+    public void deleteRaceForUser(Long raceId) {
+        ExternalUserDto user = this.getCurrentUser();
 
         this.raceRepository.deleteById(raceId);
     }

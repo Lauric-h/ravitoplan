@@ -5,5 +5,4 @@ import com.java.ravito_plan.race.application.dto.ExternalUserDto;
 public interface UserPort {
 
     ExternalUserDto getByUsername(String username);
-    boolean userExistsByUsername(String username);
 }

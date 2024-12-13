@@ -45,7 +45,13 @@ public class Segment {
     private Long raceId;
 
     public Segment(Checkpoint start, Checkpoint finish) {
+        if (finish.getDistanceFromStart() <= start.getDistanceFromStart()) {
+            throw new IllegalArgumentException("Finish checkpoint must be after start checkpoint.");
+        }
+
         this.start = start;
         this.finish = finish;
+
+        this.distance = finish.getDistanceFromStart() - start.getDistanceFromStart();
     }
 }

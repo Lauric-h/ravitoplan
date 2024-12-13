@@ -11,6 +11,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -72,5 +73,12 @@ public class RaceController {
                         .toUri();
 
         return ResponseEntity.status(OK).header(HttpHeaders.LOCATION, String.valueOf(location)).build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteRace(@AuthenticationPrincipal UserDetails userDetails,
+            @PathVariable Long id) {
+        this.raceApplicationService.deleteRaceForUser(id, userDetails.getUsername());
+        return ResponseEntity.noContent().build();
     }
 }

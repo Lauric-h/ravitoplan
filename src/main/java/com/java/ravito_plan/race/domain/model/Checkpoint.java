@@ -52,4 +52,12 @@ public class Checkpoint {
         this.location = location;
         this.type = type;
     }
+
+    public Checkpoint updateDetails(Checkpoint checkpoint) {
+        this.name = checkpoint.getName();
+        this.distanceFromStart = checkpoint.getDistanceFromStart();
+        this.type = checkpoint.getType();
+        this.location = checkpoint.getLocation();
+        return this;
+    }
 }

@@ -68,8 +68,8 @@ public class Race {
         Checkpoint start = new Checkpoint("Start", 0, CheckpointType.START);
         Checkpoint finish = new Checkpoint("Finish", this.distance, CheckpointType.FINISH);
 
-        this.addCheckpoint(start);
-        this.addCheckpoint(finish);
+        this.addOrUpdateCheckpoint(start);
+        this.addOrUpdateCheckpoint(finish);
     }
 
     public Race updateFields(String name, LocalDate date, int distance, int elevationPositive,
@@ -85,16 +85,18 @@ public class Race {
         return this;
     }
 
-    public Race addCheckpoint(Checkpoint checkpoint) {
-        boolean checkpointExistsAtSameDistance = this.checkpoints.stream()
-                .anyMatch(cp -> cp.getDistanceFromStart() == checkpoint.getDistanceFromStart());
+    public Race addOrUpdateCheckpoint(Checkpoint checkpoint) {
+        Checkpoint existingCheckpoint = this.checkpoints.stream()
+                .filter(cp -> cp.getDistanceFromStart() == checkpoint.getDistanceFromStart())
+                .findFirst().orElse(null);
 
-        if (checkpointExistsAtSameDistance) {
-            throw new IllegalArgumentException("Checkpoint already exists");
+        if (existingCheckpoint != null) {
+            existingCheckpoint.updateDetails(checkpoint);
+        } else {
+            this.checkpoints.add(checkpoint);
+            checkpoint.setRace(this);
         }
 
-        this.checkpoints.add(checkpoint);
-        checkpoint.setRace(this);
         return this;
     }
 }

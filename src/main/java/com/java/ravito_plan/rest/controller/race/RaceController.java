@@ -84,4 +84,16 @@ public class RaceController {
         return ResponseEntity.status(OK).header(HttpHeaders.LOCATION, String.valueOf(location))
                 .build();
     }
+
+    @PutMapping("/{id}/checkpoints/{checkpointId}")
+    public ResponseEntity<Void> editCheckpoint(@PathVariable Long id, @PathVariable Long checkpointId, @RequestBody CheckpointRequest checkpointRequest) {
+        this.raceApplicationService.updateCheckpoint(id, checkpointId, new CheckpointDto(checkpointRequest.name, checkpointRequest.distanceFromStart, checkpointRequest.location,
+                CheckpointType.valueOf(checkpointRequest.type)));
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/api/races/{id}").buildAndExpand(id)
+                .toUri();
+
+        return ResponseEntity.status(OK).header(HttpHeaders.LOCATION, String.valueOf(location))
+                .build();
+    }
 }

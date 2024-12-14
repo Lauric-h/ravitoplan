@@ -5,7 +5,9 @@ import com.java.ravito_plan.race.application.dto.ExternalUserDto;
 import com.java.ravito_plan.race.application.dto.RaceDto;
 import com.java.ravito_plan.race.application.mapper.CheckpointMapper;
 import com.java.ravito_plan.race.application.mapper.RaceMapper;
+import com.java.ravito_plan.race.domain.model.Checkpoint;
 import com.java.ravito_plan.race.domain.model.Race;
+import com.java.ravito_plan.race.domain.ports.outbound.CheckpointRepository;
 import com.java.ravito_plan.race.domain.ports.outbound.RaceRepository;
 import com.java.ravito_plan.race.domain.ports.outbound.UserPort;
 import java.time.LocalDate;
@@ -14,9 +16,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class RaceApplicationService extends BaseApplicationService {
+    CheckpointRepository checkpointRepository;
 
-    public RaceApplicationService(RaceRepository raceRepository, UserPort userPort) {
+    public RaceApplicationService(RaceRepository raceRepository, UserPort userPort, CheckpointRepository checkpointRepository) {
         super(raceRepository, userPort);
+        this.checkpointRepository = checkpointRepository;
     }
 
     public List<RaceDto> getAllUserRaces() {
@@ -51,9 +55,6 @@ public class RaceApplicationService extends BaseApplicationService {
         ExternalUserDto user = this.getCurrentUser();
 
         Race race = this.raceRepository.findByIdAndUserId(raceId, user.id);
-        if (race == null) {
-            throw new IllegalArgumentException("Race not found");
-        }
 
         race.updateFields(name, date, distance, elevationPositive, elevationNegative, city,
                 postalCode);
@@ -71,12 +72,22 @@ public class RaceApplicationService extends BaseApplicationService {
         ExternalUserDto user = this.getCurrentUser();
 
         Race race = this.raceRepository.findByIdAndUserId(raceId, user.id);
-        if (race == null) {
-            throw new IllegalArgumentException("Race not found");
-        }
+        race.addOrUpdateCheckpoint(CheckpointMapper.toCheckpoint(checkpointDto));
 
-        race.addCheckpoint(CheckpointMapper.toCheckpoint(checkpointDto));
         Race updatedRace = this.raceRepository.save(race);
         return RaceMapper.toRaceDto(updatedRace);
+    }
+
+    public RaceDto updateCheckpoint(Long raceId, Long checkpointId, CheckpointDto checkpointDto) {
+        this.verifyUserOwnsRace(raceId);
+
+        Checkpoint checkpoint = this.checkpointRepository.findById(checkpointId);
+
+        Checkpoint updatedCheckpoint = CheckpointMapper.toCheckpoint(checkpointDto);
+        checkpoint.updateDetails(updatedCheckpoint);
+
+        Checkpoint savedCheckpoint = this.checkpointRepository.save(checkpoint);
+
+        return RaceMapper.toRaceDto(savedCheckpoint.getRace());
     }
 }

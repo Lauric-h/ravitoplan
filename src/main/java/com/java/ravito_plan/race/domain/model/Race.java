@@ -101,6 +101,10 @@ public class Race {
     }
 
     public Race addOrUpdateCheckpoint(Checkpoint checkpoint) {
+        if (checkpoint.getDistanceFromStart() > this.getDistance()) {
+            throw new IllegalArgumentException();
+        }
+        
         Checkpoint existingCheckpoint = this.checkpoints.stream()
                 .filter(cp -> cp.getDistanceFromStart() == checkpoint.getDistanceFromStart())
                 .findFirst().orElse(null);

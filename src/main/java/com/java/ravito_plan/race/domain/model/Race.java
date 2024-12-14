@@ -10,7 +10,6 @@ import jakarta.persistence.OrderBy;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -73,7 +72,8 @@ public class Race {
 
     public void validate() {
         if (this.checkpoints == null || this.checkpoints.isEmpty()) {
-            throw new IllegalArgumentException("Race must have at least two checkpoints: start and finish.");
+            throw new IllegalArgumentException(
+                    "Race must have at least two checkpoints: start and finish.");
         }
 
         boolean hasStartCheckpoint = this.checkpoints.stream()

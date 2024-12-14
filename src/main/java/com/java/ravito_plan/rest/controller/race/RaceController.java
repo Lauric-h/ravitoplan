@@ -73,32 +73,38 @@ public class RaceController {
     }
 
     @PostMapping("/{id}/checkpoints")
-    public ResponseEntity<Void> addCheckpoint(@PathVariable Long id, @RequestBody CheckpointRequest checkpointRequest) {
-        RaceDto updatedRace = this.raceApplicationService.addCheckpoint(id, new CheckpointDto(
-                checkpointRequest.name, checkpointRequest.distanceFromStart, checkpointRequest.location,
-                CheckpointType.valueOf(checkpointRequest.type)));
+    public ResponseEntity<Void> addCheckpoint(@PathVariable Long id,
+            @RequestBody CheckpointRequest checkpointRequest) {
+        RaceDto updatedRace = this.raceApplicationService.addCheckpoint(id,
+                new CheckpointDto(checkpointRequest.name, checkpointRequest.distanceFromStart,
+                        checkpointRequest.location,
+                        CheckpointType.valueOf(checkpointRequest.type)));
 
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/api/races/{id}").buildAndExpand(id)
-                .toUri();
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/api/races/{id}")
+                .buildAndExpand(id).toUri();
 
         return ResponseEntity.status(OK).header(HttpHeaders.LOCATION, String.valueOf(location))
                 .build();
     }
 
     @PutMapping("/{id}/checkpoints/{checkpointId}")
-    public ResponseEntity<Void> editCheckpoint(@PathVariable Long id, @PathVariable Long checkpointId, @RequestBody CheckpointRequest checkpointRequest) {
-        this.raceApplicationService.updateCheckpoint(id, checkpointId, new CheckpointDto(checkpointRequest.name, checkpointRequest.distanceFromStart, checkpointRequest.location,
-                CheckpointType.valueOf(checkpointRequest.type)));
+    public ResponseEntity<Void> editCheckpoint(@PathVariable Long id,
+            @PathVariable Long checkpointId, @RequestBody CheckpointRequest checkpointRequest) {
+        this.raceApplicationService.updateCheckpoint(id, checkpointId,
+                new CheckpointDto(checkpointRequest.name, checkpointRequest.distanceFromStart,
+                        checkpointRequest.location,
+                        CheckpointType.valueOf(checkpointRequest.type)));
 
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/api/races/{id}").buildAndExpand(id)
-                .toUri();
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/api/races/{id}")
+                .buildAndExpand(id).toUri();
 
         return ResponseEntity.status(OK).header(HttpHeaders.LOCATION, String.valueOf(location))
                 .build();
     }
 
     @DeleteMapping("/{id}/checkpoints/{checkpointId}")
-    public ResponseEntity<Void> deleteCheckpoint(@PathVariable Long id, @PathVariable Long checkpointId) {
+    public ResponseEntity<Void> deleteCheckpoint(@PathVariable Long id,
+            @PathVariable Long checkpointId) {
         this.raceApplicationService.deleteCheckpoint(id, checkpointId);
         return ResponseEntity.noContent().build();
     }

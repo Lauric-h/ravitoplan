@@ -18,7 +18,6 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class Race {
 
@@ -70,6 +69,22 @@ public class Race {
 
         this.addOrUpdateCheckpoint(start);
         this.addOrUpdateCheckpoint(finish);
+    }
+
+    public void validate() {
+        if (this.checkpoints == null || this.checkpoints.isEmpty()) {
+            throw new IllegalArgumentException("Race must have at least two checkpoints: start and finish.");
+        }
+
+        boolean hasStartCheckpoint = this.checkpoints.stream()
+                .anyMatch(cp -> cp.getDistanceFromStart() == 0);
+
+        boolean hasFinishCheckpoint = this.checkpoints.stream()
+                .anyMatch(cp -> cp.getDistanceFromStart() == this.getDistance());
+
+        if (!hasStartCheckpoint || !hasFinishCheckpoint) {
+            throw new IllegalArgumentException("Race must have a starting and finish checkpoint");
+        }
     }
 
     public Race updateFields(String name, LocalDate date, int distance, int elevationPositive,

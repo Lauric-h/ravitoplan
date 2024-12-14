@@ -7,4 +7,5 @@ public interface CheckpointRepository {
 
     Checkpoint findById(Long id);
     Checkpoint save(Checkpoint checkpoint);
+    void deleteById(Long id);
 }

@@ -16,9 +16,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class RaceApplicationService extends BaseApplicationService {
+
     CheckpointRepository checkpointRepository;
 
-    public RaceApplicationService(RaceRepository raceRepository, UserPort userPort, CheckpointRepository checkpointRepository) {
+    public RaceApplicationService(RaceRepository raceRepository, UserPort userPort,
+            CheckpointRepository checkpointRepository) {
         super(raceRepository, userPort);
         this.checkpointRepository = checkpointRepository;
     }
@@ -45,6 +47,7 @@ public class RaceApplicationService extends BaseApplicationService {
                 new RaceDto(name, date, distance, elevationPositive, elevationNegative, city,
                         postalCode));
         race.setUserId(user.id);
+        race.validate();
 
         Race createdRace = this.raceRepository.save(race);
         return RaceMapper.toRaceDto(createdRace);
@@ -58,6 +61,8 @@ public class RaceApplicationService extends BaseApplicationService {
 
         race.updateFields(name, date, distance, elevationPositive, elevationNegative, city,
                 postalCode);
+
+        race.validate();
 
         this.raceRepository.save(race);
     }
@@ -89,5 +94,10 @@ public class RaceApplicationService extends BaseApplicationService {
         Checkpoint savedCheckpoint = this.checkpointRepository.save(checkpoint);
 
         return RaceMapper.toRaceDto(savedCheckpoint.getRace());
+    }
+
+    public void deleteCheckpoint(Long raceId, Long checkpointId) {
+        this.verifyUserOwnsRace(raceId);
+        this.checkpointRepository.deleteById(checkpointId);
     }
 }

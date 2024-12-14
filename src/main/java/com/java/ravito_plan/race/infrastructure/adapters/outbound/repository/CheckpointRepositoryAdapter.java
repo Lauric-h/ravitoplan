@@ -22,4 +22,9 @@ public class CheckpointRepositoryAdapter implements CheckpointRepository {
     public Checkpoint save(Checkpoint checkpoint) {
        return this.checkpointRepository.save(checkpoint);
     }
+
+    @Override
+    public void deleteById(Long id) {
+        this.checkpointRepository.deleteById(id);
+    }
 }

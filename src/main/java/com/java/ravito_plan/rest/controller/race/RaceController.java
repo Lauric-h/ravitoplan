@@ -96,4 +96,11 @@ public class RaceController {
         return ResponseEntity.status(OK).header(HttpHeaders.LOCATION, String.valueOf(location))
                 .build();
     }
+
+    @DeleteMapping("/{id}/checkpoints/{checkpointId}")
+    public ResponseEntity<Void> deleteCheckpoint(@PathVariable Long id, @PathVariable Long checkpointId) {
+        this.raceApplicationService.deleteCheckpoint(id, checkpointId);
+        return ResponseEntity.noContent().build();
+    }
+
 }

@@ -2,8 +2,11 @@ package com.java.ravito_plan.rest.controller.race;
 
 import static org.springframework.http.HttpStatus.OK;
 
+import com.java.ravito_plan.race.application.dto.CheckpointDto;
 import com.java.ravito_plan.race.application.dto.RaceDto;
 import com.java.ravito_plan.race.application.service.RaceApplicationService;
+import com.java.ravito_plan.race.domain.model.CheckpointType;
+import com.java.ravito_plan.rest.view.race.CheckpointRequest;
 import com.java.ravito_plan.rest.view.race.RaceRequest;
 import java.net.URI;
 import java.util.List;
@@ -67,5 +70,18 @@ public class RaceController {
     public ResponseEntity<Void> deleteRace(@PathVariable Long id) {
         this.raceApplicationService.deleteRaceForUser(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{id}/checkpoints")
+    public ResponseEntity<Void> addCheckpoint(@PathVariable Long id, @RequestBody CheckpointRequest checkpointRequest) {
+        RaceDto updatedRace = this.raceApplicationService.addCheckpoint(id, new CheckpointDto(
+                checkpointRequest.name, checkpointRequest.distanceFromStart, checkpointRequest.location,
+                CheckpointType.valueOf(checkpointRequest.type)));
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/api/races/{id}").buildAndExpand(id)
+                .toUri();
+
+        return ResponseEntity.status(OK).header(HttpHeaders.LOCATION, String.valueOf(location))
+                .build();
     }
 }

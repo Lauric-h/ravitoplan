@@ -6,6 +6,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,6 +36,15 @@ public class Checkpoint {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private CheckpointType type;
+
+    @ManyToOne()
+    private Race race;
+
+    public Checkpoint(String name, int distanceFromStart, CheckpointType type) {
+        this.name = name;
+        this.distanceFromStart = distanceFromStart;
+        this.type = type;
+    }
 
     public Checkpoint(String name, int distanceFromStart, String location, CheckpointType type) {
         this.name = name;

@@ -1,7 +1,9 @@
 package com.java.ravito_plan.race.application.service;
 
+import com.java.ravito_plan.race.application.dto.CheckpointDto;
 import com.java.ravito_plan.race.application.dto.ExternalUserDto;
 import com.java.ravito_plan.race.application.dto.RaceDto;
+import com.java.ravito_plan.race.application.mapper.CheckpointMapper;
 import com.java.ravito_plan.race.application.mapper.RaceMapper;
 import com.java.ravito_plan.race.domain.model.Race;
 import com.java.ravito_plan.race.domain.ports.outbound.RaceRepository;
@@ -63,5 +65,18 @@ public class RaceApplicationService extends BaseApplicationService {
         ExternalUserDto user = this.getCurrentUser();
 
         this.raceRepository.deleteById(raceId);
+    }
+
+    public RaceDto addCheckpoint(Long raceId, CheckpointDto checkpointDto) {
+        ExternalUserDto user = this.getCurrentUser();
+
+        Race race = this.raceRepository.findByIdAndUserId(raceId, user.id);
+        if (race == null) {
+            throw new IllegalArgumentException("Race not found");
+        }
+
+        race.addCheckpoint(CheckpointMapper.toCheckpoint(checkpointDto));
+        Race updatedRace = this.raceRepository.save(race);
+        return RaceMapper.toRaceDto(updatedRace);
     }
 }

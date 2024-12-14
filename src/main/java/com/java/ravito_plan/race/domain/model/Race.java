@@ -6,7 +6,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderBy;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -50,7 +52,8 @@ public class Race {
     private Long userId;
 
     @OneToMany(mappedBy = "race", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Segment> segments;
+    @OrderBy("distanceFromStart ASC")
+    private List<Checkpoint> checkpoints = new ArrayList<>();
 
     public Race(String name, LocalDate date, int distance, int elevationPositive,
             int elevationNegative, String city, String postalCode) {
@@ -61,6 +64,12 @@ public class Race {
         this.elevationNegative = elevationNegative;
         this.city = city;
         this.postalCode = postalCode;
+
+        Checkpoint start = new Checkpoint("Start", 0, CheckpointType.START);
+        Checkpoint finish = new Checkpoint("Finish", this.distance, CheckpointType.FINISH);
+
+        this.addCheckpoint(start);
+        this.addCheckpoint(finish);
     }
 
     public Race updateFields(String name, LocalDate date, int distance, int elevationPositive,
@@ -73,6 +82,19 @@ public class Race {
         this.city = city;
         this.postalCode = postalCode;
 
+        return this;
+    }
+
+    public Race addCheckpoint(Checkpoint checkpoint) {
+        boolean checkpointExistsAtSameDistance = this.checkpoints.stream()
+                .anyMatch(cp -> cp.getDistanceFromStart() == checkpoint.getDistanceFromStart());
+
+        if (checkpointExistsAtSameDistance) {
+            throw new IllegalArgumentException("Checkpoint already exists");
+        }
+
+        this.checkpoints.add(checkpoint);
+        checkpoint.setRace(this);
         return this;
     }
 }

@@ -7,7 +7,8 @@ public class RaceMapper {
 
     public static RaceDto toRaceDto(Race race) {
         return new RaceDto(race.getName(), race.getDate(), race.getDistance(), race.getElevationPositive(),
-                race.getElevationNegative(), race.getCity(), race.getPostalCode());
+                race.getElevationNegative(), race.getCity(), race.getPostalCode(), race.getCheckpoints().stream().map(
+                CheckpointMapper::toCheckpointDto).toList());
     }
 
     public static Race toRace(RaceDto raceDto) {

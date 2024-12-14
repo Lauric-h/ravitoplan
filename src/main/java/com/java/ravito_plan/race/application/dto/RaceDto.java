@@ -1,10 +1,14 @@
 package com.java.ravito_plan.race.application.dto;
 
 
-import com.java.ravito_plan.race.domain.model.Race;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
+@AllArgsConstructor
+@NoArgsConstructor
 public class RaceDto {
 
     public String name;
@@ -21,7 +25,7 @@ public class RaceDto {
 
     public String postalCode;
 
-    public RaceDto() {}
+    public List<CheckpointDto> checkpoints = new ArrayList<>();
 
     public RaceDto(String name, LocalDate date,int distance, int elevationPositive, int elevationNegative,
             String city, String postalCode) {
@@ -33,7 +37,4 @@ public class RaceDto {
         this.city = city;
         this.postalCode = postalCode;
     }
-
-    // TODO ADD
-//    public List<Section> sections;
 }

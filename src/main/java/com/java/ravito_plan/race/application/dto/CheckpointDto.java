@@ -12,4 +12,8 @@ public class CheckpointDto {
     public int distanceFromStart;
     public String location;
     public CheckpointType type;
+    public Integer estimatedTimeInMinuteFromStart;
+    public int cumulatedElevationGainFromStart;
+    public int cumulatedElevationLossFromStart;
+    public Integer carbsTarget;
 }

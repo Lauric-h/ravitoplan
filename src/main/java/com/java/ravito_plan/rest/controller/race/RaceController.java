@@ -77,8 +77,11 @@ public class RaceController {
             @RequestBody CheckpointRequest checkpointRequest) {
         RaceDto updatedRace = this.raceApplicationService.addCheckpoint(id,
                 new CheckpointDto(checkpointRequest.name, checkpointRequest.distanceFromStart,
-                        checkpointRequest.location,
-                        CheckpointType.valueOf(checkpointRequest.type)));
+                        checkpointRequest.location, CheckpointType.valueOf(checkpointRequest.type),
+                        checkpointRequest.estimatedTimeInMinuteFromStart,
+                        checkpointRequest.cumulatedElevationGainFromStart,
+                        checkpointRequest.cumulatedElevationLossFromStart,
+                        checkpointRequest.carbsTarget));
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/api/races/{id}")
                 .buildAndExpand(id).toUri();
@@ -92,8 +95,11 @@ public class RaceController {
             @PathVariable Long checkpointId, @RequestBody CheckpointRequest checkpointRequest) {
         this.raceApplicationService.updateCheckpoint(id, checkpointId,
                 new CheckpointDto(checkpointRequest.name, checkpointRequest.distanceFromStart,
-                        checkpointRequest.location,
-                        CheckpointType.valueOf(checkpointRequest.type)));
+                        checkpointRequest.location, CheckpointType.valueOf(checkpointRequest.type),
+                        checkpointRequest.estimatedTimeInMinuteFromStart,
+                        checkpointRequest.cumulatedElevationGainFromStart,
+                        checkpointRequest.cumulatedElevationLossFromStart,
+                        checkpointRequest.carbsTarget));
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/api/races/{id}")
                 .buildAndExpand(id).toUri();

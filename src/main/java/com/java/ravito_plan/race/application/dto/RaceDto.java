@@ -27,6 +27,8 @@ public class RaceDto {
 
     public List<CheckpointDto> checkpoints = new ArrayList<>();
 
+    public List<SegmentDto> segments = new ArrayList<>();
+
     public RaceDto(String name, LocalDate date,int distance, int elevationPositive, int elevationNegative,
             String city, String postalCode) {
         this.name = name;

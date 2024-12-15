@@ -134,4 +134,15 @@ public class Race {
 
         return this;
     }
+
+    public List<Segment> getSegments() {
+        List<Segment> segments = new ArrayList<>();
+        for (int i = 0; i < this.checkpoints.size() - 1; i++) {
+            Checkpoint start = this.checkpoints.get(i);
+            Checkpoint finish = this.checkpoints.get(i + 1);
+            segments.add(new Segment(start, finish));
+        }
+
+        return segments;
+    }
 }

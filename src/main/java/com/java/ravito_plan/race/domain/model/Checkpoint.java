@@ -60,7 +60,7 @@ public class Checkpoint {
         this.cumulatedElevationLossFromStart = cumulatedElevationLossFromStart;
     }
 
-    public Checkpoint(String name, int distanceFromStart, String location, CheckpointType type,int cumulatedElevationGainFromStart, int cumulatedElevationLossFromStart, int estimatedTimeInMinuteFromStart, int carbsTarget) {
+    public Checkpoint(String name, int distanceFromStart, String location, CheckpointType type,int cumulatedElevationGainFromStart, int cumulatedElevationLossFromStart, Integer estimatedTimeInMinuteFromStart, Integer carbsTarget) {
         this.name = name;
         this.distanceFromStart = distanceFromStart;
         this.location = location;

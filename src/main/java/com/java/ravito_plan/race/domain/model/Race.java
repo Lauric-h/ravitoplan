@@ -53,7 +53,7 @@ public class Race {
     @OrderBy("distanceFromStart ASC")
     private List<Checkpoint> checkpoints = new ArrayList<>();
 
-    public Race(String name, LocalDate date, int distance, int elevationPositive,
+    private Race(String name, LocalDate date, int distance, int elevationPositive,
             int elevationNegative, String city, String postalCode) {
         this.name = name;
         this.date = date;
@@ -62,45 +62,86 @@ public class Race {
         this.elevationNegative = elevationNegative;
         this.city = city;
         this.postalCode = postalCode;
+    }
 
-        Checkpoint start = new Checkpoint("Start", 0, CheckpointType.START, 0, 0);
-        Checkpoint finish = new Checkpoint("Finish", this.distance, CheckpointType.FINISH, elevationPositive, elevationNegative);
+    public static Race create(String name, LocalDate date, int distance, int elevationPositive,
+            int elevationNegative, String city, String postalCode) {
+        Race race = new Race(name, date, distance, elevationPositive, elevationNegative, city,
+                postalCode);
 
-        this.addOrUpdateCheckpoint(start);
-        this.addOrUpdateCheckpoint(finish);
+        race.addDefaultCheckpoints();
+        race.validate();
+
+        return race;
     }
 
     public void validate() {
+        this.validateCheckpointExist();
+        this.validateStartAndFinishCheckpoints();
+        this.validateElevationConsistency();
+        this.validateCheckpointOrder();
+    }
+
+    private void validateCheckpointExist() {
         if (this.checkpoints == null || this.checkpoints.isEmpty()) {
             throw new IllegalArgumentException(
                     "Race must have at least two checkpoints: start and finish.");
         }
+    }
 
-        boolean hasStartCheckpoint = this.checkpoints.stream()
-                .anyMatch(cp -> cp.getDistanceFromStart() == 0);
+    private boolean hasCheckpointAtDistance(int distance) {
+        return this.checkpoints.stream().anyMatch(cp -> cp.getDistanceFromStart() == distance);
+    }
 
-        boolean hasFinishCheckpoint = this.checkpoints.stream()
-                .anyMatch(cp -> cp.getDistanceFromStart() == this.getDistance());
+    private void validateStartAndFinishCheckpoints() {
+        boolean hasStartCheckpoint = this.hasCheckpointAtDistance(0);
+        boolean hasFinishCheckpoint = this.hasCheckpointAtDistance(this.distance);
 
         if (!hasStartCheckpoint || !hasFinishCheckpoint) {
             throw new IllegalArgumentException("Race must have a starting and finish checkpoint");
         }
+    }
 
-        // TODO PUT SOMEWHERE ELSE AND REFACTO
-//        if (this.checkpoints.get(0).getCumulatedElevationGainFromStart() != 0
-//                || this.checkpoints.get(0).getCumulatedElevationLossFromStart() != 0
-//        ) {
-//            this.checkpoints.get(0).setCumulatedElevationGainFromStart(0);
-//            this.checkpoints.get(0).setCumulatedElevationLossFromStart(0);
-//        }
-//
-//        if (this.checkpoints.get(this.checkpoints.size() - 1).getCumulatedElevationGainFromStart() != this.elevationPositive
-//                || this.checkpoints.get(this.checkpoints.size() - 1).getCumulatedElevationLossFromStart() != this.elevationNegative
-//        ) {
-//            this.checkpoints.get(this.checkpoints.size() - 1).setCumulatedElevationGainFromStart(this.elevationPositive);
-//            this.checkpoints.get(this.checkpoints.size() - 1).setCumulatedElevationLossFromStart(this.elevationNegative);
-//
-//        }
+    private void validateElevationConsistency() {
+        Checkpoint start = this.getStartCheckpoint();
+        if (start.getCumulatedElevationGainFromStart() != 0
+                || start.getCumulatedElevationLossFromStart() != 0) {
+            throw new IllegalArgumentException(String.format("start %s -%s", start.getCumulatedElevationGainFromStart(), start.getCumulatedElevationLossFromStart()));
+        }
+
+        Checkpoint finish = this.getFinishCheckpoint();
+        if (finish.getCumulatedElevationGainFromStart() != this.elevationPositive
+                || finish.getCumulatedElevationLossFromStart() != this.elevationNegative) {
+            throw new IllegalArgumentException(String.format("finish %s -%s", finish.getCumulatedElevationGainFromStart(), finish.getCumulatedElevationLossFromStart()));
+        }
+    }
+
+    public Checkpoint getStartCheckpoint() {
+        return this.checkpoints.get(0);
+    }
+
+    public Checkpoint getFinishCheckpoint() {
+        return this.checkpoints.get(this.checkpoints.size() - 1);
+    }
+
+    private void validateCheckpointOrder() {
+        for (int i = 1; i < checkpoints.size(); i++) {
+            if (this.checkpoints.get(i).getDistanceFromStart() <= this.checkpoints.get(i - 1)
+                    .getDistanceFromStart()) {
+                throw new IllegalArgumentException(
+                        "Checkpoints must be in increasing distance order");
+            }
+        }
+    }
+
+    private void addDefaultCheckpoints() {
+        Checkpoint start = new Checkpoint("Start", 0, CheckpointType.START, 0, 0);
+        Checkpoint finish = new Checkpoint("Finish", this.distance, CheckpointType.FINISH,
+                this.elevationPositive, this.elevationNegative);
+
+        this.checkpoints.clear();
+        this.addOrUpdateCheckpoint(start);
+        this.addOrUpdateCheckpoint(finish);
     }
 
     public Race updateFields(String name, LocalDate date, int distance, int elevationPositive,
@@ -133,6 +174,11 @@ public class Race {
         }
 
         return this;
+    }
+
+    public void removeCheckpoint(Checkpoint checkpoint) {
+        this.checkpoints.remove(checkpoint);
+        this.validate();
     }
 
     public List<Segment> getSegments() {

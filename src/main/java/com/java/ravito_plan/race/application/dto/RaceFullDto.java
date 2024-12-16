@@ -1,14 +1,12 @@
 package com.java.ravito_plan.race.application.dto;
 
-
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
 @AllArgsConstructor
-public class RaceDto {
-
+public class RaceFullDto {
     public String name;
 
     public LocalDate date;
@@ -22,4 +20,8 @@ public class RaceDto {
     public String city;
 
     public String postalCode;
+
+    public List<CheckpointDto> checkpoints = new ArrayList<>();
+
+    public List<SegmentDto> segments = new ArrayList<>();
 }

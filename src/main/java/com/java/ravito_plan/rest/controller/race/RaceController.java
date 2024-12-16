@@ -4,6 +4,7 @@ import static org.springframework.http.HttpStatus.OK;
 
 import com.java.ravito_plan.race.application.dto.CheckpointDto;
 import com.java.ravito_plan.race.application.dto.RaceDto;
+import com.java.ravito_plan.race.application.dto.RaceFullDto;
 import com.java.ravito_plan.race.application.service.RaceApplicationService;
 import com.java.ravito_plan.race.domain.model.CheckpointType;
 import com.java.ravito_plan.rest.view.race.CheckpointRequest;
@@ -75,7 +76,7 @@ public class RaceController {
     @PostMapping("/{id}/checkpoints")
     public ResponseEntity<Void> addCheckpoint(@PathVariable Long id,
             @RequestBody CheckpointRequest checkpointRequest) {
-        RaceDto updatedRace = this.raceApplicationService.addCheckpoint(id,
+        RaceFullDto updatedRace = this.raceApplicationService.addCheckpoint(id,
                 new CheckpointDto(checkpointRequest.name, checkpointRequest.distanceFromStart,
                         checkpointRequest.location, CheckpointType.valueOf(checkpointRequest.type),
                         checkpointRequest.estimatedTimeInMinuteFromStart,
@@ -113,6 +114,12 @@ public class RaceController {
             @PathVariable Long checkpointId) {
         this.raceApplicationService.deleteCheckpoint(id, checkpointId);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}/full")
+    public ResponseEntity<RaceFullDto> getFullRace(@PathVariable Long id) {
+        RaceFullDto race = this.raceApplicationService.getUserFullRaceById(id);
+        return ResponseEntity.ok(race);
     }
 
 }

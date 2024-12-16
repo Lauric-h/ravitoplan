@@ -10,6 +10,7 @@ import jakarta.persistence.OrderBy;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,6 +19,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Race {
 
     @Id
@@ -68,6 +70,17 @@ public class Race {
 
         this.addOrUpdateCheckpoint(start);
         this.addOrUpdateCheckpoint(finish);
+    }
+
+    public Race(String name, LocalDate date, int distance, int elevationPositive,
+            int elevationNegative, String city, String postalCode, List<Checkpoint> checkpoints) {
+        this.name = name;
+        this.date = date;
+        this.distance = distance;
+        this.elevationPositive = elevationPositive;
+        this.elevationNegative = elevationNegative;
+        this.city = city;
+        this.postalCode = postalCode;
     }
 
     public void validate() {

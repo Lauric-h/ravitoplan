@@ -106,13 +106,13 @@ public class Race {
         Checkpoint start = this.getStartCheckpoint();
         if (start.getCumulatedElevationGainFromStart() != 0
                 || start.getCumulatedElevationLossFromStart() != 0) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(String.format("start %s -%s", start.getCumulatedElevationGainFromStart(), start.getCumulatedElevationLossFromStart()));
         }
 
         Checkpoint finish = this.getFinishCheckpoint();
         if (finish.getCumulatedElevationGainFromStart() != this.elevationPositive
                 || finish.getCumulatedElevationLossFromStart() != this.elevationNegative) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(String.format("finish %s -%s", finish.getCumulatedElevationGainFromStart(), finish.getCumulatedElevationLossFromStart()));
         }
     }
 
@@ -174,6 +174,11 @@ public class Race {
         }
 
         return this;
+    }
+
+    public void removeCheckpoint(Checkpoint checkpoint) {
+        this.checkpoints.remove(checkpoint);
+        this.validate();
     }
 
     public List<Segment> getSegments() {

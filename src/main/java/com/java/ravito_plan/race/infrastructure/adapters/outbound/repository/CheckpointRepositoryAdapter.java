@@ -27,4 +27,9 @@ public class CheckpointRepositoryAdapter implements CheckpointRepository {
     public void deleteById(Long id) {
         this.checkpointRepository.deleteById(id);
     }
+
+    @Override
+    public Checkpoint findByIdAndRaceId(Long id, Long raceId) {
+        return this.checkpointRepository.findByIdAndRaceId(id, raceId).orElseThrow();
+    }
 }

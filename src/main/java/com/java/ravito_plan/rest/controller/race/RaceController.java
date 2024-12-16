@@ -5,6 +5,7 @@ import static org.springframework.http.HttpStatus.OK;
 import com.java.ravito_plan.race.application.dto.CheckpointDto;
 import com.java.ravito_plan.race.application.dto.RaceDto;
 import com.java.ravito_plan.race.application.dto.RaceFullDto;
+import com.java.ravito_plan.race.application.service.CheckpointService;
 import com.java.ravito_plan.race.application.service.RaceApplicationService;
 import com.java.ravito_plan.race.domain.model.CheckpointType;
 import com.java.ravito_plan.rest.view.race.CheckpointRequest;
@@ -28,9 +29,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class RaceController {
 
     private final RaceApplicationService raceApplicationService;
+    private final CheckpointService checkpointService;
 
-    public RaceController(RaceApplicationService raceApplicationService) {
+    public RaceController(RaceApplicationService raceApplicationService, CheckpointService checkpointService) {
         this.raceApplicationService = raceApplicationService;
+        this.checkpointService = checkpointService;
     }
 
     @GetMapping()
@@ -76,7 +79,7 @@ public class RaceController {
     @PostMapping("/{id}/checkpoints")
     public ResponseEntity<Void> addCheckpoint(@PathVariable Long id,
             @RequestBody CheckpointRequest checkpointRequest) {
-        RaceFullDto updatedRace = this.raceApplicationService.addCheckpoint(id,
+        RaceDto updatedRace = this.checkpointService.addCheckpoint(id,
                 new CheckpointDto(checkpointRequest.name, checkpointRequest.distanceFromStart,
                         checkpointRequest.location, CheckpointType.valueOf(checkpointRequest.type),
                         checkpointRequest.estimatedTimeInMinuteFromStart,
@@ -94,7 +97,7 @@ public class RaceController {
     @PutMapping("/{id}/checkpoints/{checkpointId}")
     public ResponseEntity<Void> editCheckpoint(@PathVariable Long id,
             @PathVariable Long checkpointId, @RequestBody CheckpointRequest checkpointRequest) {
-        this.raceApplicationService.updateCheckpoint(id, checkpointId,
+        this.checkpointService.updateCheckpoint(id, checkpointId,
                 new CheckpointDto(checkpointRequest.name, checkpointRequest.distanceFromStart,
                         checkpointRequest.location, CheckpointType.valueOf(checkpointRequest.type),
                         checkpointRequest.estimatedTimeInMinuteFromStart,
@@ -112,7 +115,7 @@ public class RaceController {
     @DeleteMapping("/{id}/checkpoints/{checkpointId}")
     public ResponseEntity<Void> deleteCheckpoint(@PathVariable Long id,
             @PathVariable Long checkpointId) {
-        this.raceApplicationService.deleteCheckpoint(id, checkpointId);
+        this.checkpointService.deleteCheckpoint(id, checkpointId);
         return ResponseEntity.noContent().build();
     }
 
@@ -121,5 +124,4 @@ public class RaceController {
         RaceFullDto race = this.raceApplicationService.getUserFullRaceById(id);
         return ResponseEntity.ok(race);
     }
-
 }

@@ -55,7 +55,6 @@ public class RaceApplicationService extends BaseApplicationService {
                 new RaceDto(name, date, distance, elevationPositive, elevationNegative, city,
                         postalCode));
         race.setUserId(user.id);
-        race.validate();
 
         Race createdRace = this.raceRepository.save(race);
         return RaceMapper.toRaceDto(createdRace);

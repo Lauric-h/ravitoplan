@@ -24,14 +24,7 @@ public class RaceMapper {
     }
 
     public static Race toRace(RaceDto raceDto) {
-        return new Race(raceDto.name, raceDto.date, raceDto.distance, raceDto.elevationPositive,
+        return Race.create(raceDto.name, raceDto.date, raceDto.distance, raceDto.elevationPositive,
                 raceDto.elevationNegative, raceDto.city, raceDto.postalCode);
-    }
-
-    public static Race toRaceFull(RaceFullDto raceFullDto, List<Checkpoint> checkpoints) {
-        return new Race(
-                raceFullDto.name, raceFullDto.date, raceFullDto.distance, raceFullDto.elevationPositive,
-                raceFullDto.elevationNegative, raceFullDto.city, raceFullDto.postalCode, checkpoints
-        );
     }
 }

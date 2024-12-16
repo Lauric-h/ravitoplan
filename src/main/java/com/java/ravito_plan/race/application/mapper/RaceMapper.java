@@ -6,9 +6,11 @@ import com.java.ravito_plan.race.domain.model.Race;
 public class RaceMapper {
 
     public static RaceDto toRaceDto(Race race) {
-        return new RaceDto(race.getName(), race.getDate(), race.getDistance(), race.getElevationPositive(),
-                race.getElevationNegative(), race.getCity(), race.getPostalCode(), race.getCheckpoints().stream().map(
-                CheckpointMapper::toCheckpointDto).toList());
+        return new RaceDto(race.getName(), race.getDate(), race.getDistance(),
+                race.getElevationPositive(), race.getElevationNegative(), race.getCity(),
+                race.getPostalCode(),
+                race.getCheckpoints().stream().map(CheckpointMapper::toCheckpointDto).toList(),
+                race.getSegments().stream().map(SegmentMapper::toSegmentDto).toList());
     }
 
     public static Race toRace(RaceDto raceDto) {

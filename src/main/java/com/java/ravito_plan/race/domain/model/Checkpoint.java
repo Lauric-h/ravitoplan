@@ -30,27 +30,45 @@ public class Checkpoint {
     @Column(nullable = false)
     private int distanceFromStart;
 
-    @Column()
+    @Column
     private String location;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private CheckpointType type;
 
-    @ManyToOne()
+    @ManyToOne
     private Race race;
 
-    public Checkpoint(String name, int distanceFromStart, CheckpointType type) {
+    @Column
+    private Integer estimatedTimeInMinuteFromStart;
+
+    @Column(nullable = false)
+    private int cumulatedElevationGainFromStart;
+
+    @Column(nullable = false)
+    private int cumulatedElevationLossFromStart;
+
+    @Column
+    private Integer carbsTarget;
+
+    public Checkpoint(String name, int distanceFromStart, CheckpointType type, int cumulatedElevationGainFromStart, int cumulatedElevationLossFromStart) {
         this.name = name;
         this.distanceFromStart = distanceFromStart;
         this.type = type;
+        this.cumulatedElevationGainFromStart = cumulatedElevationGainFromStart;
+        this.cumulatedElevationLossFromStart = cumulatedElevationLossFromStart;
     }
 
-    public Checkpoint(String name, int distanceFromStart, String location, CheckpointType type) {
+    public Checkpoint(String name, int distanceFromStart, String location, CheckpointType type,int cumulatedElevationGainFromStart, int cumulatedElevationLossFromStart, Integer estimatedTimeInMinuteFromStart, Integer carbsTarget) {
         this.name = name;
         this.distanceFromStart = distanceFromStart;
         this.location = location;
         this.type = type;
+        this.cumulatedElevationGainFromStart = cumulatedElevationGainFromStart;
+        this.cumulatedElevationLossFromStart = cumulatedElevationLossFromStart;
+        this.estimatedTimeInMinuteFromStart = estimatedTimeInMinuteFromStart;
+        this.carbsTarget = carbsTarget;
     }
 
     public Checkpoint updateDetails(Checkpoint checkpoint) {
@@ -58,6 +76,11 @@ public class Checkpoint {
         this.distanceFromStart = checkpoint.getDistanceFromStart();
         this.type = checkpoint.getType();
         this.location = checkpoint.getLocation();
+        this.cumulatedElevationGainFromStart = checkpoint.getCumulatedElevationGainFromStart();
+        this.cumulatedElevationLossFromStart = checkpoint.getCumulatedElevationLossFromStart();
+        this.carbsTarget = checkpoint.getCarbsTarget();
+        this.estimatedTimeInMinuteFromStart = checkpoint.getEstimatedTimeInMinuteFromStart();
+
         return this;
     }
 }

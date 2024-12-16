@@ -63,8 +63,8 @@ public class Race {
         this.city = city;
         this.postalCode = postalCode;
 
-        Checkpoint start = new Checkpoint("Start", 0, CheckpointType.START);
-        Checkpoint finish = new Checkpoint("Finish", this.distance, CheckpointType.FINISH);
+        Checkpoint start = new Checkpoint("Start", 0, CheckpointType.START, 0, 0);
+        Checkpoint finish = new Checkpoint("Finish", this.distance, CheckpointType.FINISH, elevationPositive, elevationNegative);
 
         this.addOrUpdateCheckpoint(start);
         this.addOrUpdateCheckpoint(finish);
@@ -85,6 +85,22 @@ public class Race {
         if (!hasStartCheckpoint || !hasFinishCheckpoint) {
             throw new IllegalArgumentException("Race must have a starting and finish checkpoint");
         }
+
+        // TODO PUT SOMEWHERE ELSE AND REFACTO
+//        if (this.checkpoints.get(0).getCumulatedElevationGainFromStart() != 0
+//                || this.checkpoints.get(0).getCumulatedElevationLossFromStart() != 0
+//        ) {
+//            this.checkpoints.get(0).setCumulatedElevationGainFromStart(0);
+//            this.checkpoints.get(0).setCumulatedElevationLossFromStart(0);
+//        }
+//
+//        if (this.checkpoints.get(this.checkpoints.size() - 1).getCumulatedElevationGainFromStart() != this.elevationPositive
+//                || this.checkpoints.get(this.checkpoints.size() - 1).getCumulatedElevationLossFromStart() != this.elevationNegative
+//        ) {
+//            this.checkpoints.get(this.checkpoints.size() - 1).setCumulatedElevationGainFromStart(this.elevationPositive);
+//            this.checkpoints.get(this.checkpoints.size() - 1).setCumulatedElevationLossFromStart(this.elevationNegative);
+//
+//        }
     }
 
     public Race updateFields(String name, LocalDate date, int distance, int elevationPositive,
@@ -104,7 +120,7 @@ public class Race {
         if (checkpoint.getDistanceFromStart() > this.getDistance()) {
             throw new IllegalArgumentException();
         }
-        
+
         Checkpoint existingCheckpoint = this.checkpoints.stream()
                 .filter(cp -> cp.getDistanceFromStart() == checkpoint.getDistanceFromStart())
                 .findFirst().orElse(null);
@@ -117,5 +133,16 @@ public class Race {
         }
 
         return this;
+    }
+
+    public List<Segment> getSegments() {
+        List<Segment> segments = new ArrayList<>();
+        for (int i = 0; i < this.checkpoints.size() - 1; i++) {
+            Checkpoint start = this.checkpoints.get(i);
+            Checkpoint finish = this.checkpoints.get(i + 1);
+            segments.add(new Segment(start, finish));
+        }
+
+        return segments;
     }
 }

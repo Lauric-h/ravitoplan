@@ -23,11 +23,11 @@ public class BrandApplicationService implements BrandService {
         return brands.stream().map(BrandMapper::toBrandDto).toList();
     }
 
-    public BrandFullDto getById(Long id) {
+    public BrandFullDto getBrandById(Long id) {
         return BrandMapper.toBrandFullDto(brandRepository.findById(id));
     }
 
-    public BrandDto create(String name) {
+    public BrandDto createBrand(String name) {
         Brand brand = new Brand();
         brand.setName(name);
         brandRepository.save(brand);
@@ -35,7 +35,7 @@ public class BrandApplicationService implements BrandService {
         return BrandMapper.toBrandDto(brand);
     }
 
-    public void delete(Long id) {
+    public void deleteBrand(Long id) {
         brandRepository.deleteById(id);
     }
 

@@ -35,4 +35,16 @@ public class Brand {
         this.name = name;
         return this;
     }
+
+    public Brand addOrUpdateFood(Food food) {
+        Food existingFood = this.foods.stream().filter(f -> f.getName().equals(food.getName())).findFirst().orElse(null);
+        if (existingFood == null) {
+            this.foods.add(food);
+            food.setBrand(this);
+        } else {
+            existingFood.updateFields(food);
+        }
+
+        return this;
+    }
 }

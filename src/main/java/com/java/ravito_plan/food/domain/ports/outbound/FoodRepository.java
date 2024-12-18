@@ -5,11 +5,11 @@ import java.util.List;
 
 public interface FoodRepository {
 
-    Food findById(Long id);
+    Food findByIdAndBrandId(Long id, Long brandId);
 
     Food save(Food food);
 
-    List<Food> findAll();
+    List<Food> findAllByBrandId(Long brandId);
 
-    void deleteById(Long id);
+    void deleteByIdAndBrandId(Long id, Long brandId);
 }

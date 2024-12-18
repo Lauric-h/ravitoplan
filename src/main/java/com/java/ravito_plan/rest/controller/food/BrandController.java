@@ -33,13 +33,13 @@ public class BrandController {
 
     @PostMapping
     public ResponseEntity<Void> createBrand(@RequestBody BrandRequest brandRequest) {
-        BrandDto brandDto = this.brandService.create(brandRequest.name);
+        BrandDto brandDto = this.brandService.createBrand(brandRequest.name);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<BrandFullDto> getBrandById(@PathVariable("id") Long id) {
-        BrandFullDto brand = this.brandService.getById(id):
+        BrandFullDto brand = this.brandService.getBrandById(id);
         return ResponseEntity.ok(brand);
     }
 
@@ -51,7 +51,7 @@ public class BrandController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBrandById(@PathVariable("id") Long id) {
-        this.brandService.delete(id);
+        this.brandService.deleteBrand(id);
         return ResponseEntity.noContent().build();
     }
 }

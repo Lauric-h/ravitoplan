@@ -18,6 +18,7 @@ import org.hibernate.annotations.ColumnDefault;
 @Setter
 @NoArgsConstructor
 public class Food {
+
     @Id
     @GeneratedValue
     private Long id;
@@ -49,4 +50,28 @@ public class Food {
 
     @Enumerated(EnumType.STRING)
     private IngestionType ingestionType;
+
+    public Food(String name, int carbohydrates, int calories, int proteins, boolean electrolytes,
+            String link, String comment, IngestionType ingestionType) {
+        this.name = name;
+        this.carbohydrates = carbohydrates;
+        this.calories = calories;
+        this.proteins = proteins;
+        this.electrolytes = electrolytes;
+        this.link = link;
+        this.comment = comment;
+        this.ingestionType = ingestionType;
+    }
+
+    public Food updateFields(Food food) {
+        this.name = food.getName();
+        this.carbohydrates = food.getCarbohydrates();
+        this.calories = food.getCalories();
+        this.proteins = food.getProteins();
+        this.electrolytes = food.isElectrolytes();
+        this.link = food.getLink();
+        this.comment = food.getComment();
+        this.ingestionType = food.getIngestionType();
+        return this;
+    }
 }

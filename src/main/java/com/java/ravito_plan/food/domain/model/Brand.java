@@ -30,4 +30,9 @@ public class Brand {
     public Brand(String name) {
         this.name = name;
     }
+
+    public Brand updateFields(String name) {
+        this.name = name;
+        return this;
+    }
 }

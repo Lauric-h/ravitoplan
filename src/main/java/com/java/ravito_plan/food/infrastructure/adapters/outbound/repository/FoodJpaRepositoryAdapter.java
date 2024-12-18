@@ -2,6 +2,7 @@ package com.java.ravito_plan.food.infrastructure.adapters.outbound.repository;
 
 import com.java.ravito_plan.food.domain.model.Food;
 import com.java.ravito_plan.food.domain.ports.outbound.FoodRepository;
+import jakarta.transaction.Transactional;
 import java.util.List;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +12,11 @@ public class FoodJpaRepositoryAdapter implements FoodRepository {
     private final ImportedFoodRepository foodRepository;
     public FoodJpaRepositoryAdapter(ImportedFoodRepository foodRepository) {
         this.foodRepository = foodRepository;
+    }
+
+    @Override
+    public Food findById(Long id) {
+        return this.foodRepository.findById(id).orElseThrow();
     }
 
     @Override
@@ -29,6 +35,7 @@ public class FoodJpaRepositoryAdapter implements FoodRepository {
     }
 
     @Override
+    @Transactional
     public void deleteByIdAndBrandId(Long id, Long brandId) {
         this.foodRepository.deleteByIdAndBrandId(id, brandId);
     }

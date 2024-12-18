@@ -1,5 +1,6 @@
 package com.java.ravito_plan.food.domain.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,7 +24,7 @@ public class Brand {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(targetEntity = Food.class, mappedBy = "brand")
+    @OneToMany(targetEntity = Food.class, mappedBy = "brand", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("name")
     private List<Food> foods;
 

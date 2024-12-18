@@ -45,19 +45,22 @@ public class FoodController {
     }
 
     @PostMapping
-    public ResponseEntity<BrandFullDto> createFood(@PathVariable("brandId") Long brandId, @RequestBody FoodRequest foodRequest) {
-        BrandFullDto brand = this.foodService.createFood(
-                new FoodDto(foodRequest.name, foodRequest.carbohydrates, foodRequest.calories,
-                        foodRequest.proteins, foodRequest.electrolytes, foodRequest.link,
-                        foodRequest.comment, foodRequest.type), brandId);
+    public ResponseEntity<BrandFullDto> createFood(@PathVariable("brandId") Long brandId,
+            @RequestBody FoodRequest foodRequest) {
+        BrandFullDto brand = this.foodService.createFood(foodRequest.name,
+                foodRequest.carbohydrates, foodRequest.calories, foodRequest.proteins,
+                foodRequest.electrolytes, foodRequest.link, foodRequest.comment, foodRequest.type,
+                brandId);
         return ResponseEntity.ok(brand);
     }
 
     @PutMapping("/{id}")
-   public ResponseEntity<Void> updateFood(@PathVariable("brandId") Long brandId, @PathVariable("id") Long id, @RequestBody FoodRequest foodRequest) {
-        this.foodService.updateFood( new FoodDto(foodRequest.name, foodRequest.carbohydrates, foodRequest.calories,
-                foodRequest.proteins, foodRequest.electrolytes, foodRequest.link,
-                foodRequest.comment, foodRequest.type), id, brandId);
+    public ResponseEntity<Void> updateFood(@PathVariable("brandId") Long brandId,
+            @PathVariable("id") Long id, @RequestBody FoodRequest foodRequest) {
+        this.foodService.updateFood(
+                new FoodDto(id, foodRequest.name, foodRequest.carbohydrates, foodRequest.calories,
+                        foodRequest.proteins, foodRequest.electrolytes, foodRequest.link,
+                        foodRequest.comment, foodRequest.type), id, brandId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

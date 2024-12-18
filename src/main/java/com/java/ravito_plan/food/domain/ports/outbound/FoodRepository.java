@@ -5,6 +5,8 @@ import java.util.List;
 
 public interface FoodRepository {
 
+    Food findById(Long id);
+
     Food findByIdAndBrandId(Long id, Long brandId);
 
     Food save(Food food);

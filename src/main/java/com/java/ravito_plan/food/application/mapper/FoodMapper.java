@@ -6,7 +6,7 @@ import com.java.ravito_plan.food.domain.model.IngestionType;
 
 public class FoodMapper {
     public static FoodDto toFoodDto(Food food) {
-        return new FoodDto(food.getName(), food.getCarbohydrates(), food.getCalories(), food.getProteins(), food.isElectrolytes(), food.getLink(), food.getComment(), food.getIngestionType()
+        return new FoodDto(food.getId(), food.getName(), food.getCarbohydrates(), food.getCalories(), food.getProteins(), food.isElectrolytes(), food.getLink(), food.getComment(), food.getIngestionType()
                 .name());
     }
 

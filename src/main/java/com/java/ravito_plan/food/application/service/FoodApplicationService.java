@@ -6,6 +6,7 @@ import com.java.ravito_plan.food.application.mapper.BrandMapper;
 import com.java.ravito_plan.food.application.mapper.FoodMapper;
 import com.java.ravito_plan.food.domain.model.Brand;
 import com.java.ravito_plan.food.domain.model.Food;
+import com.java.ravito_plan.food.domain.model.IngestionType;
 import com.java.ravito_plan.food.domain.ports.outbound.BrandRepository;
 import com.java.ravito_plan.food.domain.ports.outbound.FoodRepository;
 import com.java.ravito_plan.food.domain.service.FoodService;
@@ -23,6 +24,10 @@ public class FoodApplicationService implements FoodService {
         this.brandRepository = brandRepository;
     }
 
+    public FoodDto getFoodById(Long id) {
+        return FoodMapper.toFoodDto(this.foodRepository.findById(id));
+    }
+
     @Override
     public List<FoodDto> getAllFoodsByBrand(Long brandId) {
         return this.foodRepository.findAllByBrandId(brandId).stream().map(FoodMapper::toFoodDto)
@@ -35,9 +40,12 @@ public class FoodApplicationService implements FoodService {
     }
 
     @Override
-    public BrandFullDto createFood(FoodDto foodDto, Long brandId) {
+    public BrandFullDto createFood(String name, int carbohydrates, int calories, int proteins,
+            boolean electrolytes, String link, String comment, String type, Long brandId) {
         Brand brand = this.brandRepository.findById(brandId);
-        brand.addOrUpdateFood(FoodMapper.toFood(foodDto));
+        brand.addOrUpdateFood(
+                new Food(name, carbohydrates, calories, proteins, electrolytes, link, comment,
+                        IngestionType.valueOf(type)));
         return BrandMapper.toBrandFullDto(this.brandRepository.save(brand));
     }
 

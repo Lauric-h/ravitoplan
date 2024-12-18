@@ -1,5 +1,6 @@
 package com.java.ravito_plan.race.domain.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -7,6 +8,9 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -52,6 +56,9 @@ public class Checkpoint {
     @Column
     private Integer carbsTarget;
 
+    @OneToMany(mappedBy = "checkpoint", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CheckpointFood> checkpointFoods = new ArrayList<>();
+
     public Checkpoint(String name, int distanceFromStart, CheckpointType type, int cumulatedElevationGainFromStart, int cumulatedElevationLossFromStart) {
         this.name = name;
         this.distanceFromStart = distanceFromStart;
@@ -81,6 +88,12 @@ public class Checkpoint {
         this.carbsTarget = checkpoint.getCarbsTarget();
         this.estimatedTimeInMinuteFromStart = checkpoint.getEstimatedTimeInMinuteFromStart();
 
+        return this;
+    }
+
+    public Checkpoint addFood(int quantity, Long foodId) {
+        CheckpointFood checkpointFood = new CheckpointFood(this, quantity, foodId);
+        this.checkpointFoods.add(checkpointFood);
         return this;
     }
 }

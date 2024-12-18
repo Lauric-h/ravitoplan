@@ -1,9 +1,9 @@
-package com.java.ravito_plan.food.application.dto;
+package com.java.ravito_plan.race.application.dto;
 
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public class FoodDto {
+public class ExternalFoodDto {
 
     public Long id;
     public String name;

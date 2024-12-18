@@ -26,4 +26,8 @@ public class Brand {
     @OneToMany(targetEntity = Food.class, mappedBy = "brand")
     @OrderBy("name")
     private List<Food> foods;
+
+    public Brand(String name) {
+        this.name = name;
+    }
 }

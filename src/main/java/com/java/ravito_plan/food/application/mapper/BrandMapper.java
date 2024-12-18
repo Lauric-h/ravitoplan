@@ -15,6 +15,6 @@ public class BrandMapper {
     }
 
     public static BrandFullDto toBrandFullDto(Brand brand) {
-        return new BrandFullDto(brand.getName());
+        return new BrandFullDto(brand.getName(), brand.getFoods().stream().map(FoodMapper::toFoodDto).toList());
     }
 }

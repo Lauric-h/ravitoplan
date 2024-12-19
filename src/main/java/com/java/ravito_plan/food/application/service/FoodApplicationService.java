@@ -1,9 +1,14 @@
 package com.java.ravito_plan.food.application.service;
 
 import com.java.ravito_plan.food.application.dto.BrandFullDto;
-import com.java.ravito_plan.food.application.dto.FoodDto;
+import com.java.ravito_plan.food.application.dto.command.CreateFoodCommand;
+import com.java.ravito_plan.food.application.dto.command.UpdateFoodCommand;
+import com.java.ravito_plan.food.application.dto.internal.FoodDetail;
+import com.java.ravito_plan.food.application.dto.view.FoodSummaryView;
+import com.java.ravito_plan.food.application.dto.view.FoodView;
 import com.java.ravito_plan.food.application.mapper.BrandMapper;
 import com.java.ravito_plan.food.application.mapper.FoodMapper;
+import com.java.ravito_plan.food.application.mapper.FoodViewMapper;
 import com.java.ravito_plan.food.domain.model.Brand;
 import com.java.ravito_plan.food.domain.model.Food;
 import com.java.ravito_plan.food.domain.model.IngestionType;
@@ -24,28 +29,14 @@ public class FoodApplicationService implements FoodService {
         this.brandRepository = brandRepository;
     }
 
-    public FoodDto getFoodById(Long id) {
-        return FoodMapper.toFoodDto(this.foodRepository.findById(id));
+    public FoodDetail getFoodById(Long id) {
+        return FoodMapper.toFoodDetail(this.foodRepository.findById(id));
     }
 
     @Override
-    public List<FoodDto> getAllFoodsByBrand(Long brandId) {
-        return this.foodRepository.findAllByBrandId(brandId).stream().map(FoodMapper::toFoodDto)
-                .toList();
-    }
-
-    @Override
-    public FoodDto getFood(Long id, Long brandId) {
-        return FoodMapper.toFoodDto(this.foodRepository.findByIdAndBrandId(id, brandId));
-    }
-
-    @Override
-    public BrandFullDto createFood(String name, int carbohydrates, int calories, int proteins,
-            boolean electrolytes, String link, String comment, String type, Long brandId) {
-        Brand brand = this.brandRepository.findById(brandId);
-        brand.addOrUpdateFood(
-                new Food(name, carbohydrates, calories, proteins, electrolytes, link, comment,
-                        IngestionType.valueOf(type)));
+    public BrandFullDto createFood(CreateFoodCommand createFoodCommand) {
+        Brand brand = this.brandRepository.findById(createFoodCommand.getBrandId());
+        brand.addOrUpdateFood(FoodMapper.toFood(createFoodCommand));
         return BrandMapper.toBrandFullDto(this.brandRepository.save(brand));
     }
 
@@ -55,11 +46,22 @@ public class FoodApplicationService implements FoodService {
     }
 
     @Override
-    public void updateFood(FoodDto foodDto, Long foodId, Long brandId) {
-
-        Food food = this.foodRepository.findByIdAndBrandId(foodId, brandId);
-        food.updateFields(FoodMapper.toFood(foodDto));
+    public void updateFood(UpdateFoodCommand updateFoodCommandFood) {
+        Food food = this.foodRepository.findByIdAndBrandId(updateFoodCommandFood.getId(),
+                updateFoodCommandFood.getBrandId());
+        food.updateFields(FoodMapper.toFood(updateFoodCommandFood));
 
         this.foodRepository.save(food);
+    }
+
+    @Override
+    public List<FoodSummaryView> getAllFoodsByBrand(Long brandId) {
+        return this.foodRepository.findAllByBrandId(brandId).stream()
+                .map(FoodViewMapper::toFoodSummaryView).toList();
+    }
+
+    @Override
+    public FoodView getFood(Long id, Long brandId) {
+        return FoodViewMapper.toFoodView(this.foodRepository.findByIdAndBrandId(id, brandId));
     }
 }

@@ -1,6 +1,6 @@
 package com.java.ravito_plan.race.infrastructure.adapters.outbound;
 
-import com.java.ravito_plan.food.application.dto.FoodDto;
+import com.java.ravito_plan.food.application.dto.internal.FoodDetail;
 import com.java.ravito_plan.food.application.service.FoodApplicationService;
 import com.java.ravito_plan.race.application.dto.ExternalFoodDto;
 import com.java.ravito_plan.race.domain.ports.outbound.FoodPort;
@@ -16,7 +16,7 @@ public class FoodPortAdapter implements FoodPort {
 
     @Override
     public ExternalFoodDto getFoodById(Long id) {
-        FoodDto foodDto = this.foodApplicationService.getFoodById(id);
-        return new ExternalFoodDto(foodDto.id, foodDto.name, foodDto.carbohydrates, foodDto.calories, foodDto.proteins, foodDto.electrolytes, foodDto.link, foodDto.comment, foodDto.type);
+        FoodDetail foodDetail = this.foodApplicationService.getFoodById(id);
+        return new ExternalFoodDto(foodDetail.id, foodDetail.name, foodDetail.carbohydrates, foodDetail.calories, foodDetail.proteins, foodDetail.electrolytes, foodDetail.link, foodDetail.comment, foodDetail.type);
     }
 }

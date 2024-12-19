@@ -2,18 +2,22 @@ package com.java.ravito_plan.food.domain.service;
 
 import com.java.ravito_plan.food.application.dto.BrandFullDto;
 import com.java.ravito_plan.food.application.dto.FoodDto;
+import com.java.ravito_plan.food.application.dto.command.CreateFoodCommand;
+import com.java.ravito_plan.food.application.dto.command.UpdateFoodCommand;
+import com.java.ravito_plan.food.application.dto.internal.FoodDetail;
+import com.java.ravito_plan.food.application.dto.view.FoodSummaryView;
+import com.java.ravito_plan.food.application.dto.view.FoodView;
 import java.util.List;
 
 public interface FoodService {
 
-    List<FoodDto> getAllFoodsByBrand(Long brandId);
+    FoodDetail getFoodById(Long id);
 
-    FoodDto getFood(Long id, Long brandId);
+    List<FoodSummaryView> getAllFoodsByBrand(Long brandId);
+    FoodView getFood(Long id, Long brandId);
 
-    BrandFullDto createFood(String name, int carbohydrates, int calories, int proteins,
-            boolean electrolytes, String link, String comment, String type, Long brandId);
 
+    BrandFullDto createFood(CreateFoodCommand createFoodCommand);
+    void updateFood(UpdateFoodCommand updateFoodCommand);
     void deleteFood(Long id, Long brandId);
-
-    void updateFood(FoodDto foodDto, Long foodId, Long brandId);
 }

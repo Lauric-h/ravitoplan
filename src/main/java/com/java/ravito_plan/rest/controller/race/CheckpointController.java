@@ -5,6 +5,7 @@ import com.java.ravito_plan.race.application.dto.CheckpointFoodDto;
 import com.java.ravito_plan.race.application.service.CheckpointService;
 import com.java.ravito_plan.rest.view.race.CheckpointFoodRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,5 +31,14 @@ public class CheckpointController {
                         checkpointFoodRequest.quantity));
 
         return ResponseEntity.ok(checkpointDto);
+    }
+
+    @DeleteMapping("/{checkpointId}/foods/{foodId}")
+    public ResponseEntity<Void> removeFoodFromCheckpoint(@PathVariable("raceId") Long raceId,
+            @PathVariable("checkpointId") Long checkpointId, @PathVariable("foodId") Long foodId,
+            @RequestBody CheckpointFoodRequest checkpointFoodRequest) {
+        this.checkpointService.removeFoodFromCheckpoint(raceId, checkpointId, foodId,
+                checkpointFoodRequest.quantity);
+        return ResponseEntity.noContent().build();
     }
 }

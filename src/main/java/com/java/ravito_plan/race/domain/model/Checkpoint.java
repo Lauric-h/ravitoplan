@@ -59,7 +59,8 @@ public class Checkpoint {
     @OneToMany(mappedBy = "checkpoint", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CheckpointFood> checkpointFoods = new ArrayList<>();
 
-    public Checkpoint(String name, int distanceFromStart, CheckpointType type, int cumulatedElevationGainFromStart, int cumulatedElevationLossFromStart) {
+    public Checkpoint(String name, int distanceFromStart, CheckpointType type,
+            int cumulatedElevationGainFromStart, int cumulatedElevationLossFromStart) {
         this.name = name;
         this.distanceFromStart = distanceFromStart;
         this.type = type;
@@ -67,7 +68,9 @@ public class Checkpoint {
         this.cumulatedElevationLossFromStart = cumulatedElevationLossFromStart;
     }
 
-    public Checkpoint(String name, int distanceFromStart, String location, CheckpointType type,int cumulatedElevationGainFromStart, int cumulatedElevationLossFromStart, Integer estimatedTimeInMinuteFromStart, Integer carbsTarget) {
+    public Checkpoint(String name, int distanceFromStart, String location, CheckpointType type,
+            int cumulatedElevationGainFromStart, int cumulatedElevationLossFromStart,
+            Integer estimatedTimeInMinuteFromStart, Integer carbsTarget) {
         this.name = name;
         this.distanceFromStart = distanceFromStart;
         this.location = location;
@@ -91,9 +94,33 @@ public class Checkpoint {
         return this;
     }
 
+    public CheckpointFood getFood(int quantity, Long foodId) {
+        return this.checkpointFoods.stream()
+                .filter(checkpointFood -> checkpointFood.getFoodId().equals(foodId)
+                        && checkpointFood.getQuantity() == quantity).findFirst().orElse(null);
+    }
+
     public Checkpoint addFood(int quantity, Long foodId) {
-        CheckpointFood checkpointFood = new CheckpointFood(this, quantity, foodId);
-        this.checkpointFoods.add(checkpointFood);
+        CheckpointFood existingCheckpointFood = this.getFood(quantity, foodId);
+
+        if (existingCheckpointFood == null) {
+            CheckpointFood checkpointFood = new CheckpointFood(this, quantity, foodId);
+            this.checkpointFoods.add(checkpointFood);
+        } else {
+            existingCheckpointFood.setQuantity(quantity);
+        }
+
         return this;
+    }
+
+    public void removeFood(int quantity, Long foodId) {
+        CheckpointFood checkpointFoodToRemove = this.checkpointFoods.stream()
+                .filter(checkpointFood -> checkpointFood.getFoodId().equals(foodId)
+                        && checkpointFood.getQuantity() == quantity).findFirst().orElse(null);
+        if (checkpointFoodToRemove == null) {
+            throw new IllegalArgumentException("CheckpointFood does not exist");
+        }
+
+        this.checkpointFoods.remove(checkpointFoodToRemove);
     }
 }

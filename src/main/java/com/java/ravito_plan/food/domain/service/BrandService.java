@@ -1,18 +1,20 @@
 package com.java.ravito_plan.food.domain.service;
 
-import com.java.ravito_plan.food.application.dto.BrandDto;
-import com.java.ravito_plan.food.application.dto.BrandFullDto;
+import com.java.ravito_plan.food.application.dto.command.CreateBrandCommand;
+import com.java.ravito_plan.food.application.dto.command.UpdateBrandCommand;
+import com.java.ravito_plan.food.application.dto.view.BrandDetailView;
+import com.java.ravito_plan.food.application.dto.view.BrandSummaryView;
 import java.util.List;
 
 public interface BrandService {
 
-    List<BrandDto> getAllBrands();
+    List<BrandSummaryView> getAllBrands();
 
-    BrandFullDto getBrandById(Long id);
+    BrandDetailView getBrandById(Long id);
 
-    BrandDto createBrand(String name);
+    BrandDetailView createBrand(CreateBrandCommand command);
 
     void deleteBrand(Long id);
 
-    void updateBrand(BrandDto brandDto, Long id);
+    BrandDetailView updateBrand(UpdateBrandCommand command);
 }

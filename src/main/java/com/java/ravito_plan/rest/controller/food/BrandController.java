@@ -1,9 +1,10 @@
 package com.java.ravito_plan.rest.controller.food;
 
-import com.java.ravito_plan.food.application.dto.BrandDto;
-import com.java.ravito_plan.food.application.dto.BrandFullDto;
+import com.java.ravito_plan.food.application.dto.command.CreateBrandCommand;
+import com.java.ravito_plan.food.application.dto.command.UpdateBrandCommand;
+import com.java.ravito_plan.food.application.dto.view.BrandDetailView;
+import com.java.ravito_plan.food.application.dto.view.BrandSummaryView;
 import com.java.ravito_plan.food.domain.service.BrandService;
-import com.java.ravito_plan.rest.view.food.BrandRequest;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,27 +27,28 @@ public class BrandController {
     }
 
     @GetMapping
-    public ResponseEntity<List<BrandDto>> getAllBrands()
+    public ResponseEntity<List<BrandSummaryView>> getAllBrands()
     {
         return ResponseEntity.ok(brandService.getAllBrands());
     }
 
     @PostMapping
-    public ResponseEntity<Void> createBrand(@RequestBody BrandRequest brandRequest) {
-        BrandDto brandDto = this.brandService.createBrand(brandRequest.name);
+    public ResponseEntity<Void> createBrand(@RequestBody CreateBrandCommand command) {
+        BrandDetailView brand = this.brandService.createBrand(command);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BrandFullDto> getBrandById(@PathVariable("id") Long id) {
-        BrandFullDto brand = this.brandService.getBrandById(id);
+    public ResponseEntity<BrandDetailView> getBrandById(@PathVariable("id") Long id) {
+        BrandDetailView brand = this.brandService.getBrandById(id);
         return ResponseEntity.ok(brand);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateBrand(@PathVariable("id") Long id, @RequestBody BrandRequest brandRequest) {
-        this.brandService.updateBrand(new BrandDto(brandRequest.name), id);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<BrandDetailView> updateBrand(@PathVariable("id") Long id, @RequestBody
+            UpdateBrandCommand updateBrandCommand) {
+        BrandDetailView brand = this.brandService.updateBrand(updateBrandCommand);
+        return ResponseEntity.ok(brand);
     }
 
     @DeleteMapping("/{id}")

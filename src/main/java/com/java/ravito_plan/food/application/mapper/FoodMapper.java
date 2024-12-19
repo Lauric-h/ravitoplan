@@ -1,9 +1,6 @@
 package com.java.ravito_plan.food.application.mapper;
 
-import com.java.ravito_plan.food.application.dto.FoodDto;
-import com.java.ravito_plan.food.application.dto.command.CreateFoodCommand;
 import com.java.ravito_plan.food.application.dto.command.FoodCommand;
-import com.java.ravito_plan.food.application.dto.command.UpdateFoodCommand;
 import com.java.ravito_plan.food.application.dto.internal.FoodDetail;
 import com.java.ravito_plan.food.domain.model.Food;
 import com.java.ravito_plan.food.domain.model.IngestionType;

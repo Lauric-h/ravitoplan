@@ -1,17 +1,16 @@
 package com.java.ravito_plan.food.application.service;
 
-import com.java.ravito_plan.food.application.dto.BrandFullDto;
 import com.java.ravito_plan.food.application.dto.command.CreateFoodCommand;
 import com.java.ravito_plan.food.application.dto.command.UpdateFoodCommand;
 import com.java.ravito_plan.food.application.dto.internal.FoodDetail;
+import com.java.ravito_plan.food.application.dto.view.BrandDetailView;
 import com.java.ravito_plan.food.application.dto.view.FoodSummaryView;
 import com.java.ravito_plan.food.application.dto.view.FoodView;
-import com.java.ravito_plan.food.application.mapper.BrandMapper;
+import com.java.ravito_plan.food.application.mapper.BrandViewMapper;
 import com.java.ravito_plan.food.application.mapper.FoodMapper;
 import com.java.ravito_plan.food.application.mapper.FoodViewMapper;
 import com.java.ravito_plan.food.domain.model.Brand;
 import com.java.ravito_plan.food.domain.model.Food;
-import com.java.ravito_plan.food.domain.model.IngestionType;
 import com.java.ravito_plan.food.domain.ports.outbound.BrandRepository;
 import com.java.ravito_plan.food.domain.ports.outbound.FoodRepository;
 import com.java.ravito_plan.food.domain.service.FoodService;
@@ -34,10 +33,10 @@ public class FoodApplicationService implements FoodService {
     }
 
     @Override
-    public BrandFullDto createFood(CreateFoodCommand createFoodCommand) {
+    public BrandDetailView createFood(CreateFoodCommand createFoodCommand) {
         Brand brand = this.brandRepository.findById(createFoodCommand.getBrandId());
         brand.addOrUpdateFood(FoodMapper.toFood(createFoodCommand));
-        return BrandMapper.toBrandFullDto(this.brandRepository.save(brand));
+        return BrandViewMapper.toBrandDetailView(this.brandRepository.save(brand));
     }
 
     @Override

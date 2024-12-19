@@ -1,5 +1,6 @@
 package com.java.ravito_plan.race.domain.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -7,6 +8,9 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -52,7 +56,11 @@ public class Checkpoint {
     @Column
     private Integer carbsTarget;
 
-    public Checkpoint(String name, int distanceFromStart, CheckpointType type, int cumulatedElevationGainFromStart, int cumulatedElevationLossFromStart) {
+    @OneToMany(mappedBy = "checkpoint", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CheckpointFood> checkpointFoods = new ArrayList<>();
+
+    public Checkpoint(String name, int distanceFromStart, CheckpointType type,
+            int cumulatedElevationGainFromStart, int cumulatedElevationLossFromStart) {
         this.name = name;
         this.distanceFromStart = distanceFromStart;
         this.type = type;
@@ -60,7 +68,9 @@ public class Checkpoint {
         this.cumulatedElevationLossFromStart = cumulatedElevationLossFromStart;
     }
 
-    public Checkpoint(String name, int distanceFromStart, String location, CheckpointType type,int cumulatedElevationGainFromStart, int cumulatedElevationLossFromStart, Integer estimatedTimeInMinuteFromStart, Integer carbsTarget) {
+    public Checkpoint(String name, int distanceFromStart, String location, CheckpointType type,
+            int cumulatedElevationGainFromStart, int cumulatedElevationLossFromStart,
+            Integer estimatedTimeInMinuteFromStart, Integer carbsTarget) {
         this.name = name;
         this.distanceFromStart = distanceFromStart;
         this.location = location;
@@ -82,5 +92,35 @@ public class Checkpoint {
         this.estimatedTimeInMinuteFromStart = checkpoint.getEstimatedTimeInMinuteFromStart();
 
         return this;
+    }
+
+    public CheckpointFood getFood(int quantity, Long foodId) {
+        return this.checkpointFoods.stream()
+                .filter(checkpointFood -> checkpointFood.getFoodId().equals(foodId)
+                        && checkpointFood.getQuantity() == quantity).findFirst().orElse(null);
+    }
+
+    public Checkpoint addFood(int quantity, Long foodId) {
+        CheckpointFood existingCheckpointFood = this.getFood(quantity, foodId);
+
+        if (existingCheckpointFood == null) {
+            CheckpointFood checkpointFood = new CheckpointFood(this, quantity, foodId);
+            this.checkpointFoods.add(checkpointFood);
+        } else {
+            existingCheckpointFood.setQuantity(quantity);
+        }
+
+        return this;
+    }
+
+    public void removeFood(int quantity, Long foodId) {
+        CheckpointFood checkpointFoodToRemove = this.checkpointFoods.stream()
+                .filter(checkpointFood -> checkpointFood.getFoodId().equals(foodId)
+                        && checkpointFood.getQuantity() == quantity).findFirst().orElse(null);
+        if (checkpointFoodToRemove == null) {
+            throw new IllegalArgumentException("CheckpointFood does not exist");
+        }
+
+        this.checkpointFoods.remove(checkpointFoodToRemove);
     }
 }

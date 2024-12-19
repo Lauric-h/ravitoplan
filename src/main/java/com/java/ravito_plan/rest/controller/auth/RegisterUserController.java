@@ -1,6 +1,6 @@
 package com.java.ravito_plan.rest.controller.auth;
 
-import com.java.ravito_plan.rest.view.auth.RegisterUserRequest;
+import com.java.ravito_plan.user.application.dto.auth.RegisterUserCommand;
 import com.java.ravito_plan.user.application.service.UserApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,10 +18,9 @@ public class RegisterUserController {
     }
 
     @PostMapping("/api/register")
-    public ResponseEntity<Void> registerUser(@RequestBody RegisterUserRequest registerUserRequest) {
+    public ResponseEntity<Void> registerUser(@RequestBody RegisterUserCommand registerUserCommand) {
         try {
-            this.userApplicationService.registerUser(registerUserRequest.username,
-                    registerUserRequest.email, registerUserRequest.password);
+            this.userApplicationService.registerUser(registerUserCommand);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }

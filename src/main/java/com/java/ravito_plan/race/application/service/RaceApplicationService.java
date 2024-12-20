@@ -1,19 +1,15 @@
 package com.java.ravito_plan.race.application.service;
 
-import com.java.ravito_plan.race.application.dto.CheckpointDto;
 import com.java.ravito_plan.race.application.dto.ExternalUserDto;
 import com.java.ravito_plan.race.application.dto.RaceDto;
 import com.java.ravito_plan.race.application.dto.RaceFullDto;
-import com.java.ravito_plan.race.application.mapper.CheckpointMapper;
 import com.java.ravito_plan.race.application.mapper.RaceMapper;
-import com.java.ravito_plan.race.domain.model.Checkpoint;
 import com.java.ravito_plan.race.domain.model.Race;
 import com.java.ravito_plan.race.domain.ports.outbound.CheckpointRepository;
 import com.java.ravito_plan.race.domain.ports.outbound.RaceRepository;
 import com.java.ravito_plan.race.domain.ports.outbound.UserPort;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
 import org.springframework.stereotype.Service;
 
 @Service

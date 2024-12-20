@@ -1,8 +1,12 @@
 package com.java.ravito_plan.race.application.dto.view;
 
 import java.time.LocalDate;
+import java.util.List;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public class RaceDetailView {
+
     public String name;
 
     public LocalDate date;
@@ -16,4 +20,8 @@ public class RaceDetailView {
     public String city;
 
     public String postalCode;
+
+    public List<CheckpointDetailView> checkpoints;
+
+    public List<SegmentView> segments;
 }

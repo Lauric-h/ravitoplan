@@ -34,7 +34,7 @@ public class BrandApplicationService implements BrandService {
         brand.setName(command.getName());
         brandRepository.save(brand);
 
-        return  BrandViewMapper.toBrandDetailView(brand);
+        return BrandViewMapper.toBrandDetailView(brand);
     }
 
     public void deleteBrand(Long id) {

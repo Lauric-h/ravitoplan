@@ -1,11 +1,10 @@
-package com.java.ravito_plan.race.application.dto;
+package com.java.ravito_plan.race.application.dto.view;
 
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public class ExternalFoodDto {
+public class CheckpointFoodView {
 
-    public Long id;
     public String brandName;
     public String name;
     public int carbohydrates;
@@ -15,4 +14,5 @@ public class ExternalFoodDto {
     public String link;
     public String comment;
     public String type;
+    public int quantity;
 }

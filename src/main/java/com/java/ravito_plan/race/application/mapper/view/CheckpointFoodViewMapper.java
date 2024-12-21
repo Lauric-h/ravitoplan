@@ -1,4 +1,4 @@
-package com.java.ravito_plan.race.application.mapper;
+package com.java.ravito_plan.race.application.mapper.view;
 
 import com.java.ravito_plan.race.application.dto.ExternalFoodDto;
 import com.java.ravito_plan.race.application.dto.view.CheckpointFoodView;

@@ -1,14 +1,16 @@
 package com.java.ravito_plan.race.application.service;
 
 import com.java.ravito_plan.race.application.dto.ExternalUserDto;
-import com.java.ravito_plan.race.application.dto.RaceDto;
-import com.java.ravito_plan.race.application.dto.RaceFullDto;
+import com.java.ravito_plan.race.application.dto.command.CreateRaceCommand;
+import com.java.ravito_plan.race.application.dto.command.UpdateRaceCommand;
+import com.java.ravito_plan.race.application.dto.view.RaceDetailView;
+import com.java.ravito_plan.race.application.dto.view.RaceSummaryView;
 import com.java.ravito_plan.race.application.mapper.RaceMapper;
+import com.java.ravito_plan.race.application.mapper.view.RaceViewMapper;
 import com.java.ravito_plan.race.domain.model.Race;
 import com.java.ravito_plan.race.domain.ports.outbound.CheckpointRepository;
 import com.java.ravito_plan.race.domain.ports.outbound.RaceRepository;
 import com.java.ravito_plan.race.domain.ports.outbound.UserPort;
-import java.time.LocalDate;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
@@ -23,48 +25,44 @@ public class RaceApplicationService extends BaseApplicationService {
         this.checkpointRepository = checkpointRepository;
     }
 
-    public List<RaceDto> getAllUserRaces() {
+    public List<RaceSummaryView> getAllUserRaces() {
         ExternalUserDto user = this.getCurrentUser();
 
         List<Race> races = this.raceRepository.findAllByUserId(user.id);
-        return races.stream().map(RaceMapper::toRaceDto).toList();
+        return races.stream().map(RaceViewMapper::toRaceSummaryView).toList();
     }
 
-    public RaceDto getUserRaceById(Long raceId) {
+    public RaceSummaryView getUserRaceById(Long raceId) {
         ExternalUserDto user = this.getCurrentUser();
 
         Race race = this.raceRepository.findByIdAndUserId(raceId, user.id);
-        return RaceMapper.toRaceDto(race);
+        return RaceViewMapper.toRaceSummaryView(race);
     }
 
-    public RaceFullDto getUserFullRaceById(Long raceId) {
+    public RaceDetailView getUserFullRaceById(Long raceId) {
         ExternalUserDto user = this.getCurrentUser();
 
         Race race = this.raceRepository.findByIdAndUserId(raceId, user.id);
-        return RaceMapper.toRaceFullDto(race);
+        return RaceViewMapper.toRaceDetailView(race);
     }
 
-    public RaceDto createRaceForUser(String name, LocalDate date, int distance,
-            int elevationPositive, int elevationNegative, String city, String postalCode) {
+    public RaceSummaryView createRaceForUser(CreateRaceCommand command) {
         ExternalUserDto user = this.getCurrentUser();
 
-        Race race = RaceMapper.toRace(
-                new RaceDto(name, date, distance, elevationPositive, elevationNegative, city,
-                        postalCode));
+        Race race = RaceMapper.toRace(command);
         race.setUserId(user.id);
 
         Race createdRace = this.raceRepository.save(race);
-        return RaceMapper.toRaceDto(createdRace);
+        return RaceViewMapper.toRaceSummaryView(createdRace);
     }
 
-    public void updateRaceForUser(Long raceId, String name, LocalDate date, int distance,
-            int elevationPositive, int elevationNegative, String city, String postalCode) {
+    public void updateRaceForUser(UpdateRaceCommand command) {
         ExternalUserDto user = this.getCurrentUser();
 
-        Race race = this.raceRepository.findByIdAndUserId(raceId, user.id);
+        Race race = this.raceRepository.findByIdAndUserId(command.getId(), user.id);
 
-        race.updateFields(name, date, distance, elevationPositive, elevationNegative, city,
-                postalCode);
+        race.updateFields(race.getName(), race.getDate(), race.getDistance(), race.getElevationPositive(), race.getElevationNegative(), race.getCity(),
+                race.getPostalCode());
 
         race.validate();
 

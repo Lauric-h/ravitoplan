@@ -1,4 +1,4 @@
-package com.java.ravito_plan.food.domain.service;
+package com.java.ravito_plan.food.domain.ports.inbound;
 
 import com.java.ravito_plan.food.application.dto.command.CreateFoodCommand;
 import com.java.ravito_plan.food.application.dto.command.UpdateFoodCommand;
@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-public interface FoodService {
+public interface FoodPort {
 
     FoodDetail getFoodById(Long id);
     Map<Long, FoodDetail> getFoodsByIds(Collection<Long> ids);

@@ -1,4 +1,4 @@
-package com.java.ravito_plan.race.domain.service;
+package com.java.ravito_plan.race.domain.ports.inbound;
 
 import com.java.ravito_plan.race.application.dto.command.AddOrDeleteFoodCommand;
 import com.java.ravito_plan.race.application.dto.command.CreateCheckpointCommand;
@@ -6,7 +6,7 @@ import com.java.ravito_plan.race.application.dto.command.UpdateCheckpointCommand
 import com.java.ravito_plan.race.application.dto.view.CheckpointView;
 import com.java.ravito_plan.race.application.dto.view.RaceDetailView;
 
-public interface CheckpointService {
+public interface CheckpointPort {
 
     public RaceDetailView addCheckpoint(CreateCheckpointCommand createCheckpointCommand);
 

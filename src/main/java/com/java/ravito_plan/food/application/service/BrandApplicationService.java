@@ -7,12 +7,12 @@ import com.java.ravito_plan.food.application.dto.view.BrandSummaryView;
 import com.java.ravito_plan.food.application.mapper.BrandViewMapper;
 import com.java.ravito_plan.food.domain.model.Brand;
 import com.java.ravito_plan.food.domain.ports.outbound.BrandRepository;
-import com.java.ravito_plan.food.domain.service.BrandService;
+import com.java.ravito_plan.food.domain.ports.inbound.BrandPort;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BrandApplicationService implements BrandService {
+public class BrandApplicationService implements BrandPort {
 
     private final BrandRepository brandRepository;
 

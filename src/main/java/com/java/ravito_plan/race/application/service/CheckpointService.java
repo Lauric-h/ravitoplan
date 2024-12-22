@@ -12,19 +12,21 @@ import com.java.ravito_plan.race.application.mapper.view.CheckpointViewMapper;
 import com.java.ravito_plan.race.application.mapper.view.RaceViewMapper;
 import com.java.ravito_plan.race.domain.model.Checkpoint;
 import com.java.ravito_plan.race.domain.model.Race;
+import com.java.ravito_plan.race.domain.ports.inbound.CheckpointPort;
 import com.java.ravito_plan.race.domain.ports.outbound.CheckpointRepository;
 import com.java.ravito_plan.race.domain.ports.outbound.FoodPort;
 import com.java.ravito_plan.race.domain.ports.outbound.RaceRepository;
 import com.java.ravito_plan.race.domain.ports.outbound.UserPort;
+import jakarta.transaction.Transactional;
 import java.util.Map;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CheckpointService extends BaseApplicationService implements
-        com.java.ravito_plan.race.domain.service.CheckpointService {
+        CheckpointPort {
 
-    CheckpointRepository checkpointRepository;
-    FoodPort foodPort;
+    private final CheckpointRepository checkpointRepository;
+    private final FoodPort foodPort;
 
     public CheckpointService(RaceRepository raceRepository, UserPort userPort,
             CheckpointRepository checkpointRepository, FoodPort foodPort) {
@@ -33,6 +35,7 @@ public class CheckpointService extends BaseApplicationService implements
         this.foodPort = foodPort;
     }
 
+    @Transactional
     public RaceDetailView addCheckpoint(CreateCheckpointCommand createCheckpointCommand) {
         UserDto user = this.getCurrentUser();
 
@@ -45,6 +48,7 @@ public class CheckpointService extends BaseApplicationService implements
         return RaceViewMapper.toRaceDetailView(updatedRace, foods);
     }
 
+    @Transactional
     public RaceDetailView updateCheckpoint(UpdateCheckpointCommand updateCheckpointCommand) {
         this.verifyUserOwnsRace(updateCheckpointCommand.getRaceId());
 
@@ -60,6 +64,7 @@ public class CheckpointService extends BaseApplicationService implements
         return RaceViewMapper.toRaceDetailView(savedCheckpoint.getRace(), foods);
     }
 
+    @Transactional
     public void deleteCheckpoint(Long raceId, Long checkpointId) {
         this.verifyUserOwnsRace(raceId);
 
@@ -68,6 +73,7 @@ public class CheckpointService extends BaseApplicationService implements
         this.checkpointRepository.deleteById(checkpointId);
     }
 
+    @Transactional
     public CheckpointView addFoodToCheckpoint(AddOrDeleteFoodCommand addFoodCommand) {
         this.verifyUserOwnsRace(addFoodCommand.raceId);
         Checkpoint checkpoint = this.checkpointRepository.findByIdAndRaceId(
@@ -82,6 +88,7 @@ public class CheckpointService extends BaseApplicationService implements
         return CheckpointViewMapper.toCheckpointDetailView(savedCheckpoint, foods);
     }
 
+    @Transactional
     public void removeFoodFromCheckpoint(AddOrDeleteFoodCommand deleteFoodCommand) {
         this.verifyUserOwnsRace(deleteFoodCommand.raceId);
         Checkpoint checkpoint = this.checkpointRepository.findByIdAndRaceId(

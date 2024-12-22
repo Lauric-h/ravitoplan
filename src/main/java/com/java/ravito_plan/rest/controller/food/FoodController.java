@@ -5,7 +5,7 @@ import com.java.ravito_plan.food.application.dto.command.UpdateFoodCommand;
 import com.java.ravito_plan.food.application.dto.view.BrandDetailView;
 import com.java.ravito_plan.food.application.dto.view.FoodSummaryView;
 import com.java.ravito_plan.food.application.dto.view.FoodView;
-import com.java.ravito_plan.food.domain.service.FoodService;
+import com.java.ravito_plan.food.domain.ports.inbound.FoodPort;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/brands/{brandId}/foods")
 public class FoodController {
 
-    private final FoodService foodService;
+    private final FoodPort foodService;
 
-    public FoodController(FoodService foodService) {
+    public FoodController(FoodPort foodService) {
         this.foodService = foodService;
     }
 

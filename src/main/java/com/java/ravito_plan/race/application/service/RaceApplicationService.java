@@ -12,15 +12,16 @@ import com.java.ravito_plan.race.domain.model.Race;
 import com.java.ravito_plan.race.domain.ports.outbound.FoodPort;
 import com.java.ravito_plan.race.domain.ports.outbound.RaceRepository;
 import com.java.ravito_plan.race.domain.ports.outbound.UserPort;
-import com.java.ravito_plan.race.domain.service.RaceService;
+import com.java.ravito_plan.race.domain.ports.inbound.RacePort;
+import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RaceApplicationService extends BaseApplicationService implements RaceService {
+public class RaceApplicationService extends BaseApplicationService implements RacePort {
 
-    FoodPort foodPort;
+    private final FoodPort foodPort;
 
     public RaceApplicationService(RaceRepository raceRepository, UserPort userPort,
             FoodPort foodPort) {
@@ -53,6 +54,7 @@ public class RaceApplicationService extends BaseApplicationService implements Ra
     }
 
 
+    @Transactional
     public RaceSummaryView createRaceForUser(CreateRaceCommand command) {
         UserDto user = this.getCurrentUser();
 
@@ -63,6 +65,7 @@ public class RaceApplicationService extends BaseApplicationService implements Ra
         return RaceViewMapper.toRaceSummaryView(createdRace);
     }
 
+    @Transactional
     public void updateRaceForUser(UpdateRaceCommand command) {
         UserDto user = this.getCurrentUser();
 
@@ -75,8 +78,9 @@ public class RaceApplicationService extends BaseApplicationService implements Ra
         this.raceRepository.save(race);
     }
 
+    @Transactional
     public void deleteRaceForUser(Long raceId) {
-        UserDto user = this.getCurrentUser();
+       this.verifyUserOwnsRace(raceId);
 
         this.raceRepository.deleteById(raceId);
     }

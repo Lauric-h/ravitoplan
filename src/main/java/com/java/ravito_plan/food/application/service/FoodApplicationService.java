@@ -13,7 +13,7 @@ import com.java.ravito_plan.food.domain.model.Brand;
 import com.java.ravito_plan.food.domain.model.Food;
 import com.java.ravito_plan.food.domain.ports.outbound.BrandRepository;
 import com.java.ravito_plan.food.domain.ports.outbound.FoodRepository;
-import com.java.ravito_plan.food.domain.service.FoodService;
+import com.java.ravito_plan.food.domain.ports.inbound.FoodPort;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FoodApplicationService implements FoodService {
+public class FoodApplicationService implements FoodPort {
 
     private final FoodRepository foodRepository;
     private final BrandRepository brandRepository;

@@ -5,13 +5,13 @@ import com.java.ravito_plan.user.application.dto.auth.RegisterUserCommand;
 import com.java.ravito_plan.user.domain.model.User;
 import com.java.ravito_plan.user.domain.ports.outbound.UserRepository;
 import com.java.ravito_plan.user.domain.service.UserDomainService;
-import com.java.ravito_plan.user.domain.service.UserService;
+import com.java.ravito_plan.user.domain.ports.inbound.UserPort;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserApplicationService implements UserService {
+public class UserApplicationService implements UserPort {
 
     private final UserRepository userRepository;
     private final UserDomainService userService;

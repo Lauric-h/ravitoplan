@@ -1,9 +1,11 @@
 package com.java.ravito_plan.rest.controller.food;
 
-import com.java.ravito_plan.food.application.dto.BrandFullDto;
-import com.java.ravito_plan.food.application.dto.FoodDto;
-import com.java.ravito_plan.food.domain.service.FoodService;
-import com.java.ravito_plan.rest.view.food.FoodRequest;
+import com.java.ravito_plan.food.application.dto.command.CreateFoodCommand;
+import com.java.ravito_plan.food.application.dto.command.UpdateFoodCommand;
+import com.java.ravito_plan.food.application.dto.view.BrandDetailView;
+import com.java.ravito_plan.food.application.dto.view.FoodSummaryView;
+import com.java.ravito_plan.food.application.dto.view.FoodView;
+import com.java.ravito_plan.food.domain.ports.inbound.FoodPort;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,19 +22,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/brands/{brandId}/foods")
 public class FoodController {
 
-    private final FoodService foodService;
+    private final FoodPort foodService;
 
-    public FoodController(FoodService foodService) {
+    public FoodController(FoodPort foodService) {
         this.foodService = foodService;
     }
 
     @GetMapping
-    public ResponseEntity<List<FoodDto>> getAllFoodsByBrand(@PathVariable("brandId") Long brandId) {
+    public ResponseEntity<List<FoodSummaryView>> getAllFoodsByBrand(@PathVariable("brandId") Long brandId) {
         return ResponseEntity.ok(this.foodService.getAllFoodsByBrand(brandId));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FoodDto> getFoodById(@PathVariable("id") Long id,
+    public ResponseEntity<FoodView> getFoodById(@PathVariable("id") Long id,
             @PathVariable("brandId") Long brandId) {
         return ResponseEntity.ok(this.foodService.getFood(id, brandId));
     }
@@ -45,22 +47,16 @@ public class FoodController {
     }
 
     @PostMapping
-    public ResponseEntity<BrandFullDto> createFood(@PathVariable("brandId") Long brandId,
-            @RequestBody FoodRequest foodRequest) {
-        BrandFullDto brand = this.foodService.createFood(foodRequest.name,
-                foodRequest.carbohydrates, foodRequest.calories, foodRequest.proteins,
-                foodRequest.electrolytes, foodRequest.link, foodRequest.comment, foodRequest.type,
-                brandId);
+    public ResponseEntity<BrandDetailView> createFood(@PathVariable("brandId") Long brandId,
+            @RequestBody CreateFoodCommand createFoodCommand) {
+        BrandDetailView brand = this.foodService.createFood(createFoodCommand);
         return ResponseEntity.ok(brand);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateFood(@PathVariable("brandId") Long brandId,
-            @PathVariable("id") Long id, @RequestBody FoodRequest foodRequest) {
-        this.foodService.updateFood(
-                new FoodDto(id, foodRequest.name, foodRequest.carbohydrates, foodRequest.calories,
-                        foodRequest.proteins, foodRequest.electrolytes, foodRequest.link,
-                        foodRequest.comment, foodRequest.type), id, brandId);
+            @PathVariable("id") Long id, @RequestBody UpdateFoodCommand updateFoodCommand) {
+        this.foodService.updateFood(updateFoodCommand);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

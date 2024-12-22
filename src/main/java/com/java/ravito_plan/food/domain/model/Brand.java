@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,7 +27,7 @@ public class Brand {
 
     @OneToMany(targetEntity = Food.class, mappedBy = "brand", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("name")
-    private List<Food> foods;
+    private List<Food> foods = new ArrayList<>();
 
     public Brand(String name) {
         this.name = name;

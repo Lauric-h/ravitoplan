@@ -20,6 +20,11 @@ public class FoodJpaRepositoryAdapter implements FoodRepository {
     }
 
     @Override
+    public List<Food> findAllByIdIn(List<Long> ids) {
+        return this.foodRepository.findAllById(ids);
+    }
+
+    @Override
     public Food findByIdAndBrandId(Long id, Long brandId) {
         return this.foodRepository.findByIdAndBrandId(id, brandId).orElseThrow();
     }

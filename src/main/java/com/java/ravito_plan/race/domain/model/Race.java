@@ -106,13 +106,22 @@ public class Race {
         Checkpoint start = this.getStartCheckpoint();
         if (start.getCumulatedElevationGainFromStart() != 0
                 || start.getCumulatedElevationLossFromStart() != 0) {
-            throw new IllegalArgumentException(String.format("start %s -%s", start.getCumulatedElevationGainFromStart(), start.getCumulatedElevationLossFromStart()));
+            throw new IllegalArgumentException(
+                    String.format("start %s -%s", start.getCumulatedElevationGainFromStart(),
+                            start.getCumulatedElevationLossFromStart()));
         }
 
         Checkpoint finish = this.getFinishCheckpoint();
         if (finish.getCumulatedElevationGainFromStart() != this.elevationPositive
                 || finish.getCumulatedElevationLossFromStart() != this.elevationNegative) {
-            throw new IllegalArgumentException(String.format("finish %s -%s", finish.getCumulatedElevationGainFromStart(), finish.getCumulatedElevationLossFromStart()));
+            System.out.println(finish.getCumulatedElevationGainFromStart());
+            System.out.println(finish.getCumulatedElevationLossFromStart());
+            System.out.println(this.elevationPositive);
+            System.out.println(this.elevationNegative);
+
+            throw new IllegalArgumentException(
+                    String.format("finish %s -%s", finish.getCumulatedElevationGainFromStart(),
+                            finish.getCumulatedElevationLossFromStart()));
         }
     }
 
@@ -144,15 +153,14 @@ public class Race {
         this.addOrUpdateCheckpoint(finish);
     }
 
-    public Race updateFields(String name, LocalDate date, int distance, int elevationPositive,
-            int elevationNegative, String city, String postalCode) {
-        this.name = name;
-        this.date = date;
-        this.distance = distance;
-        this.elevationPositive = elevationPositive;
-        this.elevationNegative = elevationNegative;
-        this.city = city;
-        this.postalCode = postalCode;
+    public Race updateFields(Race race) {
+        this.name = race.getName();
+        this.date = race.getDate();
+        this.distance = race.getDistance();
+        this.elevationPositive = race.getElevationPositive();
+        this.elevationNegative = race.getElevationNegative();
+        this.city = race.getCity();
+        this.postalCode = race.getPostalCode();
 
         return this;
     }

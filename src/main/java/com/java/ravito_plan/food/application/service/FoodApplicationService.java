@@ -37,7 +37,7 @@ public class FoodApplicationService implements FoodService {
 
     @Override
     public Map<Long, FoodDetail> getFoodsByIds(Collection<Long> ids) {
-        return this.foodRepository.findAllById(ids.stream().toList()).stream()
+        return this.foodRepository.findAllByIdIn(ids.stream().toList()).stream()
                 .collect(Collectors.toMap(Food::getId, FoodMapper::toFoodDetail));
     }
 

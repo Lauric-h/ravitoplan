@@ -10,5 +10,5 @@ public interface ImportedFoodRepository extends JpaRepository<Food, Long> {
     Optional<Food> findByIdAndBrandId(Long id, Long brandId);
     void deleteByIdAndBrandId(Long id, Long brandId);
     List<Food> findAllByBrandId(Long brandId);
-    List<Food> findAllById(List<Long> ids);
+    List<Food> findAllByIdIn(List<Long> ids);
 }

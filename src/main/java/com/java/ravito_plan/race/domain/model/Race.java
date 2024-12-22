@@ -106,13 +106,22 @@ public class Race {
         Checkpoint start = this.getStartCheckpoint();
         if (start.getCumulatedElevationGainFromStart() != 0
                 || start.getCumulatedElevationLossFromStart() != 0) {
-            throw new IllegalArgumentException(String.format("start %s -%s", start.getCumulatedElevationGainFromStart(), start.getCumulatedElevationLossFromStart()));
+            throw new IllegalArgumentException(
+                    String.format("start %s -%s", start.getCumulatedElevationGainFromStart(),
+                            start.getCumulatedElevationLossFromStart()));
         }
 
         Checkpoint finish = this.getFinishCheckpoint();
         if (finish.getCumulatedElevationGainFromStart() != this.elevationPositive
                 || finish.getCumulatedElevationLossFromStart() != this.elevationNegative) {
-            throw new IllegalArgumentException(String.format("finish %s -%s", finish.getCumulatedElevationGainFromStart(), finish.getCumulatedElevationLossFromStart()));
+            System.out.println(finish.getCumulatedElevationGainFromStart());
+            System.out.println(finish.getCumulatedElevationLossFromStart());
+            System.out.println(this.elevationPositive);
+            System.out.println(this.elevationNegative);
+
+            throw new IllegalArgumentException(
+                    String.format("finish %s -%s", finish.getCumulatedElevationGainFromStart(),
+                            finish.getCumulatedElevationLossFromStart()));
         }
     }
 

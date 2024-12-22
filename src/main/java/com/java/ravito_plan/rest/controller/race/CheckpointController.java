@@ -54,7 +54,7 @@ public class CheckpointController {
                 .build();
     }
 
-    @DeleteMapping("/checkpoints/{checkpointId}")
+    @DeleteMapping("/{checkpointId}")
     public ResponseEntity<Void> deleteCheckpoint(@PathVariable Long raceId,
             @PathVariable Long checkpointId) {
         this.checkpointService.deleteCheckpoint(raceId, checkpointId);

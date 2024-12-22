@@ -3,7 +3,7 @@ package com.java.ravito_plan.race.application.dto.internal;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public class ExternalFoodDto {
+public class FoodDto {
 
     public Long id;
     public String brandName;

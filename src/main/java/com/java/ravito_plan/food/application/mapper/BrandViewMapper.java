@@ -11,6 +11,7 @@ public class BrandViewMapper {
     }
 
     public static BrandDetailView toBrandDetailView(Brand brand) {
-        return new BrandDetailView(brand.getName(), brand.getFoods().stream().map(FoodViewMapper::toFoodSummaryView).toList());
+        return new BrandDetailView(brand.getName(),
+                brand.getFoods().stream().map(FoodViewMapper::toFoodSummaryView).toList());
     }
 }

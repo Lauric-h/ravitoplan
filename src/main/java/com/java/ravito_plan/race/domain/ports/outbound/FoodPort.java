@@ -1,11 +1,11 @@
 package com.java.ravito_plan.race.domain.ports.outbound;
 
-import com.java.ravito_plan.race.application.dto.internal.ExternalFoodDto;
+import com.java.ravito_plan.race.application.dto.internal.FoodDto;
 import java.util.Collection;
 import java.util.Map;
 
 public interface FoodPort {
 
-    ExternalFoodDto getFoodById(Long id);
-    Map<Long, ExternalFoodDto> getFoodsByIds(Collection<Long> ids);
+    FoodDto getFoodById(Long id);
+    Map<Long, FoodDto> getFoodsByIds(Collection<Long> ids);
 }

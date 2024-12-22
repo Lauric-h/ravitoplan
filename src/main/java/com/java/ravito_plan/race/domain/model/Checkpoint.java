@@ -11,6 +11,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -79,6 +80,13 @@ public class Checkpoint {
         this.cumulatedElevationLossFromStart = cumulatedElevationLossFromStart;
         this.estimatedTimeInMinuteFromStart = estimatedTimeInMinuteFromStart;
         this.carbsTarget = carbsTarget;
+    }
+
+    public int calculateTotalCarbs(Map<Long, FoodNutrients> foodNutrients) {
+        return this.checkpointFoods.stream().mapToInt(cf -> {
+            FoodNutrients nutrients = foodNutrients.get(cf.getFoodId());
+            return nutrients.carbohydrates() * cf.getQuantity();
+        }).sum();
     }
 
     public Checkpoint updateDetails(Checkpoint checkpoint) {

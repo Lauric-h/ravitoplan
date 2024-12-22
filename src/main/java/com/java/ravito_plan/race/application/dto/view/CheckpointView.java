@@ -14,5 +14,6 @@ public class CheckpointView {
     public int cumulatedElevationGainFromStart;
     public int cumulatedElevationLossFromStart;
     public Integer carbsTarget;
+    public int currentTotalCarbs;
     public List<CheckpointFoodView> foods;
 }

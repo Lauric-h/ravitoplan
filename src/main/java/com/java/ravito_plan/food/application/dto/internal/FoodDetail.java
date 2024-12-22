@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 public class FoodDetail {
 
     public Long id;
+    public String brandName;
     public String name;
     public int carbohydrates;
     public int calories;

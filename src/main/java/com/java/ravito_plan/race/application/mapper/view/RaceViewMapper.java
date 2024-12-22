@@ -1,6 +1,6 @@
 package com.java.ravito_plan.race.application.mapper.view;
 
-import com.java.ravito_plan.race.application.dto.ExternalFoodDto;
+import com.java.ravito_plan.race.application.dto.internal.ExternalFoodDto;
 import com.java.ravito_plan.race.application.dto.view.RaceDetailView;
 import com.java.ravito_plan.race.application.dto.view.RaceSummaryView;
 import com.java.ravito_plan.race.domain.model.Race;
@@ -17,8 +17,8 @@ public class RaceViewMapper {
     public static RaceDetailView toRaceDetailView(Race race, Map<Long, ExternalFoodDto> foods) {
         return new RaceDetailView(race.getName(), race.getDate(), race.getDistance(),
                 race.getElevationPositive(), race.getElevationNegative(), race.getCity(),
-                race.getPostalCode(),
-                race.getCheckpoints().stream().map(cp -> CheckpointViewMapper.toCheckpointDetailView(cp, foods)).toList(),
+                race.getPostalCode(), race.getCheckpoints().stream()
+                .map(cp -> CheckpointViewMapper.toCheckpointDetailView(cp, foods)).toList(),
                 race.getSegments().stream().map(SegmentViewMapper::toSegmentView).toList());
     }
 }

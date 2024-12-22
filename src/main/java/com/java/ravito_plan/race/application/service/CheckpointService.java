@@ -1,18 +1,22 @@
 package com.java.ravito_plan.race.application.service;
 
-import com.java.ravito_plan.race.application.dto.CheckpointDto;
-import com.java.ravito_plan.race.application.dto.CheckpointFoodDto;
-import com.java.ravito_plan.race.application.dto.ExternalFoodDto;
-import com.java.ravito_plan.race.application.dto.ExternalUserDto;
-import com.java.ravito_plan.race.application.dto.RaceDto;
+import com.java.ravito_plan.race.application.dto.internal.ExternalFoodDto;
+import com.java.ravito_plan.race.application.dto.command.AddOrDeleteFoodCommand;
+import com.java.ravito_plan.race.application.dto.command.CreateCheckpointCommand;
+import com.java.ravito_plan.race.application.dto.command.UpdateCheckpointCommand;
+import com.java.ravito_plan.race.application.dto.internal.UserDto;
+import com.java.ravito_plan.race.application.dto.view.CheckpointView;
+import com.java.ravito_plan.race.application.dto.view.RaceDetailView;
 import com.java.ravito_plan.race.application.mapper.CheckpointMapper;
-import com.java.ravito_plan.race.application.mapper.RaceMapper;
+import com.java.ravito_plan.race.application.mapper.view.CheckpointViewMapper;
+import com.java.ravito_plan.race.application.mapper.view.RaceViewMapper;
 import com.java.ravito_plan.race.domain.model.Checkpoint;
 import com.java.ravito_plan.race.domain.model.Race;
 import com.java.ravito_plan.race.domain.ports.outbound.CheckpointRepository;
 import com.java.ravito_plan.race.domain.ports.outbound.FoodPort;
 import com.java.ravito_plan.race.domain.ports.outbound.RaceRepository;
 import com.java.ravito_plan.race.domain.ports.outbound.UserPort;
+import java.util.Map;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -28,25 +32,31 @@ public class CheckpointService extends BaseApplicationService {
         this.foodPort = foodPort;
     }
 
-    public RaceDto addCheckpoint(Long raceId, CheckpointDto checkpointDto) {
-        ExternalUserDto user = this.getCurrentUser();
+    public RaceDetailView addCheckpoint(CreateCheckpointCommand createCheckpointCommand) {
+        UserDto user = this.getCurrentUser();
 
-        Race race = this.raceRepository.findByIdAndUserId(raceId, user.id);
-        race.addOrUpdateCheckpoint(CheckpointMapper.toCheckpoint(checkpointDto));
+        Race race = this.raceRepository.findByIdAndUserId(createCheckpointCommand.getRaceId(),
+                user.id);
+        race.addOrUpdateCheckpoint(CheckpointMapper.toCheckpoint(createCheckpointCommand));
 
         Race updatedRace = this.raceRepository.save(race);
-        return RaceMapper.toRaceDto(updatedRace);
+        Map<Long, ExternalFoodDto> foods = this.foodPort.getFoodsByIds(this.getAllFoodIdsForRace(updatedRace));
+        return RaceViewMapper.toRaceDetailView(updatedRace, foods);
     }
 
-    public RaceDto updateCheckpoint(Long raceId, Long checkpointId, CheckpointDto checkpointDto) {
-        this.verifyUserOwnsRace(raceId);
+    public RaceDetailView updateCheckpoint(UpdateCheckpointCommand updateCheckpointCommand) {
+        this.verifyUserOwnsRace(updateCheckpointCommand.getRaceId());
 
-        Checkpoint checkpoint = this.checkpointRepository.findByIdAndRaceId(checkpointId, raceId);
+        Checkpoint checkpoint = this.checkpointRepository.findByIdAndRaceId(
+                updateCheckpointCommand.getCheckpointId(), updateCheckpointCommand.getRaceId());
 
-        checkpoint.updateDetails(CheckpointMapper.toCheckpoint(checkpointDto));
+        checkpoint.updateDetails(CheckpointMapper.toCheckpoint(updateCheckpointCommand));
 
         Checkpoint savedCheckpoint = this.checkpointRepository.save(checkpoint);
-        return RaceMapper.toRaceDto(savedCheckpoint.getRace());
+
+        Map<Long, ExternalFoodDto> foods = this.foodPort.getFoodsByIds(this.getAllFoodIdsForRace(savedCheckpoint.getRace()));
+
+        return RaceViewMapper.toRaceDetailView(savedCheckpoint.getRace(), foods);
     }
 
     public void deleteCheckpoint(Long raceId, Long checkpointId) {
@@ -57,21 +67,26 @@ public class CheckpointService extends BaseApplicationService {
         this.checkpointRepository.deleteById(checkpointId);
     }
 
-    public CheckpointDto addFoodToCheckpoint(Long raceId, CheckpointFoodDto checkpointFoodDto) {
-        this.verifyUserOwnsRace(raceId);
+    public CheckpointView addFoodToCheckpoint(AddOrDeleteFoodCommand addFoodCommand) {
+        this.verifyUserOwnsRace(addFoodCommand.raceId);
         Checkpoint checkpoint = this.checkpointRepository.findByIdAndRaceId(
-                checkpointFoodDto.checkpointId, raceId);
+                addFoodCommand.checkpointId, addFoodCommand.raceId);
 
-        ExternalFoodDto externalFoodDto = this.foodPort.getFoodById(checkpointFoodDto.foodId);
-        checkpoint.addFood(checkpointFoodDto.quantity, externalFoodDto.id);
-        return CheckpointMapper.toCheckpointDto(this.checkpointRepository.save(checkpoint));
+        ExternalFoodDto externalFoodDto = this.foodPort.getFoodById(addFoodCommand.foodId);
+        checkpoint.addFood(addFoodCommand.quantity, externalFoodDto.id);
+
+        Checkpoint savedCheckpoint = this.checkpointRepository.save(checkpoint);
+        Map<Long, ExternalFoodDto> foods = this.foodPort.getFoodsByIds(this.getAllFoodIdsForRace(savedCheckpoint.getRace()));
+
+        return CheckpointViewMapper.toCheckpointDetailView(savedCheckpoint, foods);
     }
 
-    public void removeFoodFromCheckpoint(Long raceId, Long checkpointId, Long foodId, int quantity) {
-        this.verifyUserOwnsRace(raceId);
-        Checkpoint checkpoint = this.checkpointRepository.findByIdAndRaceId(checkpointId, raceId);
+    public void removeFoodFromCheckpoint(AddOrDeleteFoodCommand deleteFoodCommand) {
+        this.verifyUserOwnsRace(deleteFoodCommand.raceId);
+        Checkpoint checkpoint = this.checkpointRepository.findByIdAndRaceId(
+                deleteFoodCommand.checkpointId, deleteFoodCommand.raceId);
 
-        checkpoint.removeFood(quantity, foodId);
+        checkpoint.removeFood(deleteFoodCommand.quantity, deleteFoodCommand.foodId);
         this.checkpointRepository.save(checkpoint);
     }
 }

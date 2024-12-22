@@ -21,7 +21,7 @@ public class RaceDetailView {
 
     public String postalCode;
 
-    public List<CheckpointDetailView> checkpoints;
+    public List<CheckpointView> checkpoints;
 
     public List<SegmentView> segments;
 }

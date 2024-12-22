@@ -6,13 +6,18 @@ import com.java.ravito_plan.food.domain.model.Food;
 import com.java.ravito_plan.food.domain.model.IngestionType;
 
 public class FoodMapper {
+
     public static FoodDetail toFoodDetail(Food food) {
-        return new FoodDetail(food.getId(), food.getName(), food.getCarbohydrates(), food.getCalories(), food.getProteins(), food.isElectrolytes(), food.getLink(), food.getComment(), food.getIngestionType()
-                .name());
+        return new FoodDetail(food.getId(), food.getBrand().getName(), food.getName(),
+                food.getCarbohydrates(), food.getCalories(), food.getProteins(),
+                food.isElectrolytes(), food.getLink(), food.getComment(),
+                food.getIngestionType().name());
     }
 
     public static Food toFood(FoodCommand foodCommand) {
-        return new Food(foodCommand.getName(), foodCommand.getCarbohydrates(), foodCommand.getCalories(), foodCommand.getProteins(), foodCommand.hasElectrolytes(), foodCommand.getLink(), foodCommand.getComment(),
+        return new Food(foodCommand.getName(), foodCommand.getCarbohydrates(),
+                foodCommand.getCalories(), foodCommand.getProteins(), foodCommand.hasElectrolytes(),
+                foodCommand.getLink(), foodCommand.getComment(),
                 IngestionType.valueOf(foodCommand.getIngestionType()));
     }
 }

@@ -14,7 +14,10 @@ import com.java.ravito_plan.food.domain.model.Food;
 import com.java.ravito_plan.food.domain.ports.outbound.BrandRepository;
 import com.java.ravito_plan.food.domain.ports.outbound.FoodRepository;
 import com.java.ravito_plan.food.domain.service.FoodService;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -30,6 +33,12 @@ public class FoodApplicationService implements FoodService {
 
     public FoodDetail getFoodById(Long id) {
         return FoodMapper.toFoodDetail(this.foodRepository.findById(id));
+    }
+
+    @Override
+    public Map<Long, FoodDetail> getFoodsByIds(Collection<Long> ids) {
+        return this.foodRepository.findAllById(ids.stream().toList()).stream()
+                .collect(Collectors.toMap(Food::getId, FoodMapper::toFoodDetail));
     }
 
     @Override

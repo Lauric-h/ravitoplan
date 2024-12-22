@@ -1,6 +1,6 @@
 package com.java.ravito_plan.race.application.mapper.view;
 
-import com.java.ravito_plan.race.application.dto.ExternalFoodDto;
+import com.java.ravito_plan.race.application.dto.internal.ExternalFoodDto;
 import com.java.ravito_plan.race.application.dto.view.CheckpointFoodView;
 import com.java.ravito_plan.race.domain.model.CheckpointFood;
 import java.util.Map;

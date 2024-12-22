@@ -7,6 +7,8 @@ public interface FoodRepository {
 
     Food findById(Long id);
 
+    List<Food> findAllById(List<Long> ids);
+
     Food findByIdAndBrandId(Long id, Long brandId);
 
     Food save(Food food);

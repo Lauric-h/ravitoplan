@@ -1,53 +1,63 @@
 package com.java.ravito_plan.race.application.service;
 
-import com.java.ravito_plan.race.application.dto.ExternalUserDto;
 import com.java.ravito_plan.race.application.dto.command.CreateRaceCommand;
 import com.java.ravito_plan.race.application.dto.command.UpdateRaceCommand;
+import com.java.ravito_plan.race.application.dto.internal.ExternalFoodDto;
+import com.java.ravito_plan.race.application.dto.internal.UserDto;
 import com.java.ravito_plan.race.application.dto.view.RaceDetailView;
 import com.java.ravito_plan.race.application.dto.view.RaceSummaryView;
 import com.java.ravito_plan.race.application.mapper.RaceMapper;
 import com.java.ravito_plan.race.application.mapper.view.RaceViewMapper;
+import com.java.ravito_plan.race.domain.model.CheckpointFood;
 import com.java.ravito_plan.race.domain.model.Race;
-import com.java.ravito_plan.race.domain.ports.outbound.CheckpointRepository;
+import com.java.ravito_plan.race.domain.ports.outbound.FoodPort;
 import com.java.ravito_plan.race.domain.ports.outbound.RaceRepository;
 import com.java.ravito_plan.race.domain.ports.outbound.UserPort;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RaceApplicationService extends BaseApplicationService {
 
-    CheckpointRepository checkpointRepository;
+    FoodPort foodPort;
 
     public RaceApplicationService(RaceRepository raceRepository, UserPort userPort,
-            CheckpointRepository checkpointRepository) {
+            FoodPort foodPort) {
         super(raceRepository, userPort);
-        this.checkpointRepository = checkpointRepository;
+        this.foodPort = foodPort;
     }
 
     public List<RaceSummaryView> getAllUserRaces() {
-        ExternalUserDto user = this.getCurrentUser();
+        UserDto user = this.getCurrentUser();
 
         List<Race> races = this.raceRepository.findAllByUserId(user.id);
         return races.stream().map(RaceViewMapper::toRaceSummaryView).toList();
     }
 
     public RaceSummaryView getUserRaceById(Long raceId) {
-        ExternalUserDto user = this.getCurrentUser();
+        UserDto user = this.getCurrentUser();
 
         Race race = this.raceRepository.findByIdAndUserId(raceId, user.id);
         return RaceViewMapper.toRaceSummaryView(race);
     }
 
     public RaceDetailView getUserFullRaceById(Long raceId) {
-        ExternalUserDto user = this.getCurrentUser();
+        UserDto user = this.getCurrentUser();
 
         Race race = this.raceRepository.findByIdAndUserId(raceId, user.id);
-        return RaceViewMapper.toRaceDetailView(race);
+
+        Map<Long, ExternalFoodDto> foods = this.foodPort.getFoodsByIds(
+                this.getAllFoodIdsForRace(race));
+
+        return RaceViewMapper.toRaceDetailView(race, foods);
     }
 
+
     public RaceSummaryView createRaceForUser(CreateRaceCommand command) {
-        ExternalUserDto user = this.getCurrentUser();
+        UserDto user = this.getCurrentUser();
 
         Race race = RaceMapper.toRace(command);
         race.setUserId(user.id);
@@ -57,12 +67,11 @@ public class RaceApplicationService extends BaseApplicationService {
     }
 
     public void updateRaceForUser(UpdateRaceCommand command) {
-        ExternalUserDto user = this.getCurrentUser();
+        UserDto user = this.getCurrentUser();
 
         Race race = this.raceRepository.findByIdAndUserId(command.getId(), user.id);
 
-        race.updateFields(race.getName(), race.getDate(), race.getDistance(), race.getElevationPositive(), race.getElevationNegative(), race.getCity(),
-                race.getPostalCode());
+        race.updateFields(RaceMapper.toRace(command));
 
         race.validate();
 
@@ -70,7 +79,7 @@ public class RaceApplicationService extends BaseApplicationService {
     }
 
     public void deleteRaceForUser(Long raceId) {
-        ExternalUserDto user = this.getCurrentUser();
+        UserDto user = this.getCurrentUser();
 
         this.raceRepository.deleteById(raceId);
     }

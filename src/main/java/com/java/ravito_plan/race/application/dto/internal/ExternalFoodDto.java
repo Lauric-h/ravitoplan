@@ -1,4 +1,4 @@
-package com.java.ravito_plan.race.application.dto;
+package com.java.ravito_plan.race.application.dto.internal;
 
 import lombok.AllArgsConstructor;
 

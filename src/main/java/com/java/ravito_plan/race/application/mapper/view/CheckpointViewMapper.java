@@ -1,15 +1,15 @@
 package com.java.ravito_plan.race.application.mapper.view;
 
-import com.java.ravito_plan.race.application.dto.ExternalFoodDto;
-import com.java.ravito_plan.race.application.dto.view.CheckpointDetailView;
+import com.java.ravito_plan.race.application.dto.internal.ExternalFoodDto;
+import com.java.ravito_plan.race.application.dto.view.CheckpointView;
 import com.java.ravito_plan.race.domain.model.Checkpoint;
 import java.util.Map;
 
 public class CheckpointViewMapper {
 
-    public static CheckpointDetailView toCheckpointDetailView(Checkpoint checkpoint,
+    public static CheckpointView toCheckpointDetailView(Checkpoint checkpoint,
             Map<Long, ExternalFoodDto> foods) {
-        return new CheckpointDetailView(checkpoint.getName(), checkpoint.getDistanceFromStart(),
+        return new CheckpointView(checkpoint.getName(), checkpoint.getDistanceFromStart(),
                 checkpoint.getLocation(), checkpoint.getType().name(),
                 checkpoint.getEstimatedTimeInMinuteFromStart(),
                 checkpoint.getCumulatedElevationGainFromStart(),

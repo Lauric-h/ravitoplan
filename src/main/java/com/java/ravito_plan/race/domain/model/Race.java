@@ -144,15 +144,14 @@ public class Race {
         this.addOrUpdateCheckpoint(finish);
     }
 
-    public Race updateFields(String name, LocalDate date, int distance, int elevationPositive,
-            int elevationNegative, String city, String postalCode) {
-        this.name = name;
-        this.date = date;
-        this.distance = distance;
-        this.elevationPositive = elevationPositive;
-        this.elevationNegative = elevationNegative;
-        this.city = city;
-        this.postalCode = postalCode;
+    public Race updateFields(Race race) {
+        this.name = race.getName();
+        this.date = race.getDate();
+        this.distance = race.getDistance();
+        this.elevationPositive = race.getElevationPositive();
+        this.elevationNegative = race.getElevationNegative();
+        this.city = race.getCity();
+        this.postalCode = race.getPostalCode();
 
         return this;
     }

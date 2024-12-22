@@ -20,7 +20,8 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CheckpointService extends BaseApplicationService {
+public class CheckpointService extends BaseApplicationService implements
+        com.java.ravito_plan.race.domain.service.CheckpointService {
 
     CheckpointRepository checkpointRepository;
     FoodPort foodPort;

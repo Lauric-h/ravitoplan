@@ -12,12 +12,13 @@ import com.java.ravito_plan.race.domain.model.Race;
 import com.java.ravito_plan.race.domain.ports.outbound.FoodPort;
 import com.java.ravito_plan.race.domain.ports.outbound.RaceRepository;
 import com.java.ravito_plan.race.domain.ports.outbound.UserPort;
+import com.java.ravito_plan.race.domain.service.RaceService;
 import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RaceApplicationService extends BaseApplicationService {
+public class RaceApplicationService extends BaseApplicationService implements RaceService {
 
     FoodPort foodPort;
 
@@ -46,8 +47,7 @@ public class RaceApplicationService extends BaseApplicationService {
 
         Race race = this.raceRepository.findByIdAndUserId(raceId, user.id);
 
-        Map<Long, FoodDto> foods = this.foodPort.getFoodsByIds(
-                this.getAllFoodIdsForRace(race));
+        Map<Long, FoodDto> foods = this.foodPort.getFoodsByIds(this.getAllFoodIdsForRace(race));
 
         return RaceViewMapper.toRaceDetailView(race, foods);
     }

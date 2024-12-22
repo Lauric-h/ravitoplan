@@ -6,9 +6,9 @@ import com.java.ravito_plan.user.domain.model.User;
 import com.java.ravito_plan.user.domain.ports.outbound.UserRepository;
 import com.java.ravito_plan.user.domain.service.UserDomainService;
 import com.java.ravito_plan.user.domain.ports.inbound.UserPort;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserApplicationService implements UserPort {
@@ -42,11 +42,13 @@ public class UserApplicationService implements UserPort {
         return new UserDto(savedUser.getId(), savedUser.getUsername(), savedUser.getEmail());
     }
 
+    @Transactional(readOnly = true)
     public UserDto getByUsername(String username) {
         User user = this.userRepository.findByUsername(username).orElseThrow();
         return new UserDto(user.getId(), user.getUsername(), user.getEmail());
     }
 
+    @Transactional(readOnly = true)
     public boolean existsByUsername(String username) {
         return this.userRepository.existsByUsername(username);
     }

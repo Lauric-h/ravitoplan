@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class FoodApplicationService implements FoodPort {
@@ -31,17 +32,20 @@ public class FoodApplicationService implements FoodPort {
         this.brandRepository = brandRepository;
     }
 
+    @Transactional(readOnly = true)
     public FoodDetail getFoodById(Long id) {
         return FoodMapper.toFoodDetail(this.foodRepository.findById(id));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Map<Long, FoodDetail> getFoodsByIds(Collection<Long> ids) {
         return this.foodRepository.findAllByIdIn(ids.stream().toList()).stream()
                 .collect(Collectors.toMap(Food::getId, FoodMapper::toFoodDetail));
     }
 
     @Override
+    @Transactional
     public BrandDetailView createFood(CreateFoodCommand createFoodCommand) {
         Brand brand = this.brandRepository.findById(createFoodCommand.getBrandId());
         brand.addOrUpdateFood(FoodMapper.toFood(createFoodCommand));
@@ -49,11 +53,13 @@ public class FoodApplicationService implements FoodPort {
     }
 
     @Override
+    @Transactional
     public void deleteFood(Long id, Long brandId) {
         this.foodRepository.deleteByIdAndBrandId(id, brandId);
     }
 
     @Override
+    @Transactional
     public void updateFood(UpdateFoodCommand updateFoodCommandFood) {
         Food food = this.foodRepository.findByIdAndBrandId(updateFoodCommandFood.getId(),
                 updateFoodCommandFood.getBrandId());
@@ -63,12 +69,14 @@ public class FoodApplicationService implements FoodPort {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<FoodSummaryView> getAllFoodsByBrand(Long brandId) {
         return this.foodRepository.findAllByBrandId(brandId).stream()
                 .map(FoodViewMapper::toFoodSummaryView).toList();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public FoodView getFood(Long id, Long brandId) {
         return FoodViewMapper.toFoodView(this.foodRepository.findByIdAndBrandId(id, brandId));
     }

@@ -10,6 +10,7 @@ import com.java.ravito_plan.food.domain.ports.outbound.BrandRepository;
 import com.java.ravito_plan.food.domain.ports.inbound.BrandPort;
 import java.util.List;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class BrandApplicationService implements BrandPort {
@@ -20,15 +21,18 @@ public class BrandApplicationService implements BrandPort {
         this.brandRepository = brandRepository;
     }
 
+    @Transactional(readOnly = true)
     public List<BrandSummaryView> getAllBrands() {
         List<Brand> brands = brandRepository.findAll();
         return brands.stream().map(BrandViewMapper::toBrandSummaryView).toList();
     }
 
+    @Transactional(readOnly = true)
     public BrandDetailView getBrandById(Long id) {
         return BrandViewMapper.toBrandDetailView(brandRepository.findById(id));
     }
 
+    @Transactional
     public BrandDetailView createBrand(CreateBrandCommand command) {
         Brand brand = new Brand();
         brand.setName(command.getName());
@@ -37,10 +41,12 @@ public class BrandApplicationService implements BrandPort {
         return BrandViewMapper.toBrandDetailView(brand);
     }
 
+    @Transactional
     public void deleteBrand(Long id) {
         brandRepository.deleteById(id);
     }
 
+    @Transactional
     public BrandDetailView updateBrand(UpdateBrandCommand command) {
         Brand brand = brandRepository.findById(command.getId());
         brand.updateFields(command.getName());

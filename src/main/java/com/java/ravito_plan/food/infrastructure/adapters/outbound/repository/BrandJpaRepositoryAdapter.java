@@ -1,5 +1,6 @@
 package com.java.ravito_plan.food.infrastructure.adapters.outbound.repository;
 
+import com.java.ravito_plan.food.application.exception.BrandNotFoundException;
 import com.java.ravito_plan.food.domain.model.Brand;
 import com.java.ravito_plan.food.domain.ports.outbound.BrandRepository;
 import java.util.List;
@@ -17,7 +18,7 @@ public class BrandJpaRepositoryAdapter implements BrandRepository {
 
     @Override
     public Brand findById(Long id) {
-        return this.repository.findById(id).orElseThrow();
+        return this.repository.findById(id).orElseThrow(() -> new BrandNotFoundException(id));
     }
 
     @Override

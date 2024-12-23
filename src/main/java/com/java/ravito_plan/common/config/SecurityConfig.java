@@ -1,4 +1,4 @@
-package com.java.ravito_plan.config;
+package com.java.ravito_plan.common.config;
 
 import com.java.ravito_plan.user.infrastructure.service.DatabaseUserDetailsService;
 import org.springframework.context.annotation.Bean;

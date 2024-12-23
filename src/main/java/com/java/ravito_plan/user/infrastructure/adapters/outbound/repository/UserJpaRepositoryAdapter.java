@@ -1,8 +1,8 @@
 package com.java.ravito_plan.user.infrastructure.adapters.outbound.repository;
 
+import com.java.ravito_plan.user.application.exception.UserNotFoundException;
 import com.java.ravito_plan.user.domain.ports.outbound.UserRepository;
 import com.java.ravito_plan.user.domain.model.User;
-import java.util.Optional;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,13 +15,13 @@ public class UserJpaRepositoryAdapter implements UserRepository {
     }
 
     @Override
-    public Optional<User> findByEmail(String email) {
-        return this.repository.findByEmail(email);
+    public User findByEmail(String email) {
+        return this.repository.findByEmail(email).orElseThrow(() -> new UserNotFoundException(email));
     }
 
     @Override
-    public Optional<User> findByUsername(String username) {
-       return this.repository.findByUsername(username);
+    public User findByUsername(String username) {
+       return this.repository.findByUsername(username).orElseThrow(() -> new UserNotFoundException(username));
     }
 
     @Override

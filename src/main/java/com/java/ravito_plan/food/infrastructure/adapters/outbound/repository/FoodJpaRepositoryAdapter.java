@@ -1,5 +1,6 @@
 package com.java.ravito_plan.food.infrastructure.adapters.outbound.repository;
 
+import com.java.ravito_plan.food.application.exception.FoodNotFoundException;
 import com.java.ravito_plan.food.domain.model.Food;
 import com.java.ravito_plan.food.domain.ports.outbound.FoodRepository;
 import jakarta.transaction.Transactional;
@@ -26,7 +27,7 @@ public class FoodJpaRepositoryAdapter implements FoodRepository {
 
     @Override
     public Food findByIdAndBrandId(Long id, Long brandId) {
-        return this.foodRepository.findByIdAndBrandId(id, brandId).orElseThrow();
+        return this.foodRepository.findByIdAndBrandId(id, brandId).orElseThrow(() -> new FoodNotFoundException(id));
     }
 
     @Override

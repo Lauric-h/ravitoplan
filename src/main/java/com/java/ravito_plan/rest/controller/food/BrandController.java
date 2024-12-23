@@ -1,9 +1,12 @@
 package com.java.ravito_plan.rest.controller.food;
 
+import com.java.ravito_plan.common.api.error.ApiError;
+import com.java.ravito_plan.common.api.error.ErrorCode;
 import com.java.ravito_plan.food.application.dto.command.CreateBrandCommand;
 import com.java.ravito_plan.food.application.dto.command.UpdateBrandCommand;
 import com.java.ravito_plan.food.application.dto.view.BrandDetailView;
 import com.java.ravito_plan.food.application.dto.view.BrandSummaryView;
+import com.java.ravito_plan.food.application.exception.BrandNotFoundException;
 import com.java.ravito_plan.food.domain.ports.inbound.BrandPort;
 import java.util.List;
 import org.springframework.http.HttpStatus;

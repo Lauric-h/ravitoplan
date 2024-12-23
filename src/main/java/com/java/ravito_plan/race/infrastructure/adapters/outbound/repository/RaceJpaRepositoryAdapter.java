@@ -1,5 +1,6 @@
 package com.java.ravito_plan.race.infrastructure.adapters.outbound.repository;
 
+import com.java.ravito_plan.race.application.exception.RaceNotFoundException;
 import com.java.ravito_plan.race.domain.model.Race;
 import com.java.ravito_plan.race.domain.ports.outbound.RaceRepository;
 import java.util.List;
@@ -26,7 +27,7 @@ public class RaceJpaRepositoryAdapter implements RaceRepository {
 
     @Override
     public Race findByIdAndUserId(Long id, Long userId) {
-        return this.importedRaceRepository.findByIdAndUserId(id, userId).orElseThrow();
+        return this.importedRaceRepository.findByIdAndUserId(id, userId).orElseThrow(() -> new RaceNotFoundException(id));
     }
 
     @Override

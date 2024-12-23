@@ -29,9 +29,6 @@ public abstract class BaseApplicationService {
     protected void verifyUserOwnsRace(Long raceId) {
         UserDto currentUser = getCurrentUser();
         Race race = raceRepository.findByIdAndUserId(raceId, currentUser.id);
-        if (race == null) {
-            throw new IllegalArgumentException("Race not found for current user");
-        }
     }
 
     protected Set<Long> getAllFoodIdsForRace(Race race) {

@@ -31,7 +31,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/api/register", "/").permitAll()
+                    .requestMatchers("/api/register", "/", "/swagger-ui/index.html", "/v3/api-docs").permitAll()
                     .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/"))

@@ -17,7 +17,7 @@ public class FoodJpaRepositoryAdapter implements FoodRepository {
 
     @Override
     public Food findById(Long id) {
-        return this.foodRepository.findById(id).orElseThrow();
+        return this.foodRepository.findById(id).orElseThrow(() -> new FoodNotFoundException(id));
     }
 
     @Override

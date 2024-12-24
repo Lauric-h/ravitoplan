@@ -16,7 +16,8 @@ public class UserPortAdapter implements UserPort {
 
     @Override
     public UserDto getByUsername(String username) {
-        com.java.ravito_plan.user.application.dto.UserDto user = this.userApplicationService.getByUsername(username);
+        com.java.ravito_plan.user.application.dto.UserDto user = this.userApplicationService.getByUsername(
+                username);
 
         return new UserDto(user.id, user.username);
     }

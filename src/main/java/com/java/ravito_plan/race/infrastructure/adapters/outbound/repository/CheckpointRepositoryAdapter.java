@@ -16,12 +16,13 @@ public class CheckpointRepositoryAdapter implements CheckpointRepository {
 
     @Override
     public Checkpoint findById(Long id) {
-        return this.checkpointRepository.findById(id).orElseThrow(() -> new CheckpointNotFoundException(id));
+        return this.checkpointRepository.findById(id)
+                .orElseThrow(() -> new CheckpointNotFoundException(id));
     }
 
     @Override
     public Checkpoint save(Checkpoint checkpoint) {
-       return this.checkpointRepository.save(checkpoint);
+        return this.checkpointRepository.save(checkpoint);
     }
 
     @Override
@@ -31,6 +32,7 @@ public class CheckpointRepositoryAdapter implements CheckpointRepository {
 
     @Override
     public Checkpoint findByIdAndRaceId(Long id, Long raceId) {
-        return this.checkpointRepository.findByIdAndRaceId(id, raceId).orElseThrow(() -> new CheckpointNotFoundException(id));
+        return this.checkpointRepository.findByIdAndRaceId(id, raceId)
+                .orElseThrow(() -> new CheckpointNotFoundException(id));
     }
 }

@@ -1,5 +1,10 @@
 package com.java.ravito_plan.race.domain.model;
 
+import com.java.ravito_plan.race.domain.exception.CheckpointDistanceOverRaceDistanceException;
+import com.java.ravito_plan.race.domain.exception.InvalidCheckpointElevationException;
+import com.java.ravito_plan.race.domain.exception.InvalidCheckpointOrderException;
+import com.java.ravito_plan.race.domain.exception.RaceHasEmptyCheckpointsException;
+import com.java.ravito_plan.race.domain.exception.RaceWithoutStartOrFinishException;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -84,8 +89,7 @@ public class Race {
 
     private void validateCheckpointExist() {
         if (this.checkpoints == null || this.checkpoints.isEmpty()) {
-            throw new IllegalArgumentException(
-                    "Race must have at least two checkpoints: start and finish.");
+            throw new RaceHasEmptyCheckpointsException();
         }
     }
 
@@ -98,7 +102,7 @@ public class Race {
         boolean hasFinishCheckpoint = this.hasCheckpointAtDistance(this.distance);
 
         if (!hasStartCheckpoint || !hasFinishCheckpoint) {
-            throw new IllegalArgumentException("Race must have a starting and finish checkpoint");
+            throw new RaceWithoutStartOrFinishException();
         }
     }
 
@@ -106,22 +110,20 @@ public class Race {
         Checkpoint start = this.getStartCheckpoint();
         if (start.getCumulatedElevationGainFromStart() != 0
                 || start.getCumulatedElevationLossFromStart() != 0) {
-            throw new IllegalArgumentException(
-                    String.format("start %s -%s", start.getCumulatedElevationGainFromStart(),
+            throw new InvalidCheckpointElevationException(
+                    String.format("Start elevation gain %s and start elevation loss %s must be 0",
+                            start.getCumulatedElevationGainFromStart(),
                             start.getCumulatedElevationLossFromStart()));
         }
 
         Checkpoint finish = this.getFinishCheckpoint();
         if (finish.getCumulatedElevationGainFromStart() != this.elevationPositive
                 || finish.getCumulatedElevationLossFromStart() != this.elevationNegative) {
-            System.out.println(finish.getCumulatedElevationGainFromStart());
-            System.out.println(finish.getCumulatedElevationLossFromStart());
-            System.out.println(this.elevationPositive);
-            System.out.println(this.elevationNegative);
 
-            throw new IllegalArgumentException(
-                    String.format("finish %s -%s", finish.getCumulatedElevationGainFromStart(),
-                            finish.getCumulatedElevationLossFromStart()));
+            throw new InvalidCheckpointElevationException(String.format(
+                    "Finish elevation gain %s must be %s and finish elevation loss %s must be %s",
+                    finish.getCumulatedElevationGainFromStart(), this.elevationPositive,
+                    finish.getCumulatedElevationLossFromStart(), this.elevationNegative));
         }
     }
 
@@ -137,8 +139,8 @@ public class Race {
         for (int i = 1; i < checkpoints.size(); i++) {
             if (this.checkpoints.get(i).getDistanceFromStart() <= this.checkpoints.get(i - 1)
                     .getDistanceFromStart()) {
-                throw new IllegalArgumentException(
-                        "Checkpoints must be in increasing distance order");
+                throw new InvalidCheckpointOrderException(this.checkpoints.get(i).getId(),
+                        this.checkpoints.get(i - 1).getId());
             }
         }
     }
@@ -167,7 +169,8 @@ public class Race {
 
     public Race addOrUpdateCheckpoint(Checkpoint checkpoint) {
         if (checkpoint.getDistanceFromStart() > this.getDistance()) {
-            throw new IllegalArgumentException();
+            throw new CheckpointDistanceOverRaceDistanceException(checkpoint.getDistanceFromStart(),
+                    this.getDistance());
         }
 
         Checkpoint existingCheckpoint = this.checkpoints.stream()

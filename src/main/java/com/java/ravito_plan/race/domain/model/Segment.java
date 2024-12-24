@@ -4,15 +4,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter
-@Setter
 public class Segment {
-
-    private Checkpoint start;
-    private Checkpoint finish;
-    private int distance;
+    private final Checkpoint start;
+    private final Checkpoint finish;
+    private final int distance;
+    @Setter
     private Integer estimatedTime;
-    private int elevationGain;
-    private int elevationLoss;
+    private final int elevationGain;
+    private final int elevationLoss;
 
     public Segment(Checkpoint start, Checkpoint finish) {
         if (finish.getDistanceFromStart() < start.getDistanceFromStart()

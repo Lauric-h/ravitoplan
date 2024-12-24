@@ -1,9 +1,9 @@
 package com.java.ravito_plan.race.application.service;
 
-import com.java.ravito_plan.race.application.dto.internal.FoodDto;
 import com.java.ravito_plan.race.application.dto.command.AddOrDeleteFoodCommand;
 import com.java.ravito_plan.race.application.dto.command.CreateCheckpointCommand;
 import com.java.ravito_plan.race.application.dto.command.UpdateCheckpointCommand;
+import com.java.ravito_plan.race.application.dto.internal.FoodDto;
 import com.java.ravito_plan.race.application.dto.internal.UserDto;
 import com.java.ravito_plan.race.application.dto.view.CheckpointView;
 import com.java.ravito_plan.race.application.dto.view.RaceDetailView;
@@ -22,8 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class CheckpointService extends BaseApplicationService implements
-        CheckpointPort {
+public class CheckpointService extends BaseApplicationService implements CheckpointPort {
 
     private final CheckpointRepository checkpointRepository;
     private final FoodPort foodPort;
@@ -44,7 +43,8 @@ public class CheckpointService extends BaseApplicationService implements
         race.addOrUpdateCheckpoint(CheckpointMapper.toCheckpoint(createCheckpointCommand));
 
         Race updatedRace = this.raceRepository.save(race);
-        Map<Long, FoodDto> foods = this.foodPort.getFoodsByIds(this.getAllFoodIdsForRace(updatedRace));
+        Map<Long, FoodDto> foods = this.foodPort.getFoodsByIds(
+                this.getAllFoodIdsForRace(updatedRace));
         return RaceViewMapper.toRaceDetailView(updatedRace, foods);
     }
 
@@ -59,7 +59,8 @@ public class CheckpointService extends BaseApplicationService implements
 
         Checkpoint savedCheckpoint = this.checkpointRepository.save(checkpoint);
 
-        Map<Long, FoodDto> foods = this.foodPort.getFoodsByIds(this.getAllFoodIdsForRace(savedCheckpoint.getRace()));
+        Map<Long, FoodDto> foods = this.foodPort.getFoodsByIds(
+                this.getAllFoodIdsForRace(savedCheckpoint.getRace()));
 
         return RaceViewMapper.toRaceDetailView(savedCheckpoint.getRace(), foods);
     }
@@ -83,7 +84,8 @@ public class CheckpointService extends BaseApplicationService implements
         checkpoint.addFood(addFoodCommand.quantity, externalFoodDto.id);
 
         Checkpoint savedCheckpoint = this.checkpointRepository.save(checkpoint);
-        Map<Long, FoodDto> foods = this.foodPort.getFoodsByIds(this.getAllFoodIdsForRace(savedCheckpoint.getRace()));
+        Map<Long, FoodDto> foods = this.foodPort.getFoodsByIds(
+                this.getAllFoodIdsForRace(savedCheckpoint.getRace()));
 
         return CheckpointViewMapper.toCheckpointDetailView(savedCheckpoint, foods);
     }

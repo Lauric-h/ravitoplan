@@ -1,5 +1,6 @@
 package com.java.ravito_plan.race.domain.model;
 
+import com.java.ravito_plan.race.domain.exception.CheckpointFoodNotInCheckpointException;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -126,7 +127,7 @@ public class Checkpoint {
                 .filter(checkpointFood -> checkpointFood.getFoodId().equals(foodId)
                         && checkpointFood.getQuantity() == quantity).findFirst().orElse(null);
         if (checkpointFoodToRemove == null) {
-            throw new IllegalArgumentException("CheckpointFood does not exist");
+            throw new CheckpointFoodNotInCheckpointException(foodId, this.id);
         }
 
         this.checkpointFoods.remove(checkpointFoodToRemove);

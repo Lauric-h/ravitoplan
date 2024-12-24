@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class RegisterUserController {
+
     private final UserApplicationService userApplicationService;
 
     @Autowired
@@ -18,12 +19,9 @@ public class RegisterUserController {
     }
 
     @PostMapping("/api/register")
-    public ResponseEntity<Void> registerUser(@RequestBody RegisterUserCommand registerUserCommand) {
-        try {
-            this.userApplicationService.registerUser(registerUserCommand);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+    public ResponseEntity<Object> registerUser(
+            @RequestBody RegisterUserCommand registerUserCommand) {
+        this.userApplicationService.registerUser(registerUserCommand);
         return ResponseEntity.ok().build();
     }
 }

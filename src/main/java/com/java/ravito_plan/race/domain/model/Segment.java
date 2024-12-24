@@ -1,17 +1,19 @@
 package com.java.ravito_plan.race.domain.model;
 
+import com.java.ravito_plan.race.domain.exception.CannotCreateSegmentWitCheckpointException;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 public class Segment {
+
     private final Checkpoint start;
     private final Checkpoint finish;
     private final int distance;
-    @Setter
-    private Integer estimatedTime;
     private final int elevationGain;
     private final int elevationLoss;
+    @Setter
+    private Integer estimatedTime;
 
     public Segment(Checkpoint start, Checkpoint finish) {
         if (finish.getDistanceFromStart() < start.getDistanceFromStart()
@@ -19,7 +21,8 @@ public class Segment {
                 < start.getCumulatedElevationGainFromStart()
                 || finish.getCumulatedElevationLossFromStart()
                 < start.getCumulatedElevationLossFromStart()) {
-            throw new IllegalArgumentException();
+            throw new CannotCreateSegmentWitCheckpointException(
+                    String.format("Start %s, finish %s", start.getId(), finish.getId()));
         }
 
         if (null != finish.getEstimatedTimeInMinuteFromStart()

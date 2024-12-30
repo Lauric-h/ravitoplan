@@ -26,16 +26,16 @@ public class UserApplicationService implements UserPort {
     @Override
     @Transactional
     public UserDto registerUser(RegisterUserCommand registerUserCommand) {
-        if (this.userRepository.findByUsername(registerUserCommand.username) != null) {
-            throw new UserAlreadyExistsException(registerUserCommand.username);
+        if (this.userRepository.findByUsername(registerUserCommand.getUsername()) != null) {
+            throw new UserAlreadyExistsException(registerUserCommand.getUsername());
         }
 
-        if (this.userRepository.findByEmail(registerUserCommand.email) != null) {
-            throw new UserAlreadyExistsException(registerUserCommand.email);
+        if (this.userRepository.findByEmail(registerUserCommand.getEmail()) != null) {
+            throw new UserAlreadyExistsException(registerUserCommand.getEmail());
         }
 
-        User user = this.userService.createUserWithHashedPassword(registerUserCommand.email,
-                registerUserCommand.username, registerUserCommand.password);
+        User user = this.userService.createUserWithHashedPassword(registerUserCommand.getEmail(),
+                registerUserCommand.getUsername(), registerUserCommand.getPassword());
 
         User savedUser = this.userRepository.save(user);
         return new UserDto(savedUser.getId(), savedUser.getUsername(), savedUser.getEmail());

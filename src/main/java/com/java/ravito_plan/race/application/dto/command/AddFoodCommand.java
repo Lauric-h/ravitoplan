@@ -2,8 +2,10 @@ package com.java.ravito_plan.race.application.dto.command;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 import lombok.Getter;
 
+@Builder
 @Getter
 public class AddFoodCommand {
 
@@ -16,6 +18,7 @@ public class AddFoodCommand {
     @NotNull
     private Long checkpointId;
 
+    @Builder.Default
     @Min(1)
-    private int quantity;
+    private int quantity = 1;
 }

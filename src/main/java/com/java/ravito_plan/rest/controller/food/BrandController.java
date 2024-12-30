@@ -4,7 +4,7 @@ import com.java.ravito_plan.food.application.dto.command.CreateBrandCommand;
 import com.java.ravito_plan.food.application.dto.command.UpdateBrandCommand;
 import com.java.ravito_plan.food.application.dto.view.BrandDetailView;
 import com.java.ravito_plan.food.application.dto.view.BrandSummaryView;
-import com.java.ravito_plan.food.domain.ports.inbound.BrandPort;
+import com.java.ravito_plan.food.application.service.BrandApplicationService;
 import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.http.HttpStatus;
@@ -22,9 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/brands")
 public class BrandController {
 
-    private final BrandPort brandService;
+    private final BrandApplicationService brandService;
 
-    public BrandController(BrandPort brandService) {
+    public BrandController(BrandApplicationService brandService) {
         this.brandService = brandService;
     }
 

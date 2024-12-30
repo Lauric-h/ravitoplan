@@ -5,7 +5,7 @@ import com.java.ravito_plan.race.application.dto.command.CreateCheckpointCommand
 import com.java.ravito_plan.race.application.dto.command.DeleteFoodCommand;
 import com.java.ravito_plan.race.application.dto.command.UpdateCheckpointCommand;
 import com.java.ravito_plan.race.application.dto.internal.FoodDto;
-import com.java.ravito_plan.race.application.dto.internal.UserDto;
+import com.java.ravito_plan.race.application.dto.internal.RaceUserDto;
 import com.java.ravito_plan.race.application.dto.view.CheckpointView;
 import com.java.ravito_plan.race.application.dto.view.RaceDetailView;
 import com.java.ravito_plan.race.application.mapper.CheckpointMapper;
@@ -13,7 +13,6 @@ import com.java.ravito_plan.race.application.mapper.view.CheckpointViewMapper;
 import com.java.ravito_plan.race.application.mapper.view.RaceViewMapper;
 import com.java.ravito_plan.race.domain.model.Checkpoint;
 import com.java.ravito_plan.race.domain.model.Race;
-import com.java.ravito_plan.race.domain.ports.inbound.CheckpointPort;
 import com.java.ravito_plan.race.domain.ports.outbound.CheckpointRepository;
 import com.java.ravito_plan.race.domain.ports.outbound.FoodPort;
 import com.java.ravito_plan.race.domain.ports.outbound.RaceRepository;
@@ -23,7 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class CheckpointService extends BaseApplicationService implements CheckpointPort {
+public class CheckpointService extends BaseApplicationService {
 
     private final CheckpointRepository checkpointRepository;
     private final FoodPort foodPort;
@@ -37,7 +36,7 @@ public class CheckpointService extends BaseApplicationService implements Checkpo
 
     @Transactional
     public RaceDetailView addCheckpoint(CreateCheckpointCommand createCheckpointCommand) {
-        UserDto user = this.getCurrentUser();
+        RaceUserDto user = this.getCurrentUser();
 
         Race race = this.raceRepository.findByIdAndUserId(createCheckpointCommand.getRaceId(),
                 user.id);

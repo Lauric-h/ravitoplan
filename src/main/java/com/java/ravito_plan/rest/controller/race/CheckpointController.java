@@ -2,12 +2,14 @@ package com.java.ravito_plan.rest.controller.race;
 
 import static org.springframework.http.HttpStatus.OK;
 
-import com.java.ravito_plan.race.application.dto.command.AddOrDeleteFoodCommand;
+import com.java.ravito_plan.race.application.dto.command.AddFoodCommand;
 import com.java.ravito_plan.race.application.dto.command.CreateCheckpointCommand;
+import com.java.ravito_plan.race.application.dto.command.DeleteFoodCommand;
 import com.java.ravito_plan.race.application.dto.command.UpdateCheckpointCommand;
 import com.java.ravito_plan.race.application.dto.view.CheckpointView;
 import com.java.ravito_plan.race.application.dto.view.RaceDetailView;
 import com.java.ravito_plan.race.application.service.CheckpointService;
+import jakarta.validation.Valid;
 import java.net.URI;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +34,7 @@ public class CheckpointController {
 
     @PostMapping()
     public ResponseEntity<Void> addCheckpoint(@PathVariable Long raceId,
-            @RequestBody CreateCheckpointCommand createCheckpointCommand) {
+            @Valid @RequestBody CreateCheckpointCommand createCheckpointCommand) {
         RaceDetailView updatedRace = this.checkpointService.addCheckpoint(createCheckpointCommand);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/api/races/{raceId}")
@@ -44,7 +46,7 @@ public class CheckpointController {
 
     @PutMapping("/{checkpointId}")
     public ResponseEntity<Void> editCheckpoint(@PathVariable Long raceId,
-            @PathVariable Long checkpointId, @RequestBody UpdateCheckpointCommand updateCheckpointCommand) {
+            @PathVariable Long checkpointId, @Valid @RequestBody UpdateCheckpointCommand updateCheckpointCommand) {
         this.checkpointService.updateCheckpoint(updateCheckpointCommand);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/api/races/{raceId}")
@@ -64,7 +66,7 @@ public class CheckpointController {
     @PostMapping("/{checkpointId}/foods")
     public ResponseEntity<CheckpointView> addFoodToCheckpoint(@PathVariable("raceId") Long raceId,
             @PathVariable("checkpointId") Long checkpointId,
-            @RequestBody AddOrDeleteFoodCommand addFoodCommand) {
+            @Valid @RequestBody AddFoodCommand addFoodCommand) {
        CheckpointView checkpointView = this.checkpointService.addFoodToCheckpoint(addFoodCommand);
 
         return ResponseEntity.ok(checkpointView);
@@ -73,8 +75,8 @@ public class CheckpointController {
     @DeleteMapping("/{checkpointId}/foods/{foodId}")
     public ResponseEntity<Void> removeFoodFromCheckpoint(@PathVariable("raceId") Long raceId,
             @PathVariable("checkpointId") Long checkpointId, @PathVariable("foodId") Long foodId,
-            @RequestBody AddOrDeleteFoodCommand addOrDeleteFoodCommand) {
-        this.checkpointService.removeFoodFromCheckpoint(addOrDeleteFoodCommand);
+            @Valid @RequestBody DeleteFoodCommand deleteFoodCommand) {
+        this.checkpointService.removeFoodFromCheckpoint(deleteFoodCommand);
         return ResponseEntity.noContent().build();
     }
 }

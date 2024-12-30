@@ -2,6 +2,7 @@ package com.java.ravito_plan.rest.controller.auth;
 
 import com.java.ravito_plan.user.application.dto.auth.RegisterUserCommand;
 import com.java.ravito_plan.user.application.service.UserApplicationService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +21,7 @@ public class RegisterUserController {
 
     @PostMapping("/api/register")
     public ResponseEntity<Object> registerUser(
-            @RequestBody RegisterUserCommand registerUserCommand) {
+            @Valid @RequestBody RegisterUserCommand registerUserCommand) {
         this.userApplicationService.registerUser(registerUserCommand);
         return ResponseEntity.ok().build();
     }

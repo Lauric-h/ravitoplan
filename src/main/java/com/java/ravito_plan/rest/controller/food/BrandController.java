@@ -1,13 +1,11 @@
 package com.java.ravito_plan.rest.controller.food;
 
-import com.java.ravito_plan.common.api.error.ApiError;
-import com.java.ravito_plan.common.api.error.ErrorCode;
 import com.java.ravito_plan.food.application.dto.command.CreateBrandCommand;
 import com.java.ravito_plan.food.application.dto.command.UpdateBrandCommand;
 import com.java.ravito_plan.food.application.dto.view.BrandDetailView;
 import com.java.ravito_plan.food.application.dto.view.BrandSummaryView;
-import com.java.ravito_plan.food.application.exception.BrandNotFoundException;
 import com.java.ravito_plan.food.domain.ports.inbound.BrandPort;
+import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,18 +23,18 @@ import org.springframework.web.bind.annotation.RestController;
 public class BrandController {
 
     private final BrandPort brandService;
+
     public BrandController(BrandPort brandService) {
         this.brandService = brandService;
     }
 
     @GetMapping
-    public ResponseEntity<List<BrandSummaryView>> getAllBrands()
-    {
+    public ResponseEntity<List<BrandSummaryView>> getAllBrands() {
         return ResponseEntity.ok(brandService.getAllBrands());
     }
 
     @PostMapping
-    public ResponseEntity<Void> createBrand(@RequestBody CreateBrandCommand command) {
+    public ResponseEntity<Void> createBrand(@Valid @RequestBody CreateBrandCommand command) {
         BrandDetailView brand = this.brandService.createBrand(command);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -48,8 +46,8 @@ public class BrandController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BrandDetailView> updateBrand(@PathVariable("id") Long id, @RequestBody
-            UpdateBrandCommand updateBrandCommand) {
+    public ResponseEntity<BrandDetailView> updateBrand(@PathVariable("id") Long id,
+            @Valid @RequestBody UpdateBrandCommand updateBrandCommand) {
         BrandDetailView brand = this.brandService.updateBrand(updateBrandCommand);
         return ResponseEntity.ok(brand);
     }

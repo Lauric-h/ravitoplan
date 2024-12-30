@@ -1,15 +1,22 @@
 package com.java.ravito_plan.food.application.dto.command;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class CreateFoodCommand implements FoodCommand {
 
+    @NotNull
     private Long brandId;
+    @NotBlank
     private String name;
+    @NotNull
     private int carbohydrates;
     private int calories;
     private int proteins;
     private boolean electrolytes;
     private String link;
     private String comment;
+    @NotBlank
     private String ingestionType;
 
     @Override

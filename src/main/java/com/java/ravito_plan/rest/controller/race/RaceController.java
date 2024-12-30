@@ -7,6 +7,7 @@ import com.java.ravito_plan.race.application.dto.command.UpdateRaceCommand;
 import com.java.ravito_plan.race.application.dto.view.RaceDetailView;
 import com.java.ravito_plan.race.application.dto.view.RaceSummaryView;
 import com.java.ravito_plan.race.application.service.RaceApplicationService;
+import jakarta.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import org.springframework.http.HttpHeaders;
@@ -38,7 +39,7 @@ public class RaceController {
     }
 
     @PostMapping()
-    public ResponseEntity<RaceSummaryView> createUserRace(@RequestBody CreateRaceCommand command) {
+    public ResponseEntity<RaceSummaryView> createUserRace(@Valid @RequestBody CreateRaceCommand command) {
         RaceSummaryView race = this.raceApplicationService.createRaceForUser(command);
         return ResponseEntity.ok(race);
     }
@@ -51,7 +52,7 @@ public class RaceController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> editUserRace(@PathVariable Long id,
-            @RequestBody UpdateRaceCommand command) {
+            @Valid @RequestBody UpdateRaceCommand command) {
         this.raceApplicationService.updateRaceForUser(command);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("").buildAndExpand(id)

@@ -1,7 +1,8 @@
 package com.java.ravito_plan.race.application.service;
 
-import com.java.ravito_plan.race.application.dto.command.AddOrDeleteFoodCommand;
+import com.java.ravito_plan.race.application.dto.command.AddFoodCommand;
 import com.java.ravito_plan.race.application.dto.command.CreateCheckpointCommand;
+import com.java.ravito_plan.race.application.dto.command.DeleteFoodCommand;
 import com.java.ravito_plan.race.application.dto.command.UpdateCheckpointCommand;
 import com.java.ravito_plan.race.application.dto.internal.FoodDto;
 import com.java.ravito_plan.race.application.dto.internal.UserDto;
@@ -75,13 +76,13 @@ public class CheckpointService extends BaseApplicationService implements Checkpo
     }
 
     @Transactional
-    public CheckpointView addFoodToCheckpoint(AddOrDeleteFoodCommand addFoodCommand) {
-        this.verifyUserOwnsRace(addFoodCommand.raceId);
+    public CheckpointView addFoodToCheckpoint(AddFoodCommand addFoodCommand) {
+        this.verifyUserOwnsRace(addFoodCommand.getRaceId());
         Checkpoint checkpoint = this.checkpointRepository.findByIdAndRaceId(
-                addFoodCommand.checkpointId, addFoodCommand.raceId);
+                addFoodCommand.getCheckpointId(), addFoodCommand.getRaceId());
 
-        FoodDto externalFoodDto = this.foodPort.getFoodById(addFoodCommand.foodId);
-        checkpoint.addFood(addFoodCommand.quantity, externalFoodDto.id);
+        FoodDto externalFoodDto = this.foodPort.getFoodById(addFoodCommand.getFoodId());
+        checkpoint.addFood(addFoodCommand.getQuantity(), externalFoodDto.id);
 
         Checkpoint savedCheckpoint = this.checkpointRepository.save(checkpoint);
         Map<Long, FoodDto> foods = this.foodPort.getFoodsByIds(
@@ -91,12 +92,12 @@ public class CheckpointService extends BaseApplicationService implements Checkpo
     }
 
     @Transactional
-    public void removeFoodFromCheckpoint(AddOrDeleteFoodCommand deleteFoodCommand) {
-        this.verifyUserOwnsRace(deleteFoodCommand.raceId);
+public void removeFoodFromCheckpoint(DeleteFoodCommand deleteFoodCommand) {
+        this.verifyUserOwnsRace(deleteFoodCommand.getRaceId());
         Checkpoint checkpoint = this.checkpointRepository.findByIdAndRaceId(
-                deleteFoodCommand.checkpointId, deleteFoodCommand.raceId);
+                deleteFoodCommand.getCheckpointId(), deleteFoodCommand.getRaceId());
 
-        checkpoint.removeFood(deleteFoodCommand.quantity, deleteFoodCommand.foodId);
+        checkpoint.removeFood(deleteFoodCommand.getQuantity(), deleteFoodCommand.getFoodId());
         this.checkpointRepository.save(checkpoint);
     }
 }

@@ -5,7 +5,7 @@ import com.java.ravito_plan.race.application.dto.command.CreateCheckpointCommand
 import com.java.ravito_plan.race.application.dto.command.DeleteFoodCommand;
 import com.java.ravito_plan.race.application.dto.command.UpdateCheckpointCommand;
 import com.java.ravito_plan.race.application.dto.internal.FoodDto;
-import com.java.ravito_plan.race.application.dto.internal.UserDto;
+import com.java.ravito_plan.race.application.dto.internal.RaceUserDto;
 import com.java.ravito_plan.race.application.dto.view.CheckpointView;
 import com.java.ravito_plan.race.application.dto.view.RaceDetailView;
 import com.java.ravito_plan.race.application.mapper.CheckpointMapper;
@@ -37,7 +37,7 @@ public class CheckpointService extends BaseApplicationService implements Checkpo
 
     @Transactional
     public RaceDetailView addCheckpoint(CreateCheckpointCommand createCheckpointCommand) {
-        UserDto user = this.getCurrentUser();
+        RaceUserDto user = this.getCurrentUser();
 
         Race race = this.raceRepository.findByIdAndUserId(createCheckpointCommand.getRaceId(),
                 user.id);

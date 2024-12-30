@@ -1,6 +1,6 @@
 package com.java.ravito_plan.race.application.service;
 
-import com.java.ravito_plan.race.application.dto.internal.UserDto;
+import com.java.ravito_plan.race.application.dto.internal.RaceUserDto;
 import com.java.ravito_plan.race.domain.model.CheckpointFood;
 import com.java.ravito_plan.race.domain.model.Race;
 import com.java.ravito_plan.race.domain.ports.outbound.RaceRepository;
@@ -20,14 +20,14 @@ public abstract class BaseApplicationService {
         this.userPort = userPort;
     }
 
-    protected UserDto getCurrentUser() {
+    protected RaceUserDto getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         return userPort.getByUsername(username);
     }
 
     protected void verifyUserOwnsRace(Long raceId) {
-        UserDto currentUser = getCurrentUser();
+        RaceUserDto currentUser = getCurrentUser();
         Race race = raceRepository.findByIdAndUserId(raceId, currentUser.id);
     }
 

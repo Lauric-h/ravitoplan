@@ -1,8 +1,9 @@
 package com.java.ravito_plan.race.domain.ports.outbound;
 
-import com.java.ravito_plan.race.application.dto.internal.UserDto;
+
+import com.java.ravito_plan.race.application.dto.internal.RaceUserDto;
 
 public interface UserPort {
 
-    UserDto getByUsername(String username);
+    RaceUserDto getByUsername(String username);
 }

@@ -3,7 +3,7 @@ package com.java.ravito_plan.race.application.service;
 import com.java.ravito_plan.race.application.dto.command.CreateRaceCommand;
 import com.java.ravito_plan.race.application.dto.command.UpdateRaceCommand;
 import com.java.ravito_plan.race.application.dto.internal.FoodDto;
-import com.java.ravito_plan.race.application.dto.internal.UserDto;
+import com.java.ravito_plan.race.application.dto.internal.RaceUserDto;
 import com.java.ravito_plan.race.application.dto.view.RaceDetailView;
 import com.java.ravito_plan.race.application.dto.view.RaceSummaryView;
 import com.java.ravito_plan.race.application.mapper.RaceMapper;
@@ -31,7 +31,7 @@ public class RaceApplicationService extends BaseApplicationService implements Ra
 
     @Transactional(readOnly = true)
     public List<RaceSummaryView> getAllUserRaces() {
-        UserDto user = this.getCurrentUser();
+        RaceUserDto user = this.getCurrentUser();
 
         List<Race> races = this.raceRepository.findAllByUserId(user.id);
         return races.stream().map(RaceViewMapper::toRaceSummaryView).toList();
@@ -39,7 +39,7 @@ public class RaceApplicationService extends BaseApplicationService implements Ra
 
     @Transactional(readOnly = true)
     public RaceSummaryView getUserRaceById(Long raceId) {
-        UserDto user = this.getCurrentUser();
+        RaceUserDto user = this.getCurrentUser();
 
         Race race = this.raceRepository.findByIdAndUserId(raceId, user.id);
         return RaceViewMapper.toRaceSummaryView(race);
@@ -47,7 +47,7 @@ public class RaceApplicationService extends BaseApplicationService implements Ra
 
     @Transactional(readOnly = true)
     public RaceDetailView getUserFullRaceById(Long raceId) {
-        UserDto user = this.getCurrentUser();
+        RaceUserDto user = this.getCurrentUser();
 
         Race race = this.raceRepository.findByIdAndUserId(raceId, user.id);
 
@@ -59,7 +59,7 @@ public class RaceApplicationService extends BaseApplicationService implements Ra
 
     @Transactional
     public RaceSummaryView createRaceForUser(CreateRaceCommand command) {
-        UserDto user = this.getCurrentUser();
+        RaceUserDto user = this.getCurrentUser();
 
         Race race = RaceMapper.toRace(command);
         race.setUserId(user.id);
@@ -70,7 +70,7 @@ public class RaceApplicationService extends BaseApplicationService implements Ra
 
     @Transactional
     public void updateRaceForUser(UpdateRaceCommand command) {
-        UserDto user = this.getCurrentUser();
+        RaceUserDto user = this.getCurrentUser();
 
         Race race = this.raceRepository.findByIdAndUserId(command.getId(), user.id);
 

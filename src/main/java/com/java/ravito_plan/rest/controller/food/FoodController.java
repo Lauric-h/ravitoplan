@@ -6,6 +6,7 @@ import com.java.ravito_plan.food.application.dto.view.BrandDetailView;
 import com.java.ravito_plan.food.application.dto.view.FoodSummaryView;
 import com.java.ravito_plan.food.application.dto.view.FoodView;
 import com.java.ravito_plan.food.domain.ports.inbound.FoodPort;
+import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,14 +49,14 @@ public class FoodController {
 
     @PostMapping
     public ResponseEntity<BrandDetailView> createFood(@PathVariable("brandId") Long brandId,
-            @RequestBody CreateFoodCommand createFoodCommand) {
+            @Valid @RequestBody CreateFoodCommand createFoodCommand) {
         BrandDetailView brand = this.foodService.createFood(createFoodCommand);
         return ResponseEntity.ok(brand);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateFood(@PathVariable("brandId") Long brandId,
-            @PathVariable("id") Long id, @RequestBody UpdateFoodCommand updateFoodCommand) {
+            @PathVariable("id") Long id, @Valid @RequestBody UpdateFoodCommand updateFoodCommand) {
         this.foodService.updateFood(updateFoodCommand);
         return new ResponseEntity<>(HttpStatus.OK);
     }

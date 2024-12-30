@@ -1,9 +1,18 @@
 package com.java.ravito_plan.user.application.dto.auth;
 
 
+import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+
+@Getter
 public class RegisterUserCommand {
 
-    public String username;
-    public String email;
-    public String password;
+    @NotBlank
+    private String username;
+
+    @NotBlank
+    private String email;
+
+    @NotBlank
+    private String password;
 }

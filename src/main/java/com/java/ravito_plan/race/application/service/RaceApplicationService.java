@@ -12,14 +12,13 @@ import com.java.ravito_plan.race.domain.model.Race;
 import com.java.ravito_plan.race.domain.ports.outbound.FoodPort;
 import com.java.ravito_plan.race.domain.ports.outbound.RaceRepository;
 import com.java.ravito_plan.race.domain.ports.outbound.UserPort;
-import com.java.ravito_plan.race.domain.ports.inbound.RacePort;
 import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class RaceApplicationService extends BaseApplicationService implements RacePort {
+public class RaceApplicationService extends BaseApplicationService {
 
     private final FoodPort foodPort;
 

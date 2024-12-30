@@ -13,7 +13,6 @@ import com.java.ravito_plan.race.application.mapper.view.CheckpointViewMapper;
 import com.java.ravito_plan.race.application.mapper.view.RaceViewMapper;
 import com.java.ravito_plan.race.domain.model.Checkpoint;
 import com.java.ravito_plan.race.domain.model.Race;
-import com.java.ravito_plan.race.domain.ports.inbound.CheckpointPort;
 import com.java.ravito_plan.race.domain.ports.outbound.CheckpointRepository;
 import com.java.ravito_plan.race.domain.ports.outbound.FoodPort;
 import com.java.ravito_plan.race.domain.ports.outbound.RaceRepository;
@@ -23,7 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class CheckpointService extends BaseApplicationService implements CheckpointPort {
+public class CheckpointService extends BaseApplicationService {
 
     private final CheckpointRepository checkpointRepository;
     private final FoodPort foodPort;

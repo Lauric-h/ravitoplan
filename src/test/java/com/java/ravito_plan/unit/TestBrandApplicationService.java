@@ -9,12 +9,15 @@ import static org.mockito.Mockito.when;
 
 import com.java.ravito_plan.food.application.dto.command.CreateBrandCommand;
 import com.java.ravito_plan.food.application.dto.view.BrandDetailView;
+import com.java.ravito_plan.food.application.dto.view.BrandSummaryView;
 import com.java.ravito_plan.food.application.service.BrandApplicationService;
 import com.java.ravito_plan.food.domain.model.Brand;
 import com.java.ravito_plan.food.domain.ports.outbound.BrandRepository;
 import jakarta.persistence.PersistenceException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -31,9 +34,44 @@ public class TestBrandApplicationService {
     @MockBean
     private BrandRepository brandRepository;
 
-//    @Test
-//    public void testGetAllBrands() {}
+    @Test
+    public void testGetAllBrands() {
+        List<Brand> brands = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            Brand brand = Generator.getBrand((long) i, String.format("Brand %s", i), Collections.emptyList());
+            brands.add(brand);
+        }
+        when(brandRepository.findAll()).thenReturn(brands);
 
+        List<BrandSummaryView> expectedBrands = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            BrandSummaryView brand = Generator.getBrandSummaryView(String.format("Brand %s", i));
+            expectedBrands.add(brand);
+        }
+
+        List<BrandSummaryView> actualBrands = brandApplicationService.getAllBrands();
+        for (int i = 0; i < 5; i++) {
+            assertThat(actualBrands.get(i).name).isEqualTo(expectedBrands.get(i).name);
+        }
+    }
+
+    @Test
+    public void testGetBrand()
+    {
+        Brand brand = Generator.getBrand(1L, "Test Brand", Collections.emptyList());
+        when(brandRepository.findById(brand.getId())).thenReturn(brand);
+
+        BrandDetailView expected = Generator.getBrandDetailView("Test Brand", Collections.emptyList());
+
+        BrandDetailView actual = this.brandApplicationService.getBrandById(brand.getId());
+        assertThat(actual.name).isEqualTo(expected.name);
+        assertThat(actual.foods.size()).isEqualTo(expected.foods.size());
+    }
+
+    @Test
+    public void testGetBrandNotFound() {
+
+    }
 
     @Test
     public void testCreateBrandWithNullNameFails() {

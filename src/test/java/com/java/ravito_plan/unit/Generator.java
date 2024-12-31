@@ -2,6 +2,7 @@ package com.java.ravito_plan.unit;
 
 import com.java.ravito_plan.food.application.dto.command.CreateBrandCommand;
 import com.java.ravito_plan.food.application.dto.view.BrandDetailView;
+import com.java.ravito_plan.food.application.dto.view.BrandSummaryView;
 import com.java.ravito_plan.food.application.dto.view.FoodSummaryView;
 import com.java.ravito_plan.food.domain.model.Brand;
 import com.java.ravito_plan.food.domain.model.Food;
@@ -15,6 +16,10 @@ public class Generator {
 
     public static BrandDetailView getBrandDetailView(String name, List<FoodSummaryView> foods) {
         return new BrandDetailView(name, foods);
+    }
+
+    public static BrandSummaryView getBrandSummaryView(String name) {
+        return new BrandSummaryView(name);
     }
 
     public static Brand getBrand(Long id, String name, List<Food> foods) {

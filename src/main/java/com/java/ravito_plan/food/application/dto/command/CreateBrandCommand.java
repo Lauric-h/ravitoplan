@@ -1,8 +1,9 @@
 package com.java.ravito_plan.food.application.dto.command;
 
 import jakarta.validation.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotBlank.List;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public class CreateBrandCommand implements BrandCommand {
 
     @NotBlank

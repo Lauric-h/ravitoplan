@@ -10,6 +10,7 @@ import static org.mockito.Mockito.when;
 import com.java.ravito_plan.food.application.dto.command.CreateBrandCommand;
 import com.java.ravito_plan.food.application.dto.view.BrandDetailView;
 import com.java.ravito_plan.food.application.dto.view.BrandSummaryView;
+import com.java.ravito_plan.food.application.exception.BrandNotFoundException;
 import com.java.ravito_plan.food.application.service.BrandApplicationService;
 import com.java.ravito_plan.food.domain.model.Brand;
 import com.java.ravito_plan.food.domain.ports.outbound.BrandRepository;
@@ -70,7 +71,8 @@ public class TestBrandApplicationService {
 
     @Test
     public void testGetBrandNotFound() {
-
+       assertThatThrownBy(() -> this.brandApplicationService.getBrandById(-1L)).isInstanceOf(
+               BrandNotFoundException.class);
     }
 
     @Test

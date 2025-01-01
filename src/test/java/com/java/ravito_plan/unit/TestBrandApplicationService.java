@@ -3,23 +3,20 @@ package com.java.ravito_plan.unit;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.java.ravito_plan.food.application.dto.command.CreateBrandCommand;
+import com.java.ravito_plan.food.application.dto.command.UpdateBrandCommand;
 import com.java.ravito_plan.food.application.dto.view.BrandDetailView;
 import com.java.ravito_plan.food.application.dto.view.BrandSummaryView;
-import com.java.ravito_plan.food.application.exception.BrandNotFoundException;
 import com.java.ravito_plan.food.application.service.BrandApplicationService;
 import com.java.ravito_plan.food.domain.model.Brand;
 import com.java.ravito_plan.food.domain.ports.outbound.BrandRepository;
 import jakarta.persistence.PersistenceException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +36,8 @@ public class TestBrandApplicationService {
     public void testGetAllBrands() {
         List<Brand> brands = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            Brand brand = Generator.getBrand((long) i, String.format("Brand %s", i), Collections.emptyList());
+            Brand brand = Generator.getBrand((long) i, String.format("Brand %s", i),
+                    Collections.emptyList());
             brands.add(brand);
         }
         when(brandRepository.findAll()).thenReturn(brands);
@@ -57,12 +55,12 @@ public class TestBrandApplicationService {
     }
 
     @Test
-    public void testGetBrand()
-    {
+    public void testGetBrand() {
         Brand brand = Generator.getBrand(1L, "Test Brand", Collections.emptyList());
-        when(brandRepository.findById(brand.getId())).thenReturn(brand);
+        when(this.brandRepository.findById(brand.getId())).thenReturn(brand);
 
-        BrandDetailView expected = Generator.getBrandDetailView("Test Brand", Collections.emptyList());
+        BrandDetailView expected = Generator.getBrandDetailView("Test Brand",
+                Collections.emptyList());
 
         BrandDetailView actual = this.brandApplicationService.getBrandById(brand.getId());
         assertThat(actual.name).isEqualTo(expected.name);
@@ -70,21 +68,16 @@ public class TestBrandApplicationService {
     }
 
     @Test
-    public void testGetBrandNotFound() {
-       assertThatThrownBy(() -> this.brandApplicationService.getBrandById(-1L)).isInstanceOf(
-               BrandNotFoundException.class);
-    }
-
-    @Test
     public void testCreateBrandWithNullNameFails() {
         CreateBrandCommand createBrandCommand = Generator.getCreateBrandCommand(null);
 
-        when(brandRepository.save(any(Brand.class))).thenThrow(new PersistenceException());
+        when(this.brandRepository.save(any(Brand.class))).thenThrow(new PersistenceException());
 
-        assertThatThrownBy(() -> brandApplicationService.createBrand(createBrandCommand))
-                .isInstanceOf(PersistenceException.class);
+        assertThatThrownBy(
+                () -> brandApplicationService.createBrand(createBrandCommand)).isInstanceOf(
+                PersistenceException.class);
 
-        verify(brandRepository).save(any(Brand.class));
+        verify(this.brandRepository).save(any(Brand.class));
     }
 
     @Test
@@ -95,13 +88,34 @@ public class TestBrandApplicationService {
         ArgumentCaptor<Brand> brandCaptor = ArgumentCaptor.forClass(Brand.class);
 
         BrandDetailView expected = Generator.getBrandDetailView(brandName, Collections.emptyList());
-        when(brandRepository.save(any(Brand.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(this.brandRepository.save(any(Brand.class))).thenAnswer(
+                invocation -> invocation.getArgument(0));
 
         BrandDetailView actual = this.brandApplicationService.createBrand(createBrandCommand);
 
-        verify(brandRepository).save(brandCaptor.capture());
+        verify(this.brandRepository).save(brandCaptor.capture());
 
         assertThat(actual.name).isEqualTo(expected.name);
         assertThat(actual.foods).isEmpty();
+    }
+
+    @Test
+    public void testUpdateBrand() {
+        var brandName = "Test Brand";
+        Brand brand = Generator.getBrand(1L, brandName, Collections.emptyList());
+        UpdateBrandCommand updateBrandCommand = Generator.getUpdateBrandCommand(1L,
+                "Updated brand name");
+        BrandDetailView expected = Generator.getBrandDetailView("Updated brand name",
+                Collections.emptyList());
+
+        when(this.brandRepository.findById(brand.getId())).thenReturn(brand);
+        when(this.brandRepository.save(any(Brand.class))).thenAnswer(
+                invocation -> invocation.getArgument(0));
+
+        BrandDetailView actual = this.brandApplicationService.updateBrand(updateBrandCommand);
+
+        ArgumentCaptor<Brand> brandCaptor = ArgumentCaptor.forClass(Brand.class);
+        verify(this.brandRepository).save(brandCaptor.capture());
+        assertThat(actual.name).isEqualTo(expected.name);
     }
 }

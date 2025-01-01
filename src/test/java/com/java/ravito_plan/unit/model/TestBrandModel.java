@@ -1,8 +1,9 @@
-package com.java.ravito_plan.unit;
+package com.java.ravito_plan.unit.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.java.ravito_plan.food.domain.model.Brand;
+import com.java.ravito_plan.unit.Generator;
 import java.util.Collections;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

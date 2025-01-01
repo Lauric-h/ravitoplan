@@ -7,6 +7,7 @@ import com.java.ravito_plan.food.application.dto.view.BrandSummaryView;
 import com.java.ravito_plan.food.application.dto.view.FoodSummaryView;
 import com.java.ravito_plan.food.domain.model.Brand;
 import com.java.ravito_plan.food.domain.model.Food;
+import com.java.ravito_plan.food.domain.model.IngestionType;
 import java.util.List;
 
 public class Generator {
@@ -35,4 +36,12 @@ public class Generator {
         return brand;
     }
 
+    public static Food getFood(Long id, String name, int carbohydrates, int calories, int proteins,
+            boolean electrolytes, String link, String comment, IngestionType ingestionType) {
+        Food food = new Food(name, carbohydrates, calories, proteins, electrolytes, link, comment,
+                ingestionType);
+        food.setId(id);
+
+        return food;
+    }
 }

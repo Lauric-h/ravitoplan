@@ -1,4 +1,4 @@
-package com.java.ravito_plan.unit;
+package com.java.ravito_plan.unit.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -13,6 +13,7 @@ import com.java.ravito_plan.food.application.dto.view.BrandSummaryView;
 import com.java.ravito_plan.food.application.service.BrandApplicationService;
 import com.java.ravito_plan.food.domain.model.Brand;
 import com.java.ravito_plan.food.domain.ports.outbound.BrandRepository;
+import com.java.ravito_plan.unit.Generator;
 import jakarta.persistence.PersistenceException;
 import java.util.ArrayList;
 import java.util.Collections;

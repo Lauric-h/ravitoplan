@@ -58,6 +58,7 @@ public class TestFoodApplicationService {
         Food food = Generator.getPopulatedFood();
         Brand brand = Generator.getBrand(2L, "Brand name", List.of(food));
         food.setBrand(brand);
+        
 
         when(this.foodRepository.findByIdAndBrandId(1L, 2L)).thenReturn(food);
 

@@ -23,7 +23,7 @@ public class FoodPortAdapter implements FoodPort {
         FoodDetail foodDetail = this.foodApplicationService.getFoodById(id);
         return new FoodDto(foodDetail.id, foodDetail.brandName, foodDetail.name,
                 foodDetail.carbohydrates, foodDetail.calories, foodDetail.proteins,
-                foodDetail.electrolytes, foodDetail.link, foodDetail.comment, foodDetail.type);
+                foodDetail.electrolytes, foodDetail.link, foodDetail.comment, foodDetail.ingestionType);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class FoodPortAdapter implements FoodPort {
             FoodDetail foodDetail = entry.getValue();
             return new FoodDto(foodDetail.id, foodDetail.brandName, foodDetail.name,
                     foodDetail.carbohydrates, foodDetail.calories, foodDetail.proteins,
-                    foodDetail.electrolytes, foodDetail.link, foodDetail.comment, foodDetail.type);
+                    foodDetail.electrolytes, foodDetail.link, foodDetail.comment, foodDetail.ingestionType);
         }));
     }
 }

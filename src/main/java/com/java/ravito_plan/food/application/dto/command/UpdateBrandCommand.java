@@ -2,8 +2,10 @@ package com.java.ravito_plan.food.application.dto.command;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+@AllArgsConstructor
 public class UpdateBrandCommand implements BrandCommand {
 
     @NotNull

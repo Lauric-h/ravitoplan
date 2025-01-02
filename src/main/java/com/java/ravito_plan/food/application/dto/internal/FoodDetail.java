@@ -14,5 +14,5 @@ public class FoodDetail {
     public boolean electrolytes;
     public String link;
     public String comment;
-    public String type;
+    public String ingestionType;
 }

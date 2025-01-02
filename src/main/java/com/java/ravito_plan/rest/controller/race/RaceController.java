@@ -32,11 +32,11 @@ public class RaceController {
         this.raceApplicationService = raceApplicationService;
     }
 
-    @GetMapping()
-    public ResponseEntity<List<RaceSummaryView>> getUserRaces() {
-        List<RaceSummaryView> races = this.raceApplicationService.getAllUserRaces();
-        return ResponseEntity.ok(races);
-    }
+//    @GetMapping()
+//    public ResponseEntity<List<RaceSummaryView>> getUserRaces() {
+//        List<RaceSummaryView> races = this.raceApplicationService.getAllUserRaces();
+//        return ResponseEntity.ok(races);
+//    }
 
     @PostMapping()
     public ResponseEntity<RaceSummaryView> createUserRace(@Valid @RequestBody CreateRaceCommand command) {

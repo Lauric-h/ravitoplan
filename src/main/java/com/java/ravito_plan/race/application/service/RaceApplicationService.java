@@ -29,22 +29,6 @@ public class RaceApplicationService extends BaseApplicationService {
     }
 
     @Transactional(readOnly = true)
-    public List<RaceSummaryView> getAllUserRaces() {
-        RaceUserDto user = this.getCurrentUser();
-
-        List<Race> races = this.raceRepository.findAllByUserId(user.id);
-        return races.stream().map(RaceViewMapper::toRaceSummaryView).toList();
-    }
-
-    @Transactional(readOnly = true)
-    public RaceSummaryView getUserRaceById(Long raceId) {
-        RaceUserDto user = this.getCurrentUser();
-
-        Race race = this.raceRepository.findByIdAndUserId(raceId, user.id);
-        return RaceViewMapper.toRaceSummaryView(race);
-    }
-
-    @Transactional(readOnly = true)
     public RaceDetailView getUserFullRaceById(Long raceId) {
         RaceUserDto user = this.getCurrentUser();
 

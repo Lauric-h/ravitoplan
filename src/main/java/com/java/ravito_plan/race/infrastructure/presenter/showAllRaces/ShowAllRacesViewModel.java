@@ -1,5 +1,8 @@
 package com.java.ravito_plan.race.infrastructure.presenter.showAllRaces;
 
-public class ShowAllRacesViewModel {
+import com.java.ravito_plan.race.application.dto.view.RaceSummaryView;
+import java.util.List;
+
+public record ShowAllRacesViewModel(List<RaceSummaryView> races) {
 
 }

@@ -6,6 +6,7 @@ import com.java.ravito_plan.race.domain.ports.outbound.UserPort;
 import com.java.ravito_plan.race.domain.usecase.showAllRaces.ShowAllRacesInterface;
 import com.java.ravito_plan.race.domain.usecase.showAllRaces.ShowAllRacesRequest;
 import com.java.ravito_plan.race.infrastructure.presenter.showAllRaces.ShowAllRacesJsonPresenter;
+import com.java.ravito_plan.race.infrastructure.presenter.showAllRaces.ShowAllRacesViewModel;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,7 +30,7 @@ public class ShowAllRacesController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<RaceSummaryView>> getUserRaces(@AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<ShowAllRacesViewModel> getUserRaces(@AuthenticationPrincipal UserDetails userDetails) {
 
         RaceUserDto user = this.userPort.getByUsername(userDetails.getUsername());
         this.usecase.execute(new ShowAllRacesRequest(user.id), presenter);

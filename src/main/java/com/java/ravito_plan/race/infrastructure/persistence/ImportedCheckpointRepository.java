@@ -1,4 +1,4 @@
-package com.java.ravito_plan.race.infrastructure.adapters.outbound.repository;
+package com.java.ravito_plan.race.infrastructure.persistence;
 
 import com.java.ravito_plan.race.domain.model.Checkpoint;
 import java.util.Optional;

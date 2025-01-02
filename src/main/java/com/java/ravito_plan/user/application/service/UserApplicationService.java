@@ -4,15 +4,14 @@ import com.java.ravito_plan.user.application.dto.UserDto;
 import com.java.ravito_plan.user.application.dto.auth.RegisterUserCommand;
 import com.java.ravito_plan.user.domain.exception.UserAlreadyExistsException;
 import com.java.ravito_plan.user.domain.model.User;
-import com.java.ravito_plan.user.domain.ports.outbound.UserRepository;
+import com.java.ravito_plan.user.domain.ports.UserRepository;
 import com.java.ravito_plan.user.domain.service.UserDomainService;
-import com.java.ravito_plan.user.domain.ports.inbound.UserPort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class UserApplicationService implements UserPort {
+public class UserApplicationService {
 
     private final UserRepository userRepository;
     private final UserDomainService userService;
@@ -23,7 +22,6 @@ public class UserApplicationService implements UserPort {
         this.userService = userService;
     }
 
-    @Override
     @Transactional
     public UserDto registerUser(RegisterUserCommand registerUserCommand) {
         if (this.userRepository.findByUsername(registerUserCommand.getUsername()) != null) {

@@ -1,7 +1,7 @@
 package com.java.ravito_plan.race.domain.usecase.showAllRaces;
 
 import com.java.ravito_plan.race.domain.model.Race;
-import com.java.ravito_plan.race.domain.ports.outbound.RaceRepository;
+import com.java.ravito_plan.race.domain.ports.repository.RaceRepository;
 import java.util.List;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

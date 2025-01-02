@@ -1,13 +1,11 @@
 package com.java.ravito_plan.race.api.race;
 
 import com.java.ravito_plan.race.application.dto.internal.RaceUserDto;
-import com.java.ravito_plan.race.application.dto.view.RaceSummaryView;
-import com.java.ravito_plan.race.domain.ports.outbound.UserPort;
+import com.java.ravito_plan.race.domain.ports.UserPort;
 import com.java.ravito_plan.race.domain.usecase.showAllRaces.ShowAllRacesInterface;
 import com.java.ravito_plan.race.domain.usecase.showAllRaces.ShowAllRacesRequest;
 import com.java.ravito_plan.race.infrastructure.presenter.showAllRaces.ShowAllRacesJsonPresenter;
 import com.java.ravito_plan.race.infrastructure.presenter.showAllRaces.ShowAllRacesViewModel;
-import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;

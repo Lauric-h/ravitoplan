@@ -1,7 +1,7 @@
 package com.java.ravito_plan.race.api.race;
 
 import com.java.ravito_plan.race.application.dto.internal.RaceUserDto;
-import com.java.ravito_plan.race.domain.ports.outbound.UserPort;
+import com.java.ravito_plan.race.domain.ports.UserPort;
 import com.java.ravito_plan.race.domain.usecase.showRace.ShowRaceInterface;
 import com.java.ravito_plan.race.domain.usecase.showRace.ShowRaceRequest;
 import com.java.ravito_plan.race.infrastructure.presenter.showRace.ShowRaceJsonPresenter;

@@ -26,18 +26,6 @@ public class RaceController {
         this.raceApplicationService = raceApplicationService;
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Void> editUserRace(@PathVariable Long id,
-            @Valid @RequestBody UpdateRaceCommand command) {
-        this.raceApplicationService.updateRaceForUser(command);
-
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("").buildAndExpand(id)
-                .toUri();
-
-        return ResponseEntity.status(OK).header(HttpHeaders.LOCATION, String.valueOf(location))
-                .build();
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRace(@PathVariable Long id) {
         this.raceApplicationService.deleteRaceForUser(id);

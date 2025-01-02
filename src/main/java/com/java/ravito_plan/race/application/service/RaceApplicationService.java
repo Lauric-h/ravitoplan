@@ -22,19 +22,6 @@ public class RaceApplicationService extends BaseApplicationService {
     }
 
     @Transactional
-    public void updateRaceForUser(UpdateRaceCommand command) {
-        RaceUserDto user = this.getCurrentUser();
-
-        Race race = this.raceRepository.findByIdAndUserId(command.getId(), user.id);
-
-        race.updateFields(RaceMapper.toRace(command));
-
-        race.validate();
-
-        this.raceRepository.save(race);
-    }
-
-    @Transactional
     public void deleteRaceForUser(Long raceId) {
        this.verifyUserOwnsRace(raceId);
 

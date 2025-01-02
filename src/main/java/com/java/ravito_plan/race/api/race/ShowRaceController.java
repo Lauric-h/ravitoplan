@@ -33,6 +33,6 @@ public class ShowRaceController {
             @AuthenticationPrincipal UserDetails userDetails) {
         RaceUserDto user = this.userPort.getByUsername(userDetails.getUsername());
         this.usecase.execute(new ShowRaceRequest(user.id, id), presenter);
-        return ResponseEntity.ok(presenter.getViewModel());
+        return ResponseEntity.ok(this.presenter.getViewModel());
     }
 }

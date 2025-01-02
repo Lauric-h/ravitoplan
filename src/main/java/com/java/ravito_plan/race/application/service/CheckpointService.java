@@ -4,13 +4,13 @@ import com.java.ravito_plan.race.application.dto.command.AddFoodCommand;
 import com.java.ravito_plan.race.application.dto.command.CreateCheckpointCommand;
 import com.java.ravito_plan.race.application.dto.command.DeleteFoodCommand;
 import com.java.ravito_plan.race.application.dto.command.UpdateCheckpointCommand;
-import com.java.ravito_plan.race.application.dto.internal.FoodDto;
 import com.java.ravito_plan.race.application.dto.internal.RaceUserDto;
 import com.java.ravito_plan.race.application.dto.view.CheckpointView;
 import com.java.ravito_plan.race.application.dto.view.RaceDetailView;
 import com.java.ravito_plan.race.application.mapper.CheckpointMapper;
 import com.java.ravito_plan.race.application.mapper.view.CheckpointViewMapper;
 import com.java.ravito_plan.race.application.mapper.view.RaceViewMapper;
+import com.java.ravito_plan.race.domain.dto.RaceFoodDto;
 import com.java.ravito_plan.race.domain.model.Checkpoint;
 import com.java.ravito_plan.race.domain.model.Race;
 import com.java.ravito_plan.race.domain.ports.repository.CheckpointRepository;
@@ -43,7 +43,7 @@ public class CheckpointService extends BaseApplicationService {
         race.addOrUpdateCheckpoint(CheckpointMapper.toCheckpoint(createCheckpointCommand));
 
         Race updatedRace = this.raceRepository.save(race);
-        Map<Long, FoodDto> foods = this.foodPort.getFoodsByIds(
+        Map<Long, RaceFoodDto> foods = this.foodPort.getFoodsByIds(
                 this.getAllFoodIdsForRace(updatedRace));
         return RaceViewMapper.toRaceDetailView(updatedRace, foods);
     }
@@ -59,7 +59,7 @@ public class CheckpointService extends BaseApplicationService {
 
         Checkpoint savedCheckpoint = this.checkpointRepository.save(checkpoint);
 
-        Map<Long, FoodDto> foods = this.foodPort.getFoodsByIds(
+        Map<Long, RaceFoodDto> foods = this.foodPort.getFoodsByIds(
                 this.getAllFoodIdsForRace(savedCheckpoint.getRace()));
 
         return RaceViewMapper.toRaceDetailView(savedCheckpoint.getRace(), foods);
@@ -80,11 +80,11 @@ public class CheckpointService extends BaseApplicationService {
         Checkpoint checkpoint = this.checkpointRepository.findByIdAndRaceId(
                 addFoodCommand.getCheckpointId(), addFoodCommand.getRaceId());
 
-        FoodDto externalFoodDto = this.foodPort.getFoodById(addFoodCommand.getFoodId());
-        checkpoint.addFood(addFoodCommand.getQuantity(), externalFoodDto.id);
+        RaceFoodDto externalFoodDto = this.foodPort.getFoodById(addFoodCommand.getFoodId());
+        checkpoint.addFood(addFoodCommand.getQuantity(), externalFoodDto.id());
 
         Checkpoint savedCheckpoint = this.checkpointRepository.save(checkpoint);
-        Map<Long, FoodDto> foods = this.foodPort.getFoodsByIds(
+        Map<Long, RaceFoodDto> foods = this.foodPort.getFoodsByIds(
                 this.getAllFoodIdsForRace(savedCheckpoint.getRace()));
 
         return CheckpointViewMapper.toCheckpointDetailView(savedCheckpoint, foods);

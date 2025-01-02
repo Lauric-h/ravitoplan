@@ -28,21 +28,10 @@ public class BrandController {
         this.brandService = brandService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<BrandSummaryView>> getAllBrands() {
-        return ResponseEntity.ok(brandService.getAllBrands());
-    }
-
     @PostMapping
     public ResponseEntity<Void> createBrand(@Valid @RequestBody CreateBrandCommand command) {
         BrandDetailView brand = this.brandService.createBrand(command);
         return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<BrandDetailView> getBrandById(@PathVariable("id") Long id) {
-        BrandDetailView brand = this.brandService.getBrandById(id);
-        return ResponseEntity.ok(brand);
     }
 
     @PutMapping("/{id}")

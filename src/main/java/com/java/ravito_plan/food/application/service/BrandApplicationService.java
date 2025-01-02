@@ -21,12 +21,6 @@ public class BrandApplicationService {
     }
 
     @Transactional(readOnly = true)
-    public List<BrandSummaryView> getAllBrands() {
-        List<Brand> brands = brandRepository.findAll();
-        return brands.stream().map(BrandViewMapper::toBrandSummaryView).toList();
-    }
-
-    @Transactional(readOnly = true)
     public BrandDetailView getBrandById(Long id) {
         return BrandViewMapper.toBrandDetailView(brandRepository.findById(id));
     }

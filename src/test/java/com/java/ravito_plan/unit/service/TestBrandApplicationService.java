@@ -33,27 +33,27 @@ public class TestBrandApplicationService {
     @MockBean
     private BrandRepository brandRepository;
 
-    @Test
-    public void testGetAllBrands() {
-        List<Brand> brands = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            Brand brand = Generator.getBrand((long) i, String.format("Brand %s", i),
-                    Collections.emptyList());
-            brands.add(brand);
-        }
-        when(brandRepository.findAll()).thenReturn(brands);
-
-        List<BrandSummaryView> expectedBrands = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            BrandSummaryView brand = Generator.getBrandSummaryView(String.format("Brand %s", i));
-            expectedBrands.add(brand);
-        }
-
-        List<BrandSummaryView> actualBrands = brandApplicationService.getAllBrands();
-        for (int i = 0; i < 5; i++) {
-            assertThat(actualBrands.get(i).name).isEqualTo(expectedBrands.get(i).name);
-        }
-    }
+//    @Test
+//    public void testGetAllBrands() {
+//        List<Brand> brands = new ArrayList<>();
+//        for (int i = 0; i < 5; i++) {
+//            Brand brand = Generator.getBrand((long) i, String.format("Brand %s", i),
+//                    Collections.emptyList());
+//            brands.add(brand);
+//        }
+//        when(brandRepository.findAll()).thenReturn(brands);
+//
+//        List<BrandSummaryView> expectedBrands = new ArrayList<>();
+//        for (int i = 0; i < 5; i++) {
+//            BrandSummaryView brand = Generator.getBrandSummaryView(String.format("Brand %s", i));
+//            expectedBrands.add(brand);
+//        }
+//
+//        List<BrandSummaryView> actualBrands = brandApplicationService.getAllBrands();
+//        for (int i = 0; i < 5; i++) {
+//            assertThat(actualBrands.get(i).name).isEqualTo(expectedBrands.get(i).name);
+//        }
+//    }
 
     @Test
     public void testGetBrand() {

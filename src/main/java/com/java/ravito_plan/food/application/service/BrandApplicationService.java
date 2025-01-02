@@ -20,20 +20,6 @@ public class BrandApplicationService {
         this.brandRepository = brandRepository;
     }
 
-    @Transactional(readOnly = true)
-    public BrandDetailView getBrandById(Long id) {
-        return BrandViewMapper.toBrandDetailView(brandRepository.findById(id));
-    }
-
-    @Transactional
-    public BrandDetailView createBrand(CreateBrandCommand command) {
-        Brand brand = new Brand();
-        brand.setName(command.getName());
-        brandRepository.save(brand);
-
-        return BrandViewMapper.toBrandDetailView(brand);
-    }
-
     @Transactional
     public void deleteBrand(Long id) {
         brandRepository.deleteById(id);

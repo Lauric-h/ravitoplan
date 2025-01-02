@@ -28,12 +28,6 @@ public class BrandController {
         this.brandService = brandService;
     }
 
-    @PostMapping
-    public ResponseEntity<Void> createBrand(@Valid @RequestBody CreateBrandCommand command) {
-        BrandDetailView brand = this.brandService.createBrand(command);
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<BrandDetailView> updateBrand(@PathVariable("id") Long id,
             @Valid @RequestBody UpdateBrandCommand updateBrandCommand) {

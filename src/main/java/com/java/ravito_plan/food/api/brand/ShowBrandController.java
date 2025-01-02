@@ -3,7 +3,7 @@ package com.java.ravito_plan.food.api.brand;
 import com.java.ravito_plan.food.domain.usecase.showBrand.ShowBrandInterface;
 import com.java.ravito_plan.food.domain.usecase.showBrand.ShowBrandRequest;
 import com.java.ravito_plan.food.infrastructure.presenter.showBrand.ShowBrandJsonPresenter;
-import com.java.ravito_plan.food.infrastructure.presenter.showBrand.ShowBrandModelView;
+import com.java.ravito_plan.food.infrastructure.presenter.showBrand.ShowBrandViewModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,8 +23,8 @@ public class ShowBrandController {
     }
 
     @GetMapping
-    public ResponseEntity<ShowBrandModelView> showBrand(@PathVariable Long id) {
+    public ResponseEntity<ShowBrandViewModel> showBrand(@PathVariable Long id) {
         this.usecase.execute(new ShowBrandRequest(id), this.presenter);
-        return ResponseEntity.ok(this.presenter.getModelView());
+        return ResponseEntity.ok(this.presenter.getViewModel());
     }
 }

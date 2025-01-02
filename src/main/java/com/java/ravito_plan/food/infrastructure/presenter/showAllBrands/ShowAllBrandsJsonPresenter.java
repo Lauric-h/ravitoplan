@@ -10,10 +10,11 @@ import org.springframework.stereotype.Component;
 @Getter
 public class ShowAllBrandsJsonPresenter implements ShowAllBrandsPresenter {
 
-    private ShowAllBrandsModelView modelView;
+    private ShowAllBrandsViewModel viewModel;
 
     @Override
     public void present(ShowAllBrandsResponse response) {
-        this.modelView = new ShowAllBrandsModelView(response.brands().stream().map(BrandViewMapper::toBrandSummaryView).toList());
+        this.viewModel = new ShowAllBrandsViewModel(
+                response.brands().stream().map(BrandViewMapper::toBrandSummaryView).toList());
     }
 }

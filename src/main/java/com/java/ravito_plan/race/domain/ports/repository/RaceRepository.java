@@ -8,5 +8,6 @@ public interface RaceRepository {
     Race save(Race race);
     List<Race> findAllByUserId(Long userId);
     Race findByIdAndUserId(Long id, Long userId);
-    void deleteById(Long id);
+    boolean existsByIdAndUserId(Long id, Long userId);
+    Race deleteById(Long id);
 }

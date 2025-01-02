@@ -8,4 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface ImportedRaceRepository extends JpaRepository<Race, Long> {
     List<Race> findAllByUserId(Long userId);
     Optional<Race> findByIdAndUserId(Long id, Long userId);
+    boolean existsByIdAndUserId(Long userId, Long raceId);
 }

@@ -31,7 +31,13 @@ public class RaceJpaRepositoryAdapter implements RaceRepository {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public boolean existsByIdAndUserId(Long id, Long userId) {
+        return this.importedRaceRepository.existsByIdAndUserId(id, userId);
+    }
+
+    @Override
+    public Race deleteById(Long id) {
         this.importedRaceRepository.deleteById(id);
+        return null;
     }
 }

@@ -39,18 +39,6 @@ public class RaceApplicationService extends BaseApplicationService {
         return RaceViewMapper.toRaceDetailView(race, foods);
     }
 
-
-    @Transactional
-    public RaceSummaryView createRaceForUser(CreateRaceCommand command) {
-        RaceUserDto user = this.getCurrentUser();
-
-        Race race = RaceMapper.toRace(command);
-        race.setUserId(user.id);
-
-        Race createdRace = this.raceRepository.save(race);
-        return RaceViewMapper.toRaceSummaryView(createdRace);
-    }
-
     @Transactional
     public void updateRaceForUser(UpdateRaceCommand command) {
         RaceUserDto user = this.getCurrentUser();

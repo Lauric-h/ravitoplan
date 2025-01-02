@@ -32,12 +32,6 @@ public class RaceController {
         this.raceApplicationService = raceApplicationService;
     }
 
-    @PostMapping()
-    public ResponseEntity<RaceSummaryView> createUserRace(@Valid @RequestBody CreateRaceCommand command) {
-        RaceSummaryView race = this.raceApplicationService.createRaceForUser(command);
-        return ResponseEntity.ok(race);
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<Void> editUserRace(@PathVariable Long id,
             @Valid @RequestBody UpdateRaceCommand command) {

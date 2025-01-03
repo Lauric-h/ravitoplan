@@ -1,10 +1,10 @@
 package com.java.ravito_plan.food.api.brand;
 
 import com.java.ravito_plan.food.application.dto.command.UpdateBrandCommand;
-import com.java.ravito_plan.food.domain.usecase.updateBrand.UpdateBrandInterface;
-import com.java.ravito_plan.food.domain.usecase.updateBrand.UpdateBrandRequest;
-import com.java.ravito_plan.food.infrastructure.presenter.updateBrand.UpdateBrandJsonPresenter;
-import com.java.ravito_plan.food.infrastructure.presenter.updateBrand.UpdateBrandViewModel;
+import com.java.ravito_plan.food.domain.usecase.brand.updateBrand.UpdateBrandInterface;
+import com.java.ravito_plan.food.domain.usecase.brand.updateBrand.UpdateBrandRequest;
+import com.java.ravito_plan.food.infrastructure.presenter.brand.updateBrand.UpdateBrandJsonPresenter;
+import com.java.ravito_plan.food.infrastructure.presenter.brand.updateBrand.UpdateBrandViewModel;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;

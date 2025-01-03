@@ -1,9 +1,9 @@
 package com.java.ravito_plan.food.api.brand;
 
-import com.java.ravito_plan.food.domain.usecase.showBrand.ShowBrandInterface;
-import com.java.ravito_plan.food.domain.usecase.showBrand.ShowBrandRequest;
-import com.java.ravito_plan.food.infrastructure.presenter.showBrand.ShowBrandJsonPresenter;
-import com.java.ravito_plan.food.infrastructure.presenter.showBrand.ShowBrandViewModel;
+import com.java.ravito_plan.food.domain.usecase.brand.showBrand.ShowBrandInterface;
+import com.java.ravito_plan.food.domain.usecase.brand.showBrand.ShowBrandRequest;
+import com.java.ravito_plan.food.infrastructure.presenter.brand.showBrand.ShowBrandJsonPresenter;
+import com.java.ravito_plan.food.infrastructure.presenter.brand.showBrand.ShowBrandViewModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -1,8 +1,8 @@
 package com.java.ravito_plan.food.api.brand;
 
-import com.java.ravito_plan.food.domain.usecase.deleteBrand.DeleteBrandInterface;
-import com.java.ravito_plan.food.domain.usecase.deleteBrand.DeleteBrandRequest;
-import com.java.ravito_plan.food.infrastructure.presenter.deleteBrand.DeleteBrandJsonPresenter;
+import com.java.ravito_plan.food.domain.usecase.brand.deleteBrand.DeleteBrandInterface;
+import com.java.ravito_plan.food.domain.usecase.brand.deleteBrand.DeleteBrandRequest;
+import com.java.ravito_plan.food.infrastructure.presenter.brand.deleteBrand.DeleteBrandJsonPresenter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;

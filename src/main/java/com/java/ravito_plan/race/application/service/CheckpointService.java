@@ -34,24 +34,6 @@ public class CheckpointService extends BaseApplicationService {
         this.foodPort = foodPort;
     }
 
-    // TODO REMOVE
-    @Transactional
-    public RaceDetailView updateCheckpoint(UpdateCheckpointCommand updateCheckpointCommand) {
-        this.verifyUserOwnsRace(1L); // REMOVE
-
-        Checkpoint checkpoint = this.checkpointRepository.findByIdAndRaceId(
-                updateCheckpointCommand.getCheckpointId(), 1L);
-
-        checkpoint.updateDetails(CheckpointMapper.toCheckpoint(updateCheckpointCommand));
-
-        Checkpoint savedCheckpoint = this.checkpointRepository.save(checkpoint);
-
-        Map<Long, RaceFoodDto> foods = this.foodPort.getFoodsByIds(
-                this.getAllFoodIdsForRace(savedCheckpoint.getRace()));
-
-        return RaceViewMapper.toRaceDetailView(savedCheckpoint.getRace(), foods);
-    }
-
     @Transactional
     public CheckpointView addFoodToCheckpoint(AddFoodCommand addFoodCommand) {
         this.verifyUserOwnsRace(addFoodCommand.getRaceId());

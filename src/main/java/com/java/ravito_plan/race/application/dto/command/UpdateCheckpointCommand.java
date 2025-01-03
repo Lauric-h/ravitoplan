@@ -2,12 +2,8 @@ package com.java.ravito_plan.race.application.dto.command;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
 
 public class UpdateCheckpointCommand implements CheckpointCommand {
-
-    @Getter
-    private Long checkpointId;
 
     @NotBlank
     private String name;

@@ -32,18 +32,6 @@ public class CheckpointController {
         this.checkpointService = checkpointService;
     }
 
-    @PutMapping("/{checkpointId}")
-    public ResponseEntity<Void> editCheckpoint(@PathVariable Long raceId,
-            @PathVariable Long checkpointId, @Valid @RequestBody UpdateCheckpointCommand updateCheckpointCommand) {
-        this.checkpointService.updateCheckpoint(updateCheckpointCommand);
-
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/api/races/{raceId}")
-                .buildAndExpand(raceId).toUri();
-
-        return ResponseEntity.status(OK).header(HttpHeaders.LOCATION, String.valueOf(location))
-                .build();
-    }
-
     @PostMapping("/{checkpointId}/foods")
     public ResponseEntity<CheckpointView> addFoodToCheckpoint(@PathVariable("raceId") Long raceId,
             @PathVariable("checkpointId") Long checkpointId,

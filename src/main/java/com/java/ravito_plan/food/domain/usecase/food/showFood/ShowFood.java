@@ -17,7 +17,7 @@ public class ShowFood implements ShowFoodInterface {
     @Override
     @Transactional(readOnly = true)
     public void execute(ShowFoodRequest request, ShowFoodPresenter presenter) {
-        Food food = this.foodRepository.findByIdAndBrandId(request.foodId(), request.brandId());
+        Food food = this.foodRepository.findById(request.foodId());
         presenter.present(new ShowFoodResponse(food));
     }
 }

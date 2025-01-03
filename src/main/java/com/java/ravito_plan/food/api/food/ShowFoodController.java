@@ -24,7 +24,7 @@ public class ShowFoodController {
 
     @GetMapping("/{foodId}")
     public ResponseEntity<ShowFoodViewModel> getFood(@PathVariable Long brandId, @PathVariable Long foodId) {
-        this.usecase.execute(new ShowFoodRequest(foodId, brandId), this.presenter);
+        this.usecase.execute(new ShowFoodRequest(foodId), this.presenter);
         return ResponseEntity.ok(this.presenter.getViewModel());
     }
 }

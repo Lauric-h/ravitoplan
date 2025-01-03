@@ -32,11 +32,6 @@ public class FoodApplicationService {
     }
 
     @Transactional(readOnly = true)
-    public FoodDetail getFoodById(Long id) {
-        return FoodMapper.toFoodDetail(this.foodRepository.findById(id));
-    }
-
-    @Transactional(readOnly = true)
     public Map<Long, FoodDetail> getFoodsByIds(Collection<Long> ids) {
         return this.foodRepository.findAllByIdIn(ids.stream().toList()).stream()
                 .collect(Collectors.toMap(Food::getId, FoodMapper::toFoodDetail));

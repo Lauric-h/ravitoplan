@@ -5,7 +5,6 @@ import static org.mockito.Mockito.when;
 
 import com.java.ravito_plan.food.application.dto.internal.FoodDetail;
 import com.java.ravito_plan.food.application.dto.view.FoodView;
-import com.java.ravito_plan.food.application.service.FoodApplicationService;
 import com.java.ravito_plan.food.domain.model.Brand;
 import com.java.ravito_plan.food.domain.model.Food;
 import com.java.ravito_plan.food.domain.ports.repository.BrandRepository;
@@ -20,8 +19,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 @SpringBootTest
 public class TestFoodApplicationService {
 
-    @Autowired
-    private FoodApplicationService foodApplicationService;
 
     @MockBean
     private FoodRepository foodRepository;

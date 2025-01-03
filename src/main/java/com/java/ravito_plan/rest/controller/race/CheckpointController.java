@@ -44,13 +44,6 @@ public class CheckpointController {
                 .build();
     }
 
-    @DeleteMapping("/{checkpointId}")
-    public ResponseEntity<Void> deleteCheckpoint(@PathVariable Long raceId,
-            @PathVariable Long checkpointId) {
-        this.checkpointService.deleteCheckpoint(raceId, checkpointId);
-        return ResponseEntity.noContent().build();
-    }
-
     @PostMapping("/{checkpointId}/foods")
     public ResponseEntity<CheckpointView> addFoodToCheckpoint(@PathVariable("raceId") Long raceId,
             @PathVariable("checkpointId") Long checkpointId,

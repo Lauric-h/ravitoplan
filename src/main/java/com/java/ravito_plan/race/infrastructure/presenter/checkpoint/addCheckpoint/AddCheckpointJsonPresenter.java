@@ -1,8 +1,8 @@
 package com.java.ravito_plan.race.infrastructure.presenter.checkpoint.addCheckpoint;
 
 import com.java.ravito_plan.race.application.mapper.view.RaceViewMapper;
-import com.java.ravito_plan.race.domain.usecase.checkpoint.AddCheckpointPresenter;
-import com.java.ravito_plan.race.domain.usecase.checkpoint.AddCheckpointResponse;
+import com.java.ravito_plan.race.domain.usecase.checkpoint.addCheckpoint.AddCheckpointPresenter;
+import com.java.ravito_plan.race.domain.usecase.checkpoint.addCheckpoint.AddCheckpointResponse;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 

@@ -18,5 +18,6 @@ public class DeleteRace implements DeleteRaceInterface {
     public void execute(DeleteRaceRequest request, DeleteRacePresenter presenter) {
         this.raceRepository.existsByIdAndUserId(request.raceId(), request.userId());
         this.raceRepository.deleteById(request.raceId());
+        presenter.present(new DeleteRaceResponse(true));
     }
 }

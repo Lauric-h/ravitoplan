@@ -53,15 +53,6 @@ public class CheckpointService extends BaseApplicationService {
     }
 
     @Transactional
-    public void deleteCheckpoint(Long raceId, Long checkpointId) {
-        this.verifyUserOwnsRace(raceId);
-
-        this.checkpointRepository.findByIdAndRaceId(checkpointId, raceId);
-
-        this.checkpointRepository.deleteById(checkpointId);
-    }
-
-    @Transactional
     public CheckpointView addFoodToCheckpoint(AddFoodCommand addFoodCommand) {
         this.verifyUserOwnsRace(addFoodCommand.getRaceId());
         Checkpoint checkpoint = this.checkpointRepository.findByIdAndRaceId(

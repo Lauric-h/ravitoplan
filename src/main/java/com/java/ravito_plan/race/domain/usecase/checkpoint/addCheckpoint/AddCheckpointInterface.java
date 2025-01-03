@@ -1,4 +1,4 @@
-package com.java.ravito_plan.race.domain.usecase.checkpoint;
+package com.java.ravito_plan.race.domain.usecase.checkpoint.addCheckpoint;
 
 public interface AddCheckpointInterface {
 

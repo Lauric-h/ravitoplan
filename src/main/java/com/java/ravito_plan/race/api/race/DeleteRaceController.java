@@ -1,11 +1,10 @@
 package com.java.ravito_plan.race.api.race;
 
 import com.java.ravito_plan.race.application.dto.internal.RaceUserDto;
-import com.java.ravito_plan.race.domain.model.Race;
 import com.java.ravito_plan.race.domain.ports.UserPort;
-import com.java.ravito_plan.race.domain.usecase.deleteRace.DeleteRaceInterface;
-import com.java.ravito_plan.race.domain.usecase.deleteRace.DeleteRaceRequest;
-import com.java.ravito_plan.race.infrastructure.presenter.deleteRace.DeleteRaceJsonPresenter;
+import com.java.ravito_plan.race.domain.usecase.race.deleteRace.DeleteRaceInterface;
+import com.java.ravito_plan.race.domain.usecase.race.deleteRace.DeleteRaceRequest;
+import com.java.ravito_plan.race.infrastructure.presenter.race.deleteRace.DeleteRaceJsonPresenter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;

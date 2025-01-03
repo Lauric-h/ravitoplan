@@ -5,9 +5,6 @@ import jakarta.validation.constraints.NotNull;
 
 public class CreateCheckpointCommand implements CheckpointCommand {
 
-    @NotNull
-    private Long raceId;
-
     @NotBlank
     private String name;
 
@@ -29,11 +26,6 @@ public class CreateCheckpointCommand implements CheckpointCommand {
     private int cumulatedElevationLossFromStart;
 
     private Integer carbsTarget;
-
-    @Override
-    public Long getRaceId() {
-        return this.raceId;
-    }
 
     @Override
     public String getName() {

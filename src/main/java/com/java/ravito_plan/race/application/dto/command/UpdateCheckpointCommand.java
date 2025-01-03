@@ -6,9 +6,6 @@ import lombok.Getter;
 
 public class UpdateCheckpointCommand implements CheckpointCommand {
 
-    @NotNull
-    private Long raceId;
-
     @Getter
     private Long checkpointId;
 
@@ -33,11 +30,6 @@ public class UpdateCheckpointCommand implements CheckpointCommand {
     private int cumulatedElevationLossFromStart;
 
     private Integer carbsTarget;
-
-    @Override
-    public Long getRaceId() {
-        return this.raceId;
-    }
 
     @Override
     public String getName() {

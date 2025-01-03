@@ -2,10 +2,10 @@ package com.java.ravito_plan.race.api.race;
 
 import com.java.ravito_plan.race.application.dto.internal.RaceUserDto;
 import com.java.ravito_plan.race.domain.ports.UserPort;
-import com.java.ravito_plan.race.domain.usecase.showRace.ShowRaceInterface;
-import com.java.ravito_plan.race.domain.usecase.showRace.ShowRaceRequest;
-import com.java.ravito_plan.race.infrastructure.presenter.showRace.ShowRaceJsonPresenter;
-import com.java.ravito_plan.race.infrastructure.presenter.showRace.ShowRaceViewModel;
+import com.java.ravito_plan.race.domain.usecase.race.showRace.ShowRaceInterface;
+import com.java.ravito_plan.race.domain.usecase.race.showRace.ShowRaceRequest;
+import com.java.ravito_plan.race.infrastructure.presenter.race.showRace.ShowRaceJsonPresenter;
+import com.java.ravito_plan.race.infrastructure.presenter.race.showRace.ShowRaceViewModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;

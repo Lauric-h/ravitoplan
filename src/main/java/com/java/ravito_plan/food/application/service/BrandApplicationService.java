@@ -21,11 +21,6 @@ public class BrandApplicationService {
     }
 
     @Transactional
-    public void deleteBrand(Long id) {
-        brandRepository.deleteById(id);
-    }
-
-    @Transactional
     public BrandDetailView updateBrand(UpdateBrandCommand command) {
         Brand brand = brandRepository.findById(command.getId());
         brand.updateFields(command.getName());

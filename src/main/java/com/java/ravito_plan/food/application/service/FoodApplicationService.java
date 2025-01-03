@@ -42,19 +42,10 @@ public class FoodApplicationService {
                 .collect(Collectors.toMap(Food::getId, FoodMapper::toFoodDetail));
     }
 
-    @Transactional
-    public BrandDetailView createFood(CreateFoodCommand createFoodCommand) {
-        Brand brand = this.brandRepository.findById(createFoodCommand.getBrandId());
-        brand.addOrUpdateFood(FoodMapper.toFood(createFoodCommand));
-        return BrandViewMapper.toBrandDetailView(this.brandRepository.save(brand));
-    }
-
-    @Transactional
-    public void updateFood(UpdateFoodCommand updateFoodCommandFood) {
-        Food food = this.foodRepository.findByIdAndBrandId(updateFoodCommandFood.getId(),
-                updateFoodCommandFood.getBrandId());
-        food.updateFields(FoodMapper.toFood(updateFoodCommandFood));
-
-        this.foodRepository.save(food);
-    }
+//    @Transactional
+//    public BrandDetailView createFood(CreateFoodCommand createFoodCommand) {
+//        Brand brand = this.brandRepository.findById(createFoodCommand.getBrandId());
+//        brand.addOrUpdateFood(FoodMapper.toFood(createFoodCommand));
+//        return BrandViewMapper.toBrandDetailView(this.brandRepository.save(brand));
+//    }
 }

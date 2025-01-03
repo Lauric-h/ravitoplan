@@ -29,17 +29,11 @@ public class FoodController {
         this.foodService = foodService;
     }
 
-    @PostMapping
-    public ResponseEntity<BrandDetailView> createFood(@PathVariable("brandId") Long brandId,
-            @Valid @RequestBody CreateFoodCommand createFoodCommand) {
-        BrandDetailView brand = this.foodService.createFood(createFoodCommand);
-        return ResponseEntity.ok(brand);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Void> updateFood(@PathVariable("brandId") Long brandId,
-            @PathVariable("id") Long id, @Valid @RequestBody UpdateFoodCommand updateFoodCommand) {
-        this.foodService.updateFood(updateFoodCommand);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+//    @PostMapping
+//    public ResponseEntity<BrandDetailView> createFood(@PathVariable("brandId") Long brandId,
+//            @Valid @RequestBody CreateFoodCommand createFoodCommand) {
+//        BrandDetailView brand = this.foodService.createFood(createFoodCommand);
+//        return ResponseEntity.ok(brand);
+//    }
+//
 }

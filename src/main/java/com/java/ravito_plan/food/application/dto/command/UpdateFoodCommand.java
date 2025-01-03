@@ -10,13 +10,6 @@ import lombok.Setter;
 @Setter
 public class UpdateFoodCommand implements FoodCommand {
 
-    @NotNull
-    private Long brandId;
-
-    @NotNull
-    @Getter
-    private Long id;
-
     @NotBlank
     private String name;
 
@@ -36,11 +29,6 @@ public class UpdateFoodCommand implements FoodCommand {
 
     @NotBlank
     private String ingestionType;
-
-    @Override
-    public Long getBrandId() {
-        return this.brandId;
-    }
 
     @Override
     public String getName() {

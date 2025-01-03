@@ -7,9 +7,6 @@ import lombok.Builder;
 @Builder
 public class CreateFoodCommand implements FoodCommand {
 
-    @NotNull
-    private Long brandId;
-
     @NotBlank
     private String name;
 
@@ -29,11 +26,6 @@ public class CreateFoodCommand implements FoodCommand {
 
     @NotBlank
     private String ingestionType;
-
-    @Override
-    public Long getBrandId() {
-        return this.brandId;
-    }
 
     @Override
     public String getName() {

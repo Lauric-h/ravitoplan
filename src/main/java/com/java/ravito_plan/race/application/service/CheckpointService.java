@@ -35,22 +35,6 @@ public class CheckpointService extends BaseApplicationService {
     }
 
     @Transactional
-    public CheckpointView addFoodToCheckpoint(AddFoodCommand addFoodCommand) {
-        this.verifyUserOwnsRace(addFoodCommand.getRaceId());
-        Checkpoint checkpoint = this.checkpointRepository.findByIdAndRaceId(
-                addFoodCommand.getCheckpointId(), addFoodCommand.getRaceId());
-
-        RaceFoodDto externalFoodDto = this.foodPort.getFoodById(addFoodCommand.getFoodId());
-        checkpoint.addFood(addFoodCommand.getQuantity(), externalFoodDto.id());
-
-        Checkpoint savedCheckpoint = this.checkpointRepository.save(checkpoint);
-        Map<Long, RaceFoodDto> foods = this.foodPort.getFoodsByIds(
-                this.getAllFoodIdsForRace(savedCheckpoint.getRace()));
-
-        return CheckpointViewMapper.toCheckpointDetailView(savedCheckpoint, foods);
-    }
-
-    @Transactional
 public void removeFoodFromCheckpoint(DeleteFoodCommand deleteFoodCommand) {
         this.verifyUserOwnsRace(deleteFoodCommand.getRaceId());
         Checkpoint checkpoint = this.checkpointRepository.findByIdAndRaceId(

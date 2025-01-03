@@ -12,12 +12,6 @@ public class AddFoodCommand {
     @NotNull
     private Long foodId;
 
-    @NotNull
-    private Long raceId;
-
-    @NotNull
-    private Long checkpointId;
-
     @Builder.Default
     @Min(1)
     private int quantity = 1;

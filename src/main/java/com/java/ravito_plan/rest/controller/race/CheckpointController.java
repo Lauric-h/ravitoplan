@@ -32,15 +32,6 @@ public class CheckpointController {
         this.checkpointService = checkpointService;
     }
 
-    @PostMapping("/{checkpointId}/foods")
-    public ResponseEntity<CheckpointView> addFoodToCheckpoint(@PathVariable("raceId") Long raceId,
-            @PathVariable("checkpointId") Long checkpointId,
-            @Valid @RequestBody AddFoodCommand addFoodCommand) {
-       CheckpointView checkpointView = this.checkpointService.addFoodToCheckpoint(addFoodCommand);
-
-        return ResponseEntity.ok(checkpointView);
-    }
-
     @DeleteMapping("/{checkpointId}/foods/{foodId}")
     public ResponseEntity<Void> removeFoodFromCheckpoint(@PathVariable("raceId") Long raceId,
             @PathVariable("checkpointId") Long checkpointId, @PathVariable("foodId") Long foodId,

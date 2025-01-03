@@ -42,10 +42,4 @@ public class FoodApplicationService {
                 .collect(Collectors.toMap(Food::getId, FoodMapper::toFoodDetail));
     }
 
-//    @Transactional
-//    public BrandDetailView createFood(CreateFoodCommand createFoodCommand) {
-//        Brand brand = this.brandRepository.findById(createFoodCommand.getBrandId());
-//        brand.addOrUpdateFood(FoodMapper.toFood(createFoodCommand));
-//        return BrandViewMapper.toBrandDetailView(this.brandRepository.save(brand));
-//    }
 }

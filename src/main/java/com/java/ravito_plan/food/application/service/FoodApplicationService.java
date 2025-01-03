@@ -50,11 +50,6 @@ public class FoodApplicationService {
     }
 
     @Transactional
-    public void deleteFood(Long id, Long brandId) {
-        this.foodRepository.deleteByIdAndBrandId(id, brandId);
-    }
-
-    @Transactional
     public void updateFood(UpdateFoodCommand updateFoodCommandFood) {
         Food food = this.foodRepository.findByIdAndBrandId(updateFoodCommandFood.getId(),
                 updateFoodCommandFood.getBrandId());

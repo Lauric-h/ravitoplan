@@ -29,13 +29,6 @@ public class FoodController {
         this.foodService = foodService;
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteFood(@PathVariable("id") Long id,
-            @PathVariable("brandId") Long brandId) {
-        this.foodService.deleteFood(id, brandId);
-        return ResponseEntity.noContent().build();
-    }
-
     @PostMapping
     public ResponseEntity<BrandDetailView> createFood(@PathVariable("brandId") Long brandId,
             @Valid @RequestBody CreateFoodCommand createFoodCommand) {

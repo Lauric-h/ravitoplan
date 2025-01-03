@@ -18,8 +18,8 @@ public class Generator {
         return new CreateBrandCommand(name);
     }
 
-    public static UpdateBrandCommand getUpdateBrandCommand(Long id, String name) {
-        return new UpdateBrandCommand(id, name);
+    public static UpdateBrandCommand getUpdateBrandCommand(String name) {
+        return new UpdateBrandCommand(name);
     }
 
     public static BrandDetailView getBrandDetailView(String name, List<FoodSummaryView> foods) {

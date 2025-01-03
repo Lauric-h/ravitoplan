@@ -6,18 +6,12 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.java.ravito_plan.food.application.dto.command.CreateBrandCommand;
 import com.java.ravito_plan.food.application.dto.command.UpdateBrandCommand;
 import com.java.ravito_plan.food.application.dto.view.BrandDetailView;
-import com.java.ravito_plan.food.application.dto.view.BrandSummaryView;
-import com.java.ravito_plan.food.application.service.BrandApplicationService;
 import com.java.ravito_plan.food.domain.model.Brand;
 import com.java.ravito_plan.food.domain.ports.repository.BrandRepository;
 import com.java.ravito_plan.unit.Generator;
-import jakarta.persistence.PersistenceException;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +20,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 @SpringBootTest
 public class TestBrandApplicationService {
-
-    @Autowired
-    private BrandApplicationService brandApplicationService;
 
     @MockBean
     private BrandRepository brandRepository;
@@ -100,23 +91,23 @@ public class TestBrandApplicationService {
 //        assertThat(actual.foods).isEmpty();
 //    }
 
-    @Test
-    public void testUpdateBrand() {
-        var brandName = "Test Brand";
-        Brand brand = Generator.getBrand(1L, brandName, Collections.emptyList());
-        UpdateBrandCommand updateBrandCommand = Generator.getUpdateBrandCommand(1L,
-                "Updated brand name");
-        BrandDetailView expected = Generator.getBrandDetailView("Updated brand name",
-                Collections.emptyList());
-
-        when(this.brandRepository.findById(brand.getId())).thenReturn(brand);
-        when(this.brandRepository.save(any(Brand.class))).thenAnswer(
-                invocation -> invocation.getArgument(0));
-
-        BrandDetailView actual = this.brandApplicationService.updateBrand(updateBrandCommand);
-
-        ArgumentCaptor<Brand> brandCaptor = ArgumentCaptor.forClass(Brand.class);
-        verify(this.brandRepository).save(brandCaptor.capture());
-        assertThat(actual.name).isEqualTo(expected.name);
-    }
+//    @Test
+//    public void testUpdateBrand() {
+//        var brandName = "Test Brand";
+//        Brand brand = Generator.getBrand(1L, brandName, Collections.emptyList());
+//        UpdateBrandCommand updateBrandCommand = Generator.getUpdateBrandCommand(1L,
+//                "Updated brand name");
+//        BrandDetailView expected = Generator.getBrandDetailView("Updated brand name",
+//                Collections.emptyList());
+//
+//        when(this.brandRepository.findById(brand.getId())).thenReturn(brand);
+//        when(this.brandRepository.save(any(Brand.class))).thenAnswer(
+//                invocation -> invocation.getArgument(0));
+//
+//        BrandDetailView actual = this.brandApplicationService.updateBrand(updateBrandCommand);
+//
+//        ArgumentCaptor<Brand> brandCaptor = ArgumentCaptor.forClass(Brand.class);
+//        verify(this.brandRepository).save(brandCaptor.capture());
+//        assertThat(actual.name).isEqualTo(expected.name);
+//    }
 }

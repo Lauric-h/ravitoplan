@@ -29,17 +29,6 @@ public class FoodController {
         this.foodService = foodService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<FoodSummaryView>> getAllFoodsByBrand(@PathVariable("brandId") Long brandId) {
-        return ResponseEntity.ok(this.foodService.getAllFoodsByBrand(brandId));
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<FoodView> getFoodById(@PathVariable("id") Long id,
-            @PathVariable("brandId") Long brandId) {
-        return ResponseEntity.ok(this.foodService.getFood(id, brandId));
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteFood(@PathVariable("id") Long id,
             @PathVariable("brandId") Long brandId) {

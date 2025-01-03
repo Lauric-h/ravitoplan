@@ -62,15 +62,4 @@ public class FoodApplicationService {
 
         this.foodRepository.save(food);
     }
-
-    @Transactional(readOnly = true)
-    public List<FoodSummaryView> getAllFoodsByBrand(Long brandId) {
-        return this.foodRepository.findAllByBrandId(brandId).stream()
-                .map(FoodViewMapper::toFoodSummaryView).toList();
-    }
-
-    @Transactional(readOnly = true)
-    public FoodView getFood(Long id, Long brandId) {
-        return FoodViewMapper.toFoodView(this.foodRepository.findByIdAndBrandId(id, brandId));
-    }
 }

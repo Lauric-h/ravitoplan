@@ -29,50 +29,50 @@ public class TestFoodApplicationService {
     @MockBean
     private BrandRepository brandRepository;
 
-    @Test
-    public void testGetFoodById() {
-        FoodDetail expected = Generator.getPopulatedFoodDetail();
-        Food food = Generator.getPopulatedFood();
-
-        when(this.foodRepository.findById(1L)).thenReturn(food);
-
-        FoodDetail actual = this.foodApplicationService.getFoodById(1L);
-
-        assertThat(actual.id).isEqualTo(expected.id);
-        assertThat(actual.name).isEqualTo(expected.name);
-        assertThat(actual.brandName).isEqualTo(expected.brandName);
-        assertThat(actual.name).isEqualTo(expected.name);
-        assertThat(actual.carbohydrates).isEqualTo(expected.carbohydrates);
-        assertThat(actual.calories).isEqualTo(expected.calories);
-        assertThat(actual.proteins).isEqualTo(expected.proteins);
-        assertThat(actual.electrolytes).isEqualTo(expected.electrolytes);
-        assertThat(actual.link).isEqualTo(expected.link);
-        assertThat(actual.comment).isEqualTo(expected.comment);
-        assertThat(actual.ingestionType).isEqualTo(expected.ingestionType);
-    }
-
-    @Test
-    public void testGetFood() {
-        FoodView expected = Generator.getFoodView("Food name", 10, 11, 12, false, "link",
-                "comment", "LIQUID");
-        Food food = Generator.getPopulatedFood();
-        Brand brand = Generator.getBrand(2L, "Brand name", List.of(food));
-        food.setBrand(brand);
-        
-
-        when(this.foodRepository.findByIdAndBrandId(1L, 2L)).thenReturn(food);
-
-        FoodView actual = this.foodApplicationService.getFood(1L, 2L);
-
-        assertThat(actual.name).isEqualTo(expected.name);
-        assertThat(actual.name).isEqualTo(expected.name);
-        assertThat(actual.carbohydrates).isEqualTo(expected.carbohydrates);
-        assertThat(actual.calories).isEqualTo(expected.calories);
-        assertThat(actual.proteins).isEqualTo(expected.proteins);
-        assertThat(actual.electrolytes).isEqualTo(expected.electrolytes);
-        assertThat(actual.link).isEqualTo(expected.link);
-        assertThat(actual.comment).isEqualTo(expected.comment);
-        assertThat(actual.ingestionType).isEqualTo(expected.ingestionType);
-    }
+//    @Test
+//    public void testGetFoodById() {
+//        FoodDetail expected = Generator.getPopulatedFoodDetail();
+//        Food food = Generator.getPopulatedFood();
+//
+//        when(this.foodRepository.findById(1L)).thenReturn(food);
+//
+//        FoodDetail actual = this.foodApplicationService.getFoodById(1L);
+//
+//        assertThat(actual.id).isEqualTo(expected.id);
+//        assertThat(actual.name).isEqualTo(expected.name);
+//        assertThat(actual.brandName).isEqualTo(expected.brandName);
+//        assertThat(actual.name).isEqualTo(expected.name);
+//        assertThat(actual.carbohydrates).isEqualTo(expected.carbohydrates);
+//        assertThat(actual.calories).isEqualTo(expected.calories);
+//        assertThat(actual.proteins).isEqualTo(expected.proteins);
+//        assertThat(actual.electrolytes).isEqualTo(expected.electrolytes);
+//        assertThat(actual.link).isEqualTo(expected.link);
+//        assertThat(actual.comment).isEqualTo(expected.comment);
+//        assertThat(actual.ingestionType).isEqualTo(expected.ingestionType);
+//    }
+//
+//    @Test
+//    public void testGetFood() {
+//        FoodView expected = Generator.getFoodView("Food name", 10, 11, 12, false, "link",
+//                "comment", "LIQUID");
+//        Food food = Generator.getPopulatedFood();
+//        Brand brand = Generator.getBrand(2L, "Brand name", List.of(food));
+//        food.setBrand(brand);
+//
+//
+//        when(this.foodRepository.findByIdAndBrandId(1L, 2L)).thenReturn(food);
+//
+//        FoodView actual = this.foodApplicationService.getFood(1L, 2L);
+//
+//        assertThat(actual.name).isEqualTo(expected.name);
+//        assertThat(actual.name).isEqualTo(expected.name);
+//        assertThat(actual.carbohydrates).isEqualTo(expected.carbohydrates);
+//        assertThat(actual.calories).isEqualTo(expected.calories);
+//        assertThat(actual.proteins).isEqualTo(expected.proteins);
+//        assertThat(actual.electrolytes).isEqualTo(expected.electrolytes);
+//        assertThat(actual.link).isEqualTo(expected.link);
+//        assertThat(actual.comment).isEqualTo(expected.comment);
+//        assertThat(actual.ingestionType).isEqualTo(expected.ingestionType);
+//    }
 
 }

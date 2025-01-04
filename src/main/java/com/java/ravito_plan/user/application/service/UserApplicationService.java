@@ -14,29 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserApplicationService {
 
     private final UserRepository userRepository;
-    private final UserDomainService userService;
 
     @Autowired
-    public UserApplicationService(UserRepository userRepository, UserDomainService userService) {
+    public UserApplicationService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.userService = userService;
-    }
-
-    @Transactional
-    public UserDto registerUser(RegisterUserCommand registerUserCommand) {
-        if (this.userRepository.findByUsername(registerUserCommand.getUsername()) != null) {
-            throw new UserAlreadyExistsException(registerUserCommand.getUsername());
-        }
-
-        if (this.userRepository.findByEmail(registerUserCommand.getEmail()) != null) {
-            throw new UserAlreadyExistsException(registerUserCommand.getEmail());
-        }
-
-        User user = this.userService.createUserWithHashedPassword(registerUserCommand.getEmail(),
-                registerUserCommand.getUsername(), registerUserCommand.getPassword());
-
-        User savedUser = this.userRepository.save(user);
-        return new UserDto(savedUser.getId(), savedUser.getUsername(), savedUser.getEmail());
     }
 
     @Transactional(readOnly = true)

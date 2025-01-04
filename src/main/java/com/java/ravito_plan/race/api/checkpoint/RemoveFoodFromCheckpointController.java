@@ -38,8 +38,8 @@ public class RemoveFoodFromCheckpointController {
             @Valid @RequestBody DeleteFoodCommand command) {
         RaceUserDto user = this.userPort.getByUsername(userDetails.getUsername());
         this.usecase.execute(
-                new RemoveFoodFromCheckpointRequest(raceId, checkpointId, user.id, foodId, command),
-                this.presenter);
+                new RemoveFoodFromCheckpointRequest(raceId, checkpointId, user.id, foodId,
+                        command.getQuantity()), this.presenter);
 
         return ResponseEntity.noContent().build();
     }

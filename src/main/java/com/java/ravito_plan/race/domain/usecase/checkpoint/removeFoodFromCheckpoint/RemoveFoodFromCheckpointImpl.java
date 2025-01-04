@@ -26,7 +26,7 @@ public class RemoveFoodFromCheckpointImpl implements RemoveFoodFromCheckpoint {
 
         Checkpoint checkpoint = this.checkpointRepository.findByIdAndRaceId(request.checkpointId(),
                 request.raceId());
-        checkpoint.removeFood(request.command().getQuantity(), request.foodId());
+        checkpoint.removeFood(request.quantity(), request.foodId());
 
         this.checkpointRepository.save(checkpoint);
         presenter.present(new RemoveFoodFromCheckpointResponse(true));

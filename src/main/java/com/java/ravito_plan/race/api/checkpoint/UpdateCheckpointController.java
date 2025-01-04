@@ -2,9 +2,9 @@ package com.java.ravito_plan.race.api.checkpoint;
 
 import com.java.ravito_plan.race.application.dto.command.UpdateCheckpointCommand;
 import com.java.ravito_plan.race.application.dto.internal.RaceUserDto;
+import com.java.ravito_plan.race.application.mapper.CheckpointMapper;
 import com.java.ravito_plan.race.domain.ports.UserPort;
 import com.java.ravito_plan.race.domain.usecase.checkpoint.updateCheckpoint.UpdateCheckpoint;
-import com.java.ravito_plan.race.domain.usecase.checkpoint.updateCheckpoint.UpdateCheckpointRequest;
 import com.java.ravito_plan.race.infrastructure.presenter.checkpoint.updateCheckpoint.UpdateCheckpointJsonPresenter;
 import com.java.ravito_plan.race.infrastructure.presenter.checkpoint.updateCheckpoint.UpdateCheckpointViewModel;
 import jakarta.validation.Valid;
@@ -33,10 +33,13 @@ public class UpdateCheckpointController {
     }
 
     @PutMapping
-    public ResponseEntity<UpdateCheckpointViewModel> updateCheckpoint(@PathVariable Long raceId, @PathVariable Long checkpointId, @Valid @RequestBody
-            UpdateCheckpointCommand command, @AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<UpdateCheckpointViewModel> updateCheckpoint(@PathVariable Long raceId,
+            @PathVariable Long checkpointId, @Valid @RequestBody UpdateCheckpointCommand command,
+            @AuthenticationPrincipal UserDetails userDetails) {
         RaceUserDto user = this.userPort.getByUsername(userDetails.getUsername());
-        this.usecase.execute(new UpdateCheckpointRequest(raceId, checkpointId, user.id, command), this.presenter);
+        this.usecase.execute(
+                CheckpointMapper.toUpdateCheckpointRequest(user.id, raceId, checkpointId, command),
+                this.presenter);
 
         return ResponseEntity.ok(this.presenter.getViewModel());
     }

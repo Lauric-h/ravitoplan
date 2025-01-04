@@ -8,7 +8,8 @@ import lombok.Setter;
 
 @Builder
 @Setter
-public class UpdateFoodCommand implements FoodCommand {
+@Getter
+public class UpdateFoodCommand {
 
     @NotBlank
     private String name;
@@ -29,44 +30,4 @@ public class UpdateFoodCommand implements FoodCommand {
 
     @NotBlank
     private String ingestionType;
-
-    @Override
-    public String getName() {
-        return this.name;
-    }
-
-    @Override
-    public int getCarbohydrates() {
-        return this.carbohydrates;
-    }
-
-    @Override
-    public int getCalories() {
-        return this.calories;
-    }
-
-    @Override
-    public int getProteins() {
-        return this.proteins;
-    }
-
-    @Override
-    public boolean hasElectrolytes() {
-        return this.electrolytes;
-    }
-
-    @Override
-    public String getLink() {
-        return this.link;
-    }
-
-    @Override
-    public String getComment() {
-        return this.comment;
-    }
-
-    @Override
-    public String getIngestionType() {
-        return this.ingestionType;
-    }
 }

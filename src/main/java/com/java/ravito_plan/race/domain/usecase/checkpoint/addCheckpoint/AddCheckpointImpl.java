@@ -4,6 +4,7 @@ import com.java.ravito_plan.race.application.mapper.CheckpointMapper;
 import com.java.ravito_plan.race.domain.dto.RaceFoodDto;
 import com.java.ravito_plan.race.domain.model.CheckpointFood;
 import com.java.ravito_plan.race.domain.model.Race;
+import com.java.ravito_plan.race.domain.ports.CheckpointFactory;
 import com.java.ravito_plan.race.domain.ports.FoodPort;
 import com.java.ravito_plan.race.domain.ports.repository.RaceRepository;
 import java.util.Map;
@@ -17,10 +18,13 @@ public class AddCheckpointImpl implements AddCheckpoint {
 
     private final RaceRepository raceRepository;
     private final FoodPort foodPort;
+    private final CheckpointFactory checkpointFactory;
 
-    public AddCheckpointImpl(RaceRepository raceRepository, FoodPort foodPort) {
+    public AddCheckpointImpl(RaceRepository raceRepository, FoodPort foodPort,
+            CheckpointFactory checkpointFactory) {
         this.raceRepository = raceRepository;
         this.foodPort = foodPort;
+        this.checkpointFactory = checkpointFactory;
     }
 
     @Override
@@ -28,7 +32,7 @@ public class AddCheckpointImpl implements AddCheckpoint {
     public void execute(AddCheckpointRequest request, AddCheckpointPresenter presenter) {
         Race race = this.raceRepository.findByIdAndUserId(request.raceId(), request.userId());
 
-        race.addOrUpdateCheckpoint(CheckpointMapper.toCheckpoint(request.command()));
+        race.addOrUpdateCheckpoint(this.checkpointFactory.create(request.checkpointParams()));
         Race updatedRace = this.raceRepository.save(race);
 
         Map<Long, RaceFoodDto> foods = this.foodPort.getFoodsByIds(

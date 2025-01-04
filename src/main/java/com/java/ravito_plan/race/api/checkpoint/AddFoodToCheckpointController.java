@@ -33,10 +33,14 @@ public class AddFoodToCheckpointController {
     }
 
     @PostMapping
-    public ResponseEntity<AddFoodToCheckpointViewModel> addFoodToCheckpoint(@PathVariable Long raceId, @PathVariable Long checkpointId, @AuthenticationPrincipal
-            UserDetails userDetails, @Valid @RequestBody AddFoodCommand command) {
+    public ResponseEntity<AddFoodToCheckpointViewModel> addFoodToCheckpoint(
+            @PathVariable Long raceId, @PathVariable Long checkpointId,
+            @AuthenticationPrincipal UserDetails userDetails,
+            @Valid @RequestBody AddFoodCommand command) {
         RaceUserDto user = this.userPort.getByUsername(userDetails.getUsername());
-        this.usecase.execute(new AddFoodToCheckpointRequest(raceId, checkpointId, user.id, command), this.presenter);
+        this.usecase.execute(
+                new AddFoodToCheckpointRequest(raceId, checkpointId, user.id, command.getFoodId(),
+                        command.getQuantity()), this.presenter);
 
         return ResponseEntity.ok(this.presenter.getViewModel());
     }

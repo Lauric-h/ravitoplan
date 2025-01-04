@@ -36,8 +36,8 @@ public class AddFoodToCheckpointImpl implements AddFoodToCheckpoint {
         Checkpoint checkpoint = this.checkpointRepository.findByIdAndRaceId(request.checkpointId(),
                 request.raceId());
 
-        RaceFoodDto externalFoodDto = this.foodPort.getFoodById(request.command().getFoodId());
-        checkpoint.addFood(request.command().getQuantity(), externalFoodDto.id());
+        RaceFoodDto externalFoodDto = this.foodPort.getFoodById(request.foodId());
+        checkpoint.addFood(request.quantity(), externalFoodDto.id());
 
         Checkpoint savedCheckpoint = this.checkpointRepository.save(checkpoint);
 

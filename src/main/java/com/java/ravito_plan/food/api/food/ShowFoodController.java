@@ -1,6 +1,6 @@
 package com.java.ravito_plan.food.api.food;
 
-import com.java.ravito_plan.food.domain.usecase.food.showFood.ShowFoodInterface;
+import com.java.ravito_plan.food.domain.usecase.food.showFood.ShowFood;
 import com.java.ravito_plan.food.domain.usecase.food.showFood.ShowFoodRequest;
 import com.java.ravito_plan.food.infrastructure.presenter.food.showFood.ShowFoodJsonPresenter;
 import com.java.ravito_plan.food.infrastructure.presenter.food.showFood.ShowFoodViewModel;
@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/brands/{brandId}/foods")
 public class ShowFoodController {
 
-    private final ShowFoodInterface usecase;
+    private final ShowFood usecase;
     private final ShowFoodJsonPresenter presenter;
 
-    public ShowFoodController(ShowFoodInterface usecase, ShowFoodJsonPresenter presenter) {
+    public ShowFoodController(ShowFood usecase, ShowFoodJsonPresenter presenter) {
         this.usecase = usecase;
         this.presenter = presenter;
     }

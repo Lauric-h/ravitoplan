@@ -3,7 +3,7 @@ package com.java.ravito_plan.race.api.checkpoint;
 import com.java.ravito_plan.race.application.dto.command.CreateCheckpointCommand;
 import com.java.ravito_plan.race.application.dto.internal.RaceUserDto;
 import com.java.ravito_plan.race.domain.ports.UserPort;
-import com.java.ravito_plan.race.domain.usecase.checkpoint.addCheckpoint.AddCheckpointInterface;
+import com.java.ravito_plan.race.domain.usecase.checkpoint.addCheckpoint.AddCheckpoint;
 import com.java.ravito_plan.race.domain.usecase.checkpoint.addCheckpoint.AddCheckpointRequest;
 import com.java.ravito_plan.race.infrastructure.presenter.checkpoint.addCheckpoint.AddCheckpointJsonPresenter;
 import com.java.ravito_plan.race.infrastructure.presenter.checkpoint.addCheckpoint.AddCheckpointViewModel;
@@ -22,11 +22,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/races/{raceId}/checkpoints")
 public class AddCheckpointController {
 
-    private final AddCheckpointInterface usecase;
+    private final AddCheckpoint usecase;
     private final AddCheckpointJsonPresenter presenter;
     private final UserPort userPort;
 
-    public AddCheckpointController(AddCheckpointInterface usecase,
+    public AddCheckpointController(AddCheckpoint usecase,
             AddCheckpointJsonPresenter presenter, UserPort userPort) {
         this.usecase = usecase;
         this.presenter = presenter;

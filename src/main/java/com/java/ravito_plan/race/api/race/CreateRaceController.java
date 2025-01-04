@@ -3,7 +3,7 @@ package com.java.ravito_plan.race.api.race;
 import com.java.ravito_plan.race.application.dto.command.CreateRaceCommand;
 import com.java.ravito_plan.race.application.dto.internal.RaceUserDto;
 import com.java.ravito_plan.race.domain.ports.UserPort;
-import com.java.ravito_plan.race.domain.usecase.race.createRace.CreateRaceInterface;
+import com.java.ravito_plan.race.domain.usecase.race.createRace.CreateRace;
 import com.java.ravito_plan.race.domain.usecase.race.createRace.CreateRaceRequest;
 import com.java.ravito_plan.race.infrastructure.presenter.race.createRace.CreateRaceJsonPresenter;
 import com.java.ravito_plan.race.infrastructure.presenter.race.createRace.CreateRaceViewModel;
@@ -21,11 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/races")
 public class CreateRaceController {
 
-    private final CreateRaceInterface usecase;
+    private final CreateRace usecase;
     private final CreateRaceJsonPresenter presenter;
     private final UserPort userPort;
 
-    public CreateRaceController(CreateRaceInterface usecase, CreateRaceJsonPresenter presenter, UserPort userPort) {
+    public CreateRaceController(CreateRace usecase, CreateRaceJsonPresenter presenter, UserPort userPort) {
         this.usecase = usecase;
         this.presenter = presenter;
         this.userPort = userPort;

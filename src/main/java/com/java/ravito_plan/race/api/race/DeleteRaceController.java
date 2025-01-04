@@ -2,7 +2,7 @@ package com.java.ravito_plan.race.api.race;
 
 import com.java.ravito_plan.race.application.dto.internal.RaceUserDto;
 import com.java.ravito_plan.race.domain.ports.UserPort;
-import com.java.ravito_plan.race.domain.usecase.race.deleteRace.DeleteRaceInterface;
+import com.java.ravito_plan.race.domain.usecase.race.deleteRace.DeleteRace;
 import com.java.ravito_plan.race.domain.usecase.race.deleteRace.DeleteRaceRequest;
 import com.java.ravito_plan.race.infrastructure.presenter.race.deleteRace.DeleteRaceJsonPresenter;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/races/{id}")
 public class DeleteRaceController {
 
-    private final DeleteRaceInterface usecase;
+    private final DeleteRace usecase;
     private final DeleteRaceJsonPresenter presenter;
     private final UserPort userPort;
 
-    public DeleteRaceController(DeleteRaceInterface usecase, DeleteRaceJsonPresenter presenter,
+    public DeleteRaceController(DeleteRace usecase, DeleteRaceJsonPresenter presenter,
             UserPort userPort) {
         this.usecase = usecase;
         this.presenter = presenter;

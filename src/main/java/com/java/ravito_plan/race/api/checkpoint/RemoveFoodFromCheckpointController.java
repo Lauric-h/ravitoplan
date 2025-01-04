@@ -3,7 +3,7 @@ package com.java.ravito_plan.race.api.checkpoint;
 import com.java.ravito_plan.race.application.dto.command.DeleteFoodCommand;
 import com.java.ravito_plan.race.application.dto.internal.RaceUserDto;
 import com.java.ravito_plan.race.domain.ports.UserPort;
-import com.java.ravito_plan.race.domain.usecase.checkpoint.removeFoodFromCheckpoint.RemoveFoodFromCheckpointInterface;
+import com.java.ravito_plan.race.domain.usecase.checkpoint.removeFoodFromCheckpoint.RemoveFoodFromCheckpoint;
 import com.java.ravito_plan.race.domain.usecase.checkpoint.removeFoodFromCheckpoint.RemoveFoodFromCheckpointRequest;
 import com.java.ravito_plan.race.infrastructure.presenter.checkpoint.removeFoodFromCheckpoint.RemoveFoodFromCheckpointJsonPresenter;
 import jakarta.validation.Valid;
@@ -20,11 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/races/{raceId}/checkpoints/{checkpointId}/foods/{foodId}")
 public class RemoveFoodFromCheckpointController {
 
-    private final RemoveFoodFromCheckpointInterface usecase;
+    private final RemoveFoodFromCheckpoint usecase;
     private final RemoveFoodFromCheckpointJsonPresenter presenter;
     private final UserPort userPort;
 
-    public RemoveFoodFromCheckpointController(RemoveFoodFromCheckpointInterface usecase,
+    public RemoveFoodFromCheckpointController(RemoveFoodFromCheckpoint usecase,
             RemoveFoodFromCheckpointJsonPresenter presenter, UserPort userPort) {
         this.usecase = usecase;
         this.presenter = presenter;

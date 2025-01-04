@@ -1,6 +1,6 @@
 package com.java.ravito_plan.food.api.food;
 
-import com.java.ravito_plan.food.domain.usecase.food.deleteFood.DeleteFoodInterface;
+import com.java.ravito_plan.food.domain.usecase.food.deleteFood.DeleteFood;
 import com.java.ravito_plan.food.domain.usecase.food.deleteFood.DeleteFoodRequest;
 import com.java.ravito_plan.food.infrastructure.presenter.food.deleteFood.DeleteFoodJsonPresenter;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/brands/{brandId}/foods/{foodId}")
 public class DeleteFoodController {
 
-    private final DeleteFoodInterface usecase;
+    private final DeleteFood usecase;
     private final DeleteFoodJsonPresenter presenter;
 
-    public DeleteFoodController(DeleteFoodInterface usecase, DeleteFoodJsonPresenter presenter) {
+    public DeleteFoodController(DeleteFood usecase, DeleteFoodJsonPresenter presenter) {
         this.usecase = usecase;
         this.presenter = presenter;
     }

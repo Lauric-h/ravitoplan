@@ -2,7 +2,7 @@ package com.java.ravito_plan.race.api.checkpoint;
 
 import com.java.ravito_plan.race.application.dto.internal.RaceUserDto;
 import com.java.ravito_plan.race.domain.ports.UserPort;
-import com.java.ravito_plan.race.domain.usecase.checkpoint.deleteCheckpoint.DeleteCheckpointInterface;
+import com.java.ravito_plan.race.domain.usecase.checkpoint.deleteCheckpoint.DeleteCheckpoint;
 import com.java.ravito_plan.race.domain.usecase.checkpoint.deleteCheckpoint.DeleteCheckpointRequest;
 import com.java.ravito_plan.race.infrastructure.presenter.checkpoint.deleteCheckpoint.DeleteCheckpointJsonPresenter;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/races/{raceId}/checkpoints/{checkpointId}")
 public class DeleteCheckpointController {
 
-    private final DeleteCheckpointInterface usecase;
+    private final DeleteCheckpoint usecase;
     private final DeleteCheckpointJsonPresenter presenter;
     private final UserPort userPort;
 
-    public DeleteCheckpointController(DeleteCheckpointInterface usecase,
+    public DeleteCheckpointController(DeleteCheckpoint usecase,
             DeleteCheckpointJsonPresenter presenter, UserPort userPort) {
         this.usecase = usecase;
         this.presenter = presenter;

@@ -1,6 +1,6 @@
 package com.java.ravito_plan.food.api.brand;
 
-import com.java.ravito_plan.food.domain.usecase.brand.deleteBrand.DeleteBrandInterface;
+import com.java.ravito_plan.food.domain.usecase.brand.deleteBrand.DeleteBrand;
 import com.java.ravito_plan.food.domain.usecase.brand.deleteBrand.DeleteBrandRequest;
 import com.java.ravito_plan.food.infrastructure.presenter.brand.deleteBrand.DeleteBrandJsonPresenter;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/brands/{id}")
 public class DeleteBrandController {
 
-    private final DeleteBrandInterface usecase;
+    private final DeleteBrand usecase;
     private final DeleteBrandJsonPresenter presenter;
 
-    public DeleteBrandController(DeleteBrandInterface usecase, DeleteBrandJsonPresenter presenter) {
+    public DeleteBrandController(DeleteBrand usecase, DeleteBrandJsonPresenter presenter) {
         this.usecase = usecase;
         this.presenter = presenter;
     }

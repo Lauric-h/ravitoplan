@@ -1,9 +1,9 @@
 package com.java.ravito_plan.race.infrastructure.adapters;
 
 import com.java.ravito_plan.food.application.dto.internal.FoodDetail;
-import com.java.ravito_plan.food.domain.usecase.food.showFood.ShowFoodInterface;
+import com.java.ravito_plan.food.domain.usecase.food.showFood.ShowFood;
 import com.java.ravito_plan.food.domain.usecase.food.showFood.ShowFoodRequest;
-import com.java.ravito_plan.food.domain.usecase.food.showFoodsByIds.ShowFoodsByIdsInterface;
+import com.java.ravito_plan.food.domain.usecase.food.showFoodsByIds.ShowFoodsByIds;
 import com.java.ravito_plan.food.domain.usecase.food.showFoodsByIds.ShowFoodsByIdsRequest;
 import com.java.ravito_plan.food.infrastructure.presenter.food.showFood.ShowFoodRaceDto;
 import com.java.ravito_plan.food.infrastructure.presenter.food.showFood.ShowFoodRacePresenter;
@@ -18,13 +18,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class FoodPortAdapter implements FoodPort {
 
-    private final ShowFoodInterface showFoodUsecase;
+    private final ShowFood showFoodUsecase;
     private final ShowFoodRacePresenter showFoodPresenter;
-    private final ShowFoodsByIdsInterface showFoodsByIdsUsecase;
+    private final ShowFoodsByIds showFoodsByIdsUsecase;
     private final ShowFoodsByIdsRacePresenter showFoodsPresenter;
 
-    public FoodPortAdapter(ShowFoodInterface showFoodUsecase,
-            ShowFoodRacePresenter showFoodPresenter, ShowFoodsByIdsInterface showFoodsByIdsUsecase,
+    public FoodPortAdapter(ShowFood showFoodUsecase,
+            ShowFoodRacePresenter showFoodPresenter, ShowFoodsByIds showFoodsByIdsUsecase,
             ShowFoodsByIdsRacePresenter showFoodsPresenter) {
         this.showFoodUsecase = showFoodUsecase;
         this.showFoodPresenter = showFoodPresenter;

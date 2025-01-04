@@ -1,7 +1,7 @@
 package com.java.ravito_plan.food.api.brand;
 
 import com.java.ravito_plan.food.application.dto.command.UpdateBrandCommand;
-import com.java.ravito_plan.food.domain.usecase.brand.updateBrand.UpdateBrandInterface;
+import com.java.ravito_plan.food.domain.usecase.brand.updateBrand.UpdateBrand;
 import com.java.ravito_plan.food.domain.usecase.brand.updateBrand.UpdateBrandRequest;
 import com.java.ravito_plan.food.infrastructure.presenter.brand.updateBrand.UpdateBrandJsonPresenter;
 import com.java.ravito_plan.food.infrastructure.presenter.brand.updateBrand.UpdateBrandViewModel;
@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/brands/{id}")
 public class UpdateBrandController {
 
-    private final UpdateBrandInterface usecase;
+    private final UpdateBrand usecase;
     private final UpdateBrandJsonPresenter presenter;
 
-    public UpdateBrandController(UpdateBrandInterface updateBrand,
+    public UpdateBrandController(UpdateBrand updateBrand,
             UpdateBrandJsonPresenter presenter) {
         this.usecase = updateBrand;
         this.presenter = presenter;

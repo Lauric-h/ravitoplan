@@ -1,7 +1,7 @@
 package com.java.ravito_plan.food.api.brand;
 
 import com.java.ravito_plan.food.application.dto.command.CreateBrandCommand;
-import com.java.ravito_plan.food.domain.usecase.brand.createBrand.CreateBrandInterface;
+import com.java.ravito_plan.food.domain.usecase.brand.createBrand.CreateBrand;
 import com.java.ravito_plan.food.domain.usecase.brand.createBrand.CreateBrandRequest;
 import com.java.ravito_plan.food.infrastructure.presenter.brand.createBrand.CreateBrandJsonPresenter;
 import com.java.ravito_plan.food.infrastructure.presenter.brand.createBrand.CreateBrandViewModel;
@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/brands")
 public class CreateBrandController {
 
-    private final CreateBrandInterface usecase;
+    private final CreateBrand usecase;
     private final CreateBrandJsonPresenter presenter;
 
-    public CreateBrandController(CreateBrandInterface usecase, CreateBrandJsonPresenter presenter) {
+    public CreateBrandController(CreateBrand usecase, CreateBrandJsonPresenter presenter) {
         this.usecase = usecase;
         this.presenter = presenter;
     }

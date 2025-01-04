@@ -2,7 +2,7 @@ package com.java.ravito_plan.race.api.race;
 
 import com.java.ravito_plan.race.application.dto.internal.RaceUserDto;
 import com.java.ravito_plan.race.domain.ports.UserPort;
-import com.java.ravito_plan.race.domain.usecase.race.showRace.ShowRaceInterface;
+import com.java.ravito_plan.race.domain.usecase.race.showRace.ShowRace;
 import com.java.ravito_plan.race.domain.usecase.race.showRace.ShowRaceRequest;
 import com.java.ravito_plan.race.infrastructure.presenter.race.showRace.ShowRaceJsonPresenter;
 import com.java.ravito_plan.race.infrastructure.presenter.race.showRace.ShowRaceViewModel;
@@ -19,10 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class ShowRaceController {
 
     private final ShowRaceJsonPresenter presenter;
-    private final ShowRaceInterface usecase;
+    private final ShowRace usecase;
     private final UserPort userPort;
 
-    public ShowRaceController(ShowRaceJsonPresenter presenter, ShowRaceInterface usecase, UserPort userPort) {
+    public ShowRaceController(ShowRaceJsonPresenter presenter, ShowRace usecase, UserPort userPort) {
         this.presenter = presenter;
         this.usecase = usecase;
         this.userPort = userPort;

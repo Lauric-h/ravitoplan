@@ -18,6 +18,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class Brand {
+
     @Id
     @GeneratedValue
     private Long id;
@@ -39,12 +40,15 @@ public class Brand {
     }
 
     public Brand addOrUpdateFood(Food food) {
-        Food existingFood = this.foods.stream().filter(f -> f.getName().equals(food.getName())).findFirst().orElse(null);
+        Food existingFood = this.foods.stream().filter(f -> f.getName().equals(food.getName()))
+                .findFirst().orElse(null);
         if (existingFood == null) {
             this.foods.add(food);
             food.setBrand(this);
         } else {
-            existingFood.updateFields(food);
+            existingFood.updateFields(food.getName(), food.getCarbohydrates(), food.getCalories(),
+                    food.getProteins(), food.isElectrolytes(), food.getLink(), food.getComment(),
+                    food.getIngestionType());
         }
 
         return this;

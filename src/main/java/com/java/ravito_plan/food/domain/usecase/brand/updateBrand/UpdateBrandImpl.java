@@ -18,7 +18,7 @@ public class UpdateBrandImpl implements UpdateBrand {
     @Transactional
     public void execute(UpdateBrandRequest request, UpdateBrandPresenter presenter) {
         Brand brand = this.brandRepository.findById(request.id());
-        brand.updateFields(request.command().getName());
+        brand.updateFields(request.name());
         presenter.present(new UpdateBrandResponse(this.brandRepository.save(brand)));
     }
 }

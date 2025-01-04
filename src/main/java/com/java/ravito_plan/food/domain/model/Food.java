@@ -63,15 +63,16 @@ public class Food {
         this.ingestionType = ingestionType;
     }
 
-    public Food updateFields(Food food) {
-        this.name = food.getName();
-        this.carbohydrates = food.getCarbohydrates();
-        this.calories = food.getCalories();
-        this.proteins = food.getProteins();
-        this.electrolytes = food.isElectrolytes();
-        this.link = food.getLink();
-        this.comment = food.getComment();
-        this.ingestionType = food.getIngestionType();
+    public Food updateFields(String name, int carbohydrates, int calories, int proteins,
+            boolean electrolytes, String link, String comment, IngestionType ingestionType) {
+        this.name = name;
+        this.carbohydrates = carbohydrates;
+        this.calories = calories;
+        this.proteins = proteins;
+        this.electrolytes = electrolytes;
+        this.link = link;
+        this.comment = comment;
+        this.ingestionType = ingestionType;
         return this;
     }
 }

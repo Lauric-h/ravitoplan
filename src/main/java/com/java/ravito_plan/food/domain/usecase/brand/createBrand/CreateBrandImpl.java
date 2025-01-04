@@ -17,7 +17,7 @@ public class CreateBrandImpl implements CreateBrand {
     @Override
     @Transactional
     public void execute(CreateBrandRequest request, CreateBrandPresenter presenter) {
-        Brand createdBrand = this.brandRepository.save(new Brand(request.command().getName()));
+        Brand createdBrand = this.brandRepository.save(new Brand(request.name()));
         presenter.present(new CreateBrandResponse(createdBrand));
     }
 }

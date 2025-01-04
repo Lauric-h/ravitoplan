@@ -28,7 +28,7 @@ public class CreateBrandController {
     @PostMapping
     public ResponseEntity<CreateBrandViewModel> createRace(
             @Valid @RequestBody CreateBrandCommand command) {
-        this.usecase.execute(new CreateBrandRequest(command), this.presenter);
+        this.usecase.execute(new CreateBrandRequest(command.getName()), this.presenter);
         return ResponseEntity.status(HttpStatus.CREATED).body(this.presenter.getViewModel());
     }
 }

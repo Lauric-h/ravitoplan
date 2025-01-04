@@ -29,7 +29,7 @@ public class UpdateBrandController {
     @PutMapping
     public ResponseEntity<UpdateBrandViewModel> updateBrand(@PathVariable Long id, @Valid @RequestBody
             UpdateBrandCommand command) {
-        this.usecase.execute(new UpdateBrandRequest(id, command), this.presenter);
+        this.usecase.execute(new UpdateBrandRequest(id, command.getName()), this.presenter);
         return ResponseEntity.ok(this.presenter.getViewModel());
     }
 }

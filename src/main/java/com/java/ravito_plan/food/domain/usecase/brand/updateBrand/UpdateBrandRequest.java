@@ -1,7 +1,5 @@
 package com.java.ravito_plan.food.domain.usecase.brand.updateBrand;
 
-import com.java.ravito_plan.food.application.dto.command.UpdateBrandCommand;
-
-public record UpdateBrandRequest(Long id, UpdateBrandCommand command) {
+public record UpdateBrandRequest(Long id, String name) {
 
 }

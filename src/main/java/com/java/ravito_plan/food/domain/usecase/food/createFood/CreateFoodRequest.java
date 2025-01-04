@@ -1,7 +1,7 @@
 package com.java.ravito_plan.food.domain.usecase.food.createFood;
 
-import com.java.ravito_plan.food.application.dto.command.CreateFoodCommand;
+import com.java.ravito_plan.food.domain.dto.FoodCreationParams;
 
-public record CreateFoodRequest(Long brandId, CreateFoodCommand command) {
+public record CreateFoodRequest(Long brandId, FoodCreationParams foodCreationParams) {
 
 }

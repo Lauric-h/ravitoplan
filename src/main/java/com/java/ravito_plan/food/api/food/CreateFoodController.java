@@ -1,6 +1,7 @@
 package com.java.ravito_plan.food.api.food;
 
 import com.java.ravito_plan.food.application.dto.command.CreateFoodCommand;
+import com.java.ravito_plan.food.application.mapper.FoodMapper;
 import com.java.ravito_plan.food.domain.usecase.food.createFood.CreateFood;
 import com.java.ravito_plan.food.domain.usecase.food.createFood.CreateFoodRequest;
 import com.java.ravito_plan.food.infrastructure.presenter.food.createFood.CreateFoodJsonPresenter;
@@ -27,7 +28,7 @@ public class CreateFoodController {
     @PostMapping
     public ResponseEntity<CreateFoodViewModel> createFood(@PathVariable Long brandId,
             @RequestBody CreateFoodCommand command) {
-        this.usecase.execute(new CreateFoodRequest(brandId, command), this.presenter);
+        this.usecase.execute(FoodMapper.toCreateFoodRequest(brandId, command), this.presenter);
         return ResponseEntity.ok(this.presenter.getViewModel());
     }
 }

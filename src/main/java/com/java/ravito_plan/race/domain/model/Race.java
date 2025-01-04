@@ -58,7 +58,7 @@ public class Race {
     @OrderBy("distanceFromStart ASC")
     private List<Checkpoint> checkpoints = new ArrayList<>();
 
-    private Race(String name, LocalDate date, int distance, int elevationPositive,
+    public Race(String name, LocalDate date, int distance, int elevationPositive,
             int elevationNegative, String city, String postalCode) {
         this.name = name;
         this.date = date;
@@ -67,17 +67,9 @@ public class Race {
         this.elevationNegative = elevationNegative;
         this.city = city;
         this.postalCode = postalCode;
-    }
 
-    public static Race create(String name, LocalDate date, int distance, int elevationPositive,
-            int elevationNegative, String city, String postalCode) {
-        Race race = new Race(name, date, distance, elevationPositive, elevationNegative, city,
-                postalCode);
-
-        race.addDefaultCheckpoints();
-        race.validate();
-
-        return race;
+        this.addDefaultCheckpoints();
+        this.validate();
     }
 
     public void validate() {

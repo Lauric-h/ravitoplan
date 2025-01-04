@@ -2,9 +2,9 @@ package com.java.ravito_plan.race.api.race;
 
 import com.java.ravito_plan.race.application.dto.command.UpdateRaceCommand;
 import com.java.ravito_plan.race.application.dto.internal.RaceUserDto;
+import com.java.ravito_plan.race.application.mapper.RaceMapper;
 import com.java.ravito_plan.race.domain.ports.UserPort;
 import com.java.ravito_plan.race.domain.usecase.race.updateRace.UpdateRace;
-import com.java.ravito_plan.race.domain.usecase.race.updateRace.UpdateRaceRequest;
 import com.java.ravito_plan.race.infrastructure.presenter.race.updateRace.UpdateRaceJsonPresenter;
 import com.java.ravito_plan.race.infrastructure.presenter.race.updateRace.UpdateRaceViewModel;
 import jakarta.validation.Valid;
@@ -34,9 +34,10 @@ public class UpdateRaceController {
 
     @PutMapping
     public ResponseEntity<UpdateRaceViewModel> updateRace(@PathVariable Long id,
-            @AuthenticationPrincipal UserDetails userDetails, @Valid @RequestBody UpdateRaceCommand command) {
+            @AuthenticationPrincipal UserDetails userDetails,
+            @Valid @RequestBody UpdateRaceCommand command) {
         RaceUserDto user = this.userPort.getByUsername(userDetails.getUsername());
-        this.usecase.execute(new UpdateRaceRequest(command, user.id), presenter);
+        this.usecase.execute(RaceMapper.toUpdateRaceRequest(user.id, id, command), presenter);
 
         return ResponseEntity.ok(this.presenter.getViewModel());
 

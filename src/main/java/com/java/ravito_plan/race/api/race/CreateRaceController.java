@@ -2,9 +2,9 @@ package com.java.ravito_plan.race.api.race;
 
 import com.java.ravito_plan.race.application.dto.command.CreateRaceCommand;
 import com.java.ravito_plan.race.application.dto.internal.RaceUserDto;
+import com.java.ravito_plan.race.application.mapper.RaceMapper;
 import com.java.ravito_plan.race.domain.ports.UserPort;
 import com.java.ravito_plan.race.domain.usecase.race.createRace.CreateRace;
-import com.java.ravito_plan.race.domain.usecase.race.createRace.CreateRaceRequest;
 import com.java.ravito_plan.race.infrastructure.presenter.race.createRace.CreateRaceJsonPresenter;
 import com.java.ravito_plan.race.infrastructure.presenter.race.createRace.CreateRaceViewModel;
 import jakarta.validation.Valid;
@@ -25,16 +25,19 @@ public class CreateRaceController {
     private final CreateRaceJsonPresenter presenter;
     private final UserPort userPort;
 
-    public CreateRaceController(CreateRace usecase, CreateRaceJsonPresenter presenter, UserPort userPort) {
+    public CreateRaceController(CreateRace usecase, CreateRaceJsonPresenter presenter,
+            UserPort userPort) {
         this.usecase = usecase;
         this.presenter = presenter;
         this.userPort = userPort;
     }
 
     @PostMapping
-    public ResponseEntity<CreateRaceViewModel> createRace(@Valid @RequestBody CreateRaceCommand command, @AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<CreateRaceViewModel> createRace(
+            @Valid @RequestBody CreateRaceCommand command,
+            @AuthenticationPrincipal UserDetails userDetails) {
         RaceUserDto user = this.userPort.getByUsername(userDetails.getUsername());
-        this.usecase.execute(new CreateRaceRequest(user.id, command), this.presenter);
+        this.usecase.execute(RaceMapper.toCreateRaceRequest(user.id, command), this.presenter);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(this.presenter.getViewModel());
     }

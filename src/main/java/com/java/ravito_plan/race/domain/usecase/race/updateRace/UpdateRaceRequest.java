@@ -1,7 +1,7 @@
 package com.java.ravito_plan.race.domain.usecase.race.updateRace;
 
-import com.java.ravito_plan.race.application.dto.command.UpdateRaceCommand;
+import com.java.ravito_plan.race.domain.dto.RaceParams;
 
-public record UpdateRaceRequest(UpdateRaceCommand command, Long userId) {
+public record UpdateRaceRequest(Long userId, Long raceId, RaceParams raceParams) {
 
 }

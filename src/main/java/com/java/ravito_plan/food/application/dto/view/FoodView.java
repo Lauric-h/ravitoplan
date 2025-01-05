@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class FoodView {
 
+    public String brandName;
     public String name;
     public int carbohydrates;
     public int calories;

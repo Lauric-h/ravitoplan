@@ -41,7 +41,7 @@ public class Generator {
     public static FoodView getFoodView(String name,
             int carbohydrates, int calories, int proteins, boolean electrolytes, String link,
             String comment, String ingestionType) {
-        return new FoodView( name, carbohydrates, calories, proteins, electrolytes,
+        return new FoodView("brandName", name, carbohydrates, calories, proteins, electrolytes,
                 link, comment, ingestionType);
     }
 

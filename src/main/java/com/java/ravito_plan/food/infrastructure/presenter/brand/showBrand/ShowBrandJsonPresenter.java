@@ -14,6 +14,7 @@ public class ShowBrandJsonPresenter implements ShowBrandPresenter {
 
     @Override
     public void present(ShowBrandResponse response) {
-        this.viewModel = new ShowBrandViewModel(BrandViewMapper.toBrandDetailView(response.brand()));
+        this.viewModel = new ShowBrandViewModel(
+                BrandViewMapper.toBrandDetailView(response.brand()));
     }
 }

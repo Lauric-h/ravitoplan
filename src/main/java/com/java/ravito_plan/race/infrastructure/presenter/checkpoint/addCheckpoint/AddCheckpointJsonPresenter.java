@@ -14,6 +14,7 @@ public class AddCheckpointJsonPresenter implements AddCheckpointPresenter {
 
     @Override
     public void present(AddCheckpointResponse response) {
-        this.viewModel = new AddCheckpointViewModel(RaceViewMapper.toRaceDetailView(response.race(), response.foods()));
+        this.viewModel = new AddCheckpointViewModel(
+                RaceViewMapper.toRaceDetailView(response.race(), response.foods()));
     }
 }

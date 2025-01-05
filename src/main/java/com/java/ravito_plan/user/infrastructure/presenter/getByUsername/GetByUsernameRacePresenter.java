@@ -13,6 +13,7 @@ public class GetByUsernameRacePresenter implements GetByUsernamePresenter {
 
     @Override
     public void present(GetByUsernameResponse response) {
-        this.viewModel = new GetByUsernameViewModel(response.user().getId(), response.user().getUsername());
+        this.viewModel = new GetByUsernameViewModel(response.user().getId(),
+                response.user().getUsername());
     }
 }

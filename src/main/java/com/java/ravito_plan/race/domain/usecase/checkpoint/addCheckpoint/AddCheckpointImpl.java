@@ -1,6 +1,5 @@
 package com.java.ravito_plan.race.domain.usecase.checkpoint.addCheckpoint;
 
-import com.java.ravito_plan.race.application.mapper.CheckpointMapper;
 import com.java.ravito_plan.race.domain.dto.RaceFoodDto;
 import com.java.ravito_plan.race.domain.model.CheckpointFood;
 import com.java.ravito_plan.race.domain.model.Race;
@@ -35,14 +34,8 @@ public class AddCheckpointImpl implements AddCheckpoint {
         race.addOrUpdateCheckpoint(this.checkpointFactory.create(request.checkpointParams()));
         Race updatedRace = this.raceRepository.save(race);
 
-        Map<Long, RaceFoodDto> foods = this.foodPort.getFoodsByIds(
-                this.getAllFoodIdsForRace(updatedRace));
+        Map<Long, RaceFoodDto> foods = this.foodPort.getFoodsByIds(updatedRace.getAllFoodIds());
 
         presenter.present(new AddCheckpointResponse(updatedRace, foods));
-    }
-
-    private Set<Long> getAllFoodIdsForRace(Race race) {
-        return race.getCheckpoints().stream().flatMap(cp -> cp.getCheckpointFoods().stream())
-                .map(CheckpointFood::getFoodId).collect(Collectors.toSet());
     }
 }

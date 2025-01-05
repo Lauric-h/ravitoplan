@@ -1,16 +1,14 @@
 package com.java.ravito_plan.race.api.checkpoint;
 
+import com.java.ravito_plan.common.api.CurrentUser;
 import com.java.ravito_plan.race.application.dto.command.UpdateCheckpointCommand;
 import com.java.ravito_plan.race.application.dto.internal.RaceUserDto;
 import com.java.ravito_plan.race.application.mapper.CheckpointMapper;
-import com.java.ravito_plan.race.domain.ports.UserPort;
 import com.java.ravito_plan.race.domain.usecase.checkpoint.updateCheckpoint.UpdateCheckpoint;
 import com.java.ravito_plan.race.infrastructure.presenter.checkpoint.updateCheckpoint.UpdateCheckpointJsonPresenter;
 import com.java.ravito_plan.race.infrastructure.presenter.checkpoint.updateCheckpoint.UpdateCheckpointViewModel;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,20 +21,17 @@ public class UpdateCheckpointController {
 
     private final UpdateCheckpoint usecase;
     private final UpdateCheckpointJsonPresenter presenter;
-    private final UserPort userPort;
 
     public UpdateCheckpointController(UpdateCheckpoint usecase,
-            UpdateCheckpointJsonPresenter presenter, UserPort userPort) {
+            UpdateCheckpointJsonPresenter presenter) {
         this.usecase = usecase;
         this.presenter = presenter;
-        this.userPort = userPort;
     }
 
     @PutMapping
     public ResponseEntity<UpdateCheckpointViewModel> updateCheckpoint(@PathVariable Long raceId,
             @PathVariable Long checkpointId, @Valid @RequestBody UpdateCheckpointCommand command,
-            @AuthenticationPrincipal UserDetails userDetails) {
-        RaceUserDto user = this.userPort.getByUsername(userDetails.getUsername());
+            @CurrentUser RaceUserDto user) {
         this.usecase.execute(
                 CheckpointMapper.toUpdateCheckpointRequest(user.id, raceId, checkpointId, command),
                 this.presenter);

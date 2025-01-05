@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class FoodSummaryView {
 
+    public String brandName;
     public String name;
     public String type;
 }

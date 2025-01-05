@@ -1,10 +1,7 @@
 package com.java.ravito_plan.user.infrastructure.service;
 
-import com.java.ravito_plan.user.domain.ports.outbound.UserRepository;
+import com.java.ravito_plan.user.domain.ports.UserRepository;
 import com.java.ravito_plan.user.domain.model.User;
-import java.util.Collection;
-import java.util.List;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

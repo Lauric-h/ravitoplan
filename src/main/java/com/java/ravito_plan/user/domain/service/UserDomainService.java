@@ -1,7 +1,7 @@
 package com.java.ravito_plan.user.domain.service;
 
 import com.java.ravito_plan.user.domain.model.User;
-import com.java.ravito_plan.user.domain.ports.outbound.PasswordHasher;
+import com.java.ravito_plan.user.domain.ports.PasswordHasher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -18,8 +18,8 @@ public class Generator {
         return new CreateBrandCommand(name);
     }
 
-    public static UpdateBrandCommand getUpdateBrandCommand(Long id, String name) {
-        return new UpdateBrandCommand(id, name);
+    public static UpdateBrandCommand getUpdateBrandCommand(String name) {
+        return new UpdateBrandCommand(name);
     }
 
     public static BrandDetailView getBrandDetailView(String name, List<FoodSummaryView> foods) {
@@ -41,7 +41,7 @@ public class Generator {
     public static FoodView getFoodView(String name,
             int carbohydrates, int calories, int proteins, boolean electrolytes, String link,
             String comment, String ingestionType) {
-        return new FoodView( name, carbohydrates, calories, proteins, electrolytes,
+        return new FoodView("brandName", name, carbohydrates, calories, proteins, electrolytes,
                 link, comment, ingestionType);
     }
 

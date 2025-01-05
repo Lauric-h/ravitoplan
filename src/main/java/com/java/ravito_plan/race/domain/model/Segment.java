@@ -16,14 +16,16 @@ public class Segment {
     private Integer estimatedTime;
 
     public Segment(Checkpoint start, Checkpoint finish) {
-        if (finish.getDistanceFromStart() < start.getDistanceFromStart()
-                || finish.getCumulatedElevationGainFromStart()
-                < start.getCumulatedElevationGainFromStart()
-                || finish.getCumulatedElevationLossFromStart()
-                < start.getCumulatedElevationLossFromStart()) {
-            throw new CannotCreateSegmentWitCheckpointException(
-                    String.format("Start %s, finish %s", start.getId(), finish.getId()));
-        }
+        // TODO REDO BETTER - NOT WORKING CORRECTLY WHEN ADDING CP
+        // TRY: ADD CHECKPOINT BY ORDER OF DISTANCE
+//        if (finish.getDistanceFromStart() < start.getDistanceFromStart()
+//                || finish.getCumulatedElevationGainFromStart()
+//                < start.getCumulatedElevationGainFromStart()
+//                || finish.getCumulatedElevationLossFromStart()
+//                < start.getCumulatedElevationLossFromStart()) {
+//            throw new CannotCreateSegmentWitCheckpointException(
+//                    String.format("Start %s, finish %s", start.getId(), finish.getId()));
+//        }
 
         if (null != finish.getEstimatedTimeInMinuteFromStart()
                 && null != start.getEstimatedTimeInMinuteFromStart()) {

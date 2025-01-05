@@ -1,15 +1,13 @@
 package com.java.ravito_plan.race.api.checkpoint;
 
+import com.java.ravito_plan.common.api.CurrentUser;
 import com.java.ravito_plan.race.application.dto.command.DeleteFoodCommand;
 import com.java.ravito_plan.race.application.dto.internal.RaceUserDto;
-import com.java.ravito_plan.race.domain.ports.UserPort;
 import com.java.ravito_plan.race.domain.usecase.checkpoint.removeFoodFromCheckpoint.RemoveFoodFromCheckpoint;
 import com.java.ravito_plan.race.domain.usecase.checkpoint.removeFoodFromCheckpoint.RemoveFoodFromCheckpointRequest;
 import com.java.ravito_plan.race.infrastructure.presenter.checkpoint.removeFoodFromCheckpoint.RemoveFoodFromCheckpointJsonPresenter;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,21 +20,17 @@ public class RemoveFoodFromCheckpointController {
 
     private final RemoveFoodFromCheckpoint usecase;
     private final RemoveFoodFromCheckpointJsonPresenter presenter;
-    private final UserPort userPort;
 
     public RemoveFoodFromCheckpointController(RemoveFoodFromCheckpoint usecase,
-            RemoveFoodFromCheckpointJsonPresenter presenter, UserPort userPort) {
+            RemoveFoodFromCheckpointJsonPresenter presenter) {
         this.usecase = usecase;
         this.presenter = presenter;
-        this.userPort = userPort;
     }
 
     @DeleteMapping
     public ResponseEntity<Void> removeFoodFromCheckpoint(@PathVariable Long raceId,
             @PathVariable Long checkpointId, @PathVariable Long foodId,
-            @AuthenticationPrincipal UserDetails userDetails,
-            @Valid @RequestBody DeleteFoodCommand command) {
-        RaceUserDto user = this.userPort.getByUsername(userDetails.getUsername());
+            @CurrentUser RaceUserDto user, @Valid @RequestBody DeleteFoodCommand command) {
         this.usecase.execute(
                 new RemoveFoodFromCheckpointRequest(raceId, checkpointId, user.id, foodId,
                         command.getQuantity()), this.presenter);

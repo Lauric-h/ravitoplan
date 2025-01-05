@@ -15,6 +15,8 @@ import jakarta.persistence.OrderBy;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -193,5 +195,10 @@ public class Race {
         }
 
         return segments;
+    }
+
+    public Set<Long> getAllFoodIds() {
+        return this.getCheckpoints().stream().flatMap(cp -> cp.getCheckpointFoods().stream())
+                .map(CheckpointFood::getFoodId).collect(Collectors.toSet());
     }
 }

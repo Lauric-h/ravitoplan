@@ -2,14 +2,10 @@ package com.java.ravito_plan.race.domain.usecase.checkpoint.addFoodToCheckpoint;
 
 import com.java.ravito_plan.race.domain.dto.RaceFoodDto;
 import com.java.ravito_plan.race.domain.model.Checkpoint;
-import com.java.ravito_plan.race.domain.model.CheckpointFood;
-import com.java.ravito_plan.race.domain.model.Race;
 import com.java.ravito_plan.race.domain.ports.FoodPort;
 import com.java.ravito_plan.race.domain.ports.repository.CheckpointRepository;
 import com.java.ravito_plan.race.domain.ports.repository.RaceRepository;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,13 +38,8 @@ public class AddFoodToCheckpointImpl implements AddFoodToCheckpoint {
         Checkpoint savedCheckpoint = this.checkpointRepository.save(checkpoint);
 
         Map<Long, RaceFoodDto> foods = this.foodPort.getFoodsByIds(
-                this.getAllFoodIdsForRace(savedCheckpoint.getRace()));
+                savedCheckpoint.getRace().getAllFoodIds());
 
         presenter.present(new AddFoodToCheckpointResponse(savedCheckpoint, foods));
-    }
-
-    private Set<Long> getAllFoodIdsForRace(Race race) {
-        return race.getCheckpoints().stream().flatMap(cp -> cp.getCheckpointFoods().stream())
-                .map(CheckpointFood::getFoodId).collect(Collectors.toSet());
     }
 }

@@ -6,11 +6,11 @@ import com.java.ravito_plan.race.domain.ports.repository.CheckpointRepository;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CheckpointRepositoryAdapter implements CheckpointRepository {
+public class CheckpointRepositoryJpaAdapter implements CheckpointRepository {
 
     ImportedCheckpointRepository checkpointRepository;
 
-    public CheckpointRepositoryAdapter(ImportedCheckpointRepository checkpointRepository) {
+    public CheckpointRepositoryJpaAdapter(ImportedCheckpointRepository checkpointRepository) {
         this.checkpointRepository = checkpointRepository;
     }
 

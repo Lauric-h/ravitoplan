@@ -1,6 +1,7 @@
 package com.java.ravito_plan.race.domain.model;
 
 import com.java.ravito_plan.race.domain.exception.CheckpointFoodNotInCheckpointException;
+import com.java.ravito_plan.race.domain.exception.CheckpointFoodQuantityIsNegativeException;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,6 +14,7 @@ import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -103,33 +105,39 @@ public class Checkpoint {
         return this;
     }
 
-    public CheckpointFood getFood(int quantity, Long foodId) {
+    public Optional<CheckpointFood> findCheckpointFood(Long foodId) {
         return this.checkpointFoods.stream()
-                .filter(checkpointFood -> checkpointFood.getFoodId().equals(foodId)
-                        && checkpointFood.getQuantity() == quantity).findFirst().orElse(null);
+                .filter(checkpointFood -> checkpointFood.getFoodId().equals(foodId)).findFirst();
     }
 
-    public Checkpoint addFood(int quantity, Long foodId) {
-        CheckpointFood existingCheckpointFood = this.getFood(quantity, foodId);
+    public Checkpoint addFood(CheckpointFood checkpointFood) {
+        this.checkpointFoods.add(checkpointFood);
+        return this;
+    }
 
-        if (existingCheckpointFood == null) {
-            CheckpointFood checkpointFood = new CheckpointFood(this, quantity, foodId);
-            this.checkpointFoods.add(checkpointFood);
+    public void removeFood(CheckpointFood checkpointFood) {
+        this.checkpointFoods.remove(checkpointFood);
+    }
+
+    public Checkpoint updateFoodQuantity(CheckpointFood checkpointFood, int quantity) {
+        Optional<CheckpointFood> existingCheckpointFood = this.findCheckpointFood(checkpointFood.getFoodId());
+
+        if (existingCheckpointFood.isPresent()) {
+            this.updateCheckpointFood(existingCheckpointFood.get(), quantity);
         } else {
-            existingCheckpointFood.setQuantity(quantity);
+            this.addFood(checkpointFood);
         }
 
         return this;
     }
 
-    public void removeFood(int quantity, Long foodId) {
-        CheckpointFood checkpointFoodToRemove = this.checkpointFoods.stream()
-                .filter(checkpointFood -> checkpointFood.getFoodId().equals(foodId)
-                        && checkpointFood.getQuantity() == quantity).findFirst().orElse(null);
-        if (checkpointFoodToRemove == null) {
-            throw new CheckpointFoodNotInCheckpointException(foodId, this.id);
-        }
+    public void updateCheckpointFood(CheckpointFood checkpointFood, int quantity) {
+        int newQuantity = checkpointFood.getQuantity() + quantity;
 
-        this.checkpointFoods.remove(checkpointFoodToRemove);
+        if (newQuantity <= 0) {
+            this.removeFood(checkpointFood);
+            return;
+        }
+        checkpointFood.setQuantity(newQuantity);
     }
 }

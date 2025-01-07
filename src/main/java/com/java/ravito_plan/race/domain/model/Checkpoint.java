@@ -1,6 +1,7 @@
 package com.java.ravito_plan.race.domain.model;
 
 import com.java.ravito_plan.race.domain.exception.CheckpointFoodNotInCheckpointException;
+import com.java.ravito_plan.race.domain.exception.CheckpointFoodQuantityIsNegativeException;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -111,7 +112,7 @@ public class Checkpoint {
 
     public Checkpoint addFood(CheckpointFood checkpointFood) {
         if (checkpointFood.getQuantity() <= 0) {
-            // throw
+            throw new CheckpointFoodQuantityIsNegativeException(checkpointFood.getFoodId(), checkpointFood.getQuantity());
         }
 
         this.checkpointFoods.add(checkpointFood);

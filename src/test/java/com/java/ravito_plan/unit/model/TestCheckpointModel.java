@@ -143,4 +143,17 @@ public class TestCheckpointModel {
 
         assertThat(checkpoint.getCheckpointFoods().size()).isEqualTo(2);
     }
+
+    @Test
+    public void test_update_food_quantity_existing_food() {
+        Checkpoint checkpoint = new Checkpoint("CP1", 10, "Col", CheckpointType.AID_STATION,
+                1000, 1000, 100, 120);
+        CheckpointFood existingCheckpointFood = new CheckpointFood(checkpoint, 1, 1L);
+        checkpoint.addFood(existingCheckpointFood);
+        
+        CheckpointFood checkpointFood = new CheckpointFood(checkpoint, 1, 1L);
+        int quantity = 2;
+        checkpoint.updateCheckpointFood(checkpointFood, quantity);
+        assertThat(checkpointFood.getQuantity()).isEqualTo(3);
+    }
 }

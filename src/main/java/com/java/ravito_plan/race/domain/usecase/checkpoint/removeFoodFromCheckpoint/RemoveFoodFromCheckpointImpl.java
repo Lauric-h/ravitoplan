@@ -1,8 +1,10 @@
 package com.java.ravito_plan.race.domain.usecase.checkpoint.removeFoodFromCheckpoint;
 
 import com.java.ravito_plan.race.domain.model.Checkpoint;
+import com.java.ravito_plan.race.domain.model.CheckpointFood;
 import com.java.ravito_plan.race.domain.ports.repository.CheckpointRepository;
 import com.java.ravito_plan.race.domain.ports.repository.RaceRepository;
+import java.util.Optional;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +28,12 @@ public class RemoveFoodFromCheckpointImpl implements RemoveFoodFromCheckpoint {
 
         Checkpoint checkpoint = this.checkpointRepository.findByIdAndRaceId(request.checkpointId(),
                 request.raceId());
-        checkpoint.removeFood(request.quantity(), request.foodId());
+        Optional<CheckpointFood> checkpointFood = checkpoint.findCheckpointFood(request.foodId());
+
+        if (checkpointFood.isEmpty()) {
+            return;
+        }
+        checkpoint.removeFood(checkpointFood.get());
 
         this.checkpointRepository.save(checkpoint);
         presenter.present(new RemoveFoodFromCheckpointResponse(true));

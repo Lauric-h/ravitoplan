@@ -36,8 +36,7 @@ public class UpdateFoodQuantityImpl implements UpdateFoodQuantity {
 
         CheckpointFood checkpointFood = this.checkpointFoodRepository.findByFoodIdAndCheckpointId(
                 request.foodId(), request.checkpointId());
-        checkpointFood.setQuantity(request.quantity());
-        checkpointFood.getCheckpoint().updateFoodQuantity(checkpointFood);
+        checkpointFood.getCheckpoint().updateFoodQuantity(checkpointFood, request.quantity());
 
         Checkpoint updatedCheckpoint = this.checkpointRepository.save(
                 checkpointFood.getCheckpoint());

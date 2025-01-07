@@ -122,11 +122,11 @@ public class Checkpoint {
         this.checkpointFoods.remove(checkpointFood);
     }
 
-    public Checkpoint updateFoodQuantity(CheckpointFood checkpointFood) {
+    public Checkpoint updateFoodQuantity(CheckpointFood checkpointFood, int quantity) {
         Optional<CheckpointFood> existingCheckpointFood = this.findCheckpointFood(checkpointFood.getFoodId());
 
         if (existingCheckpointFood.isPresent()) {
-            this.updateCheckpointFood(existingCheckpointFood.get(), checkpointFood.getQuantity());
+            this.updateCheckpointFood(existingCheckpointFood.get(), quantity);
         } else {
             this.addFood(checkpointFood);
         }

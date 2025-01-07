@@ -111,10 +111,6 @@ public class Checkpoint {
     }
 
     public Checkpoint addFood(CheckpointFood checkpointFood) {
-        if (checkpointFood.getQuantity() <= 0) {
-            throw new CheckpointFoodQuantityIsNegativeException(checkpointFood.getFoodId(), checkpointFood.getQuantity());
-        }
-
         this.checkpointFoods.add(checkpointFood);
         return this;
     }

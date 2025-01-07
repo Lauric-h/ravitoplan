@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.java.ravito_plan.race.domain.model.Checkpoint;
 import com.java.ravito_plan.race.domain.model.CheckpointFood;
 import com.java.ravito_plan.race.domain.model.CheckpointType;
+import java.util.ArrayList;
+import java.util.Collection;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -116,5 +118,29 @@ public class TestCheckpointModel {
 
         assertThat(checkpoint.getCheckpointFoods().size()).isEqualTo(1);
         assertThat(checkpoint.getCheckpointFoods().get(0).getQuantity()).isEqualTo(1);
+    }
+
+    @Test
+    public void test_add_food() {
+        Checkpoint checkpoint = new Checkpoint("CP1", 10, "Col", CheckpointType.AID_STATION,
+                1000, 1000, 100, 120);
+        CheckpointFood checkpointFood = new CheckpointFood(checkpoint, 1, 1L);
+
+        checkpoint.addFood(checkpointFood);
+
+        assertThat(checkpoint.getCheckpointFoods().size()).isEqualTo(1);
+    }
+
+    @Test
+    public void test_add_food_multiple() {
+        Checkpoint checkpoint = new Checkpoint("CP1", 10, "Col", CheckpointType.AID_STATION,
+                1000, 1000, 100, 120);
+        CheckpointFood checkpointFood = new CheckpointFood(checkpoint, 1, 1L);
+        CheckpointFood checkpointFood2 = new CheckpointFood(checkpoint, 2, 1L);
+        checkpoint.getCheckpointFoods().add(checkpointFood2);
+
+        checkpoint.addFood(checkpointFood);
+
+        assertThat(checkpoint.getCheckpointFoods().size()).isEqualTo(2);
     }
 }

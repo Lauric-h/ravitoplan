@@ -1,6 +1,7 @@
 package com.java.ravito_plan.race.domain.usecase.checkpoint.addFoodToCheckpoint;
 
 import com.java.ravito_plan.race.domain.dto.RaceFoodDto;
+import com.java.ravito_plan.race.domain.exception.CheckpointFoodQuantityIsNegativeException;
 import com.java.ravito_plan.race.domain.model.Checkpoint;
 import com.java.ravito_plan.race.domain.model.CheckpointFood;
 import com.java.ravito_plan.race.domain.ports.FoodPort;
@@ -36,8 +37,8 @@ public class AddFoodToCheckpointImpl implements AddFoodToCheckpoint {
 
         RaceFoodDto externalFoodDto = this.foodPort.getFoodById(request.foodId());
 
-        if (request.quantity() <0) {
-            // Throw
+        if (request.quantity() < 0) {
+            throw new CheckpointFoodQuantityIsNegativeException(request.foodId(), request.quantity());
         }
 
         Optional<CheckpointFood> existingCheckpointFood = checkpoint.findCheckpointFood(

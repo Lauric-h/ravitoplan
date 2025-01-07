@@ -7,6 +7,7 @@ import com.java.ravito_plan.race.domain.model.CheckpointFood;
 import com.java.ravito_plan.race.domain.model.CheckpointType;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -150,10 +151,48 @@ public class TestCheckpointModel {
                 1000, 1000, 100, 120);
         CheckpointFood existingCheckpointFood = new CheckpointFood(checkpoint, 1, 1L);
         checkpoint.addFood(existingCheckpointFood);
-        
+
         CheckpointFood checkpointFood = new CheckpointFood(checkpoint, 1, 1L);
         int quantity = 2;
         checkpoint.updateCheckpointFood(checkpointFood, quantity);
         assertThat(checkpointFood.getQuantity()).isEqualTo(3);
+    }
+
+    @Test
+    void test_update_food_quantity_new_food() {
+        Checkpoint checkpoint = new Checkpoint("CP1", 10, "Col", CheckpointType.AID_STATION,
+                1000, 1000, 100, 120);
+        CheckpointFood existingCheckpointFood = new CheckpointFood(checkpoint, 1, 1L);
+        checkpoint.addFood(existingCheckpointFood);
+
+        CheckpointFood checkpointFood = new CheckpointFood(checkpoint, 1, 2L);
+        int quantity = 2;
+        checkpoint.updateFoodQuantity(checkpointFood, quantity);
+
+        assertThat(checkpoint.getCheckpointFoods().size()).isEqualTo(2);
+    }
+
+    @Test
+    public void test_find_checkpointFood() {
+        Checkpoint checkpoint = new Checkpoint("CP1", 10, "Col", CheckpointType.AID_STATION,
+                1000, 1000, 100, 120);
+        Long foodId = 1L;
+        CheckpointFood existingCheckpointFood = new CheckpointFood(checkpoint, 1, foodId);
+        checkpoint.addFood(existingCheckpointFood);
+
+        Optional<CheckpointFood> actual = checkpoint.findCheckpointFood(foodId);
+        assertThat(actual.isPresent()).isTrue();
+    }
+
+    @Test
+    public void test_find_checkpointFood_is_not_found() {
+        Checkpoint checkpoint = new Checkpoint("CP1", 10, "Col", CheckpointType.AID_STATION,
+                1000, 1000, 100, 120);
+        Long foodId = 1L;
+        CheckpointFood existingCheckpointFood = new CheckpointFood(checkpoint, 1, foodId);
+        checkpoint.addFood(existingCheckpointFood);
+
+        Optional<CheckpointFood> actual = checkpoint.findCheckpointFood(2L);
+        assertThat(actual.isPresent()).isFalse();
     }
 }

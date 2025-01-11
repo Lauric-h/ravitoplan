@@ -21,10 +21,7 @@ public class UpdateFoodImpl implements UpdateFood {
     @Transactional
     public void execute(UpdateFoodRequest request, UpdateFoodPresenter presenter) {
         Food food = this.foodRepository.findByIdAndBrandId(request.foodId(), request.brandId());
-
-        this.foodFactory.updateFields(food, request.foodUpdateParams());
-        this.foodRepository.save(food);
-
-        presenter.present(new UpdateFoodResponse(food));
+        Food updatedFood = this.foodRepository.save(this.foodFactory.updateFields(food, request.foodUpdateParams()));
+        presenter.present(new UpdateFoodResponse(updatedFood));
     }
 }

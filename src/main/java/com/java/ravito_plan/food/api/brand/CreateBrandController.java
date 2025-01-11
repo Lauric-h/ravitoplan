@@ -17,18 +17,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/brands")
 public class CreateBrandController {
 
-    private final CreateBrand usecase;
-    private final CreateBrandJsonPresenter presenter;
+  private final CreateBrand usecase;
+  private final CreateBrandJsonPresenter presenter;
 
-    public CreateBrandController(CreateBrand usecase, CreateBrandJsonPresenter presenter) {
-        this.usecase = usecase;
-        this.presenter = presenter;
-    }
+  public CreateBrandController(CreateBrand usecase, CreateBrandJsonPresenter presenter) {
+    this.usecase = usecase;
+    this.presenter = presenter;
+  }
 
-    @PostMapping
-    public ResponseEntity<CreateBrandViewModel> createRace(
-            @Valid @RequestBody CreateBrandCommand command) {
-        this.usecase.execute(new CreateBrandRequest(command.getName()), this.presenter);
-        return ResponseEntity.status(HttpStatus.CREATED).body(this.presenter.getViewModel());
-    }
+  @PostMapping
+  public ResponseEntity<CreateBrandViewModel> createRace(
+      @Valid @RequestBody CreateBrandCommand command) {
+    this.usecase.execute(new CreateBrandRequest(command.getName()), this.presenter);
+    return ResponseEntity.status(HttpStatus.CREATED).body(this.presenter.getViewModel());
+  }
 }

@@ -73,6 +73,7 @@ public class Food {
         this.link = link;
         this.comment = comment;
         this.ingestionType = ingestionType;
+        System.out.println(name);
         return this;
     }
 }

@@ -21,13 +21,13 @@ import org.springframework.test.context.ContextConfiguration;
 public class TestDeleteBrand implements DeleteBrandPresenter {
 
     @Autowired
-    @Qualifier("inMemoryBrandRepository")
     private InMemoryBrandRepository brandRepository;
 
     private DeleteBrandImpl deleteBrand;
 
     @BeforeEach
     public void setUp() {
+        this.brandRepository.clear();
         this.deleteBrand = new DeleteBrandImpl(brandRepository);
     }
 

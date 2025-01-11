@@ -24,7 +24,6 @@ import org.springframework.test.context.ContextConfiguration;
 public class TestShowFood implements ShowFoodPresenter {
 
   @Autowired
-  @Qualifier("inMemoryFoodRepository")
   private InMemoryFoodRepository foodRepository;
 
   private ShowFoodImpl showFood;
@@ -38,6 +37,7 @@ public class TestShowFood implements ShowFoodPresenter {
 
   @BeforeEach
   public void setUp() {
+    this.foodRepository.clear();
     this.showFood = new ShowFoodImpl(foodRepository);
   }
 

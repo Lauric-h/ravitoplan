@@ -13,6 +13,10 @@ public class InMemoryBrandRepository implements BrandRepository {
 
   private final HashMap<Long, Brand> brands = new HashMap<>();
 
+  public void clear() {
+    this.brands.clear();
+  }
+
   public void addBrand(Brand brand) {
     this.brands.put(brand.getId(), brand);
   }

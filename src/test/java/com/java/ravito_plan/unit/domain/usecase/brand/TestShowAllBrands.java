@@ -23,7 +23,6 @@ import org.springframework.test.context.ContextConfiguration;
 public class TestShowAllBrands implements ShowAllBrandsPresenter {
 
   @Autowired
-  @Qualifier("inMemoryBrandRepository")
   private InMemoryBrandRepository brandRepository;
 
   private ShowAllBrandsResponse response;
@@ -32,6 +31,7 @@ public class TestShowAllBrands implements ShowAllBrandsPresenter {
 
   @BeforeEach
   public void setUp() {
+    this.brandRepository.clear();
     this.showAllBrands = new ShowAllBrandsImpl(brandRepository);
   }
 

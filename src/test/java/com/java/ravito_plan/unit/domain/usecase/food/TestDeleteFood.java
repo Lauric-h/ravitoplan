@@ -6,7 +6,6 @@ import com.java.ravito_plan.TestConfig;
 import com.java.ravito_plan.food.domain.model.Brand;
 import com.java.ravito_plan.food.domain.model.Food;
 import com.java.ravito_plan.food.domain.model.IngestionType;
-import com.java.ravito_plan.food.domain.ports.repository.FoodRepository;
 import com.java.ravito_plan.food.domain.usecase.food.deleteFood.DeleteFoodImpl;
 import com.java.ravito_plan.food.domain.usecase.food.deleteFood.DeleteFoodPresenter;
 import com.java.ravito_plan.food.domain.usecase.food.deleteFood.DeleteFoodRequest;
@@ -24,7 +23,6 @@ import org.springframework.test.context.ContextConfiguration;
 public class TestDeleteFood implements DeleteFoodPresenter {
 
   @Autowired
-  @Qualifier("inMemoryFoodRepository")
   private InMemoryFoodRepository foodRepository;
 
   private DeleteFoodImpl deleteFood;
@@ -37,6 +35,7 @@ public class TestDeleteFood implements DeleteFoodPresenter {
 
   @BeforeEach
   public void setUp() {
+    this.foodRepository.clear();
     this.deleteFood = new DeleteFoodImpl(foodRepository);
   }
 

@@ -21,7 +21,6 @@ import org.springframework.test.context.ContextConfiguration;
 public class TestCreateBrand implements CreateBrandPresenter {
 
   @Autowired
-  @Qualifier("inMemoryBrandRepository")
   private InMemoryBrandRepository brandRepository;
 
   private CreateBrandImpl createBrand;
@@ -35,6 +34,7 @@ public class TestCreateBrand implements CreateBrandPresenter {
 
   @BeforeEach
   public void setUp() {
+    this.brandRepository.clear();
     this.createBrand = new CreateBrandImpl(brandRepository);
   }
 

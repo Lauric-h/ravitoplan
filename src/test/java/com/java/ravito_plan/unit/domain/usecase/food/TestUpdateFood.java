@@ -27,7 +27,6 @@ import org.springframework.test.context.ContextConfiguration;
 public class TestUpdateFood implements UpdateFoodPresenter {
 
   @Autowired
-  @Qualifier("inMemoryFoodRepository")
   private InMemoryFoodRepository foodRepository;
 
   private UpdateFoodImpl updateFood;
@@ -43,6 +42,7 @@ public class TestUpdateFood implements UpdateFoodPresenter {
 
   @BeforeEach
   public void setUp() {
+    this.foodRepository.clear();
     this.updateFood = new UpdateFoodImpl(this.foodRepository, this.foodFactory);
   }
 

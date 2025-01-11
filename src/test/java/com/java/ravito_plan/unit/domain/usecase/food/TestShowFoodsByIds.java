@@ -23,7 +23,6 @@ import org.springframework.test.context.ContextConfiguration;
 public class TestShowFoodsByIds implements ShowFoodsByIdsPresenter {
 
   @Autowired
-  @Qualifier("inMemoryFoodRepository")
   private InMemoryFoodRepository foodRepository;
 
   private ShowFoodsByIdsImpl showFoodsByIds;
@@ -37,6 +36,7 @@ public class TestShowFoodsByIds implements ShowFoodsByIdsPresenter {
 
   @BeforeEach
   public void setUp() {
+    this.foodRepository.clear();
     this.showFoodsByIds = new ShowFoodsByIdsImpl(foodRepository);
   }
 
@@ -69,20 +69,18 @@ public class TestShowFoodsByIds implements ShowFoodsByIdsPresenter {
   public void test_showFoodsByIds_returns_empty_list() {
     List<Long> ids = List.of(1L, 2L, 3L);
 
-    for (Long id : ids) {
-      Food food =
-              new Food(
-                      String.format("Food %s", 4L),
-                      10,
-                      20,
-                      30,
-                      false,
-                      "no link",
-                      "no comment",
-                      IngestionType.SOLID);
-      food.setId(4L);
-      this.foodRepository.addFood(food);
-    }
+    Food dummyFood =  new Food(
+            String.format("Food %s", 4L),
+            10,
+            20,
+            30,
+            false,
+            "no link",
+            "no comment",
+            IngestionType.SOLID);
+    dummyFood.setId(4L);
+
+    this.foodRepository.addFood(dummyFood);
 
     this.showFoodsByIds.execute(new ShowFoodsByIdsRequest(ids), this);
     assertThat(this.response.foods()).isEmpty();

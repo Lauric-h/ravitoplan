@@ -14,6 +14,10 @@ public class InMemoryFoodRepository implements FoodRepository {
 
   private final HashMap<Long, Food> foods = new HashMap<>();
 
+  public void clear() {
+    this.foods.clear();
+  }
+
   public void addFood(Food food) {
     foods.put(food.getId(), food);
   }

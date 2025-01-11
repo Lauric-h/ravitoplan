@@ -21,7 +21,6 @@ import org.springframework.test.context.ContextConfiguration;
 public class TestUpdateBrand implements UpdateBrandPresenter {
 
   @Autowired
-  @Qualifier("inMemoryBrandRepository")
   private InMemoryBrandRepository brandRepository;
 
   private UpdateBrandResponse response;
@@ -30,6 +29,7 @@ public class TestUpdateBrand implements UpdateBrandPresenter {
 
   @BeforeEach
   public void setUp() {
+    this.brandRepository.clear();
     this.updateBrand = new UpdateBrandImpl(this.brandRepository);
   }
 
@@ -46,6 +46,6 @@ public class TestUpdateBrand implements UpdateBrandPresenter {
 
     this.updateBrand.execute(new UpdateBrandRequest(1L, "After update"), this);
 
-    assertThat(this.response.brand().getName()).isEqualTo("Before update");
+    assertThat(this.response.brand().getName()).isEqualTo("After update");
   }
 }

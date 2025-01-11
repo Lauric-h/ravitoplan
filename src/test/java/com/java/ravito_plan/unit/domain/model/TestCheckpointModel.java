@@ -2,14 +2,17 @@ package com.java.ravito_plan.unit.domain.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.java.ravito_plan.TestConfig;
 import com.java.ravito_plan.race.domain.model.Checkpoint;
 import com.java.ravito_plan.race.domain.model.CheckpointFood;
 import com.java.ravito_plan.race.domain.model.CheckpointType;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
 
 @SpringBootTest
+@ContextConfiguration(classes = TestConfig.class)
 public class TestCheckpointModel {
 
   @Test

@@ -11,28 +11,30 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 public class RegisterUserImpl implements RegisterUser {
 
-    private final UserRepository userRepository;
-    private final UserDomainService userService;
+  private final UserRepository userRepository;
+  private final UserDomainService userService;
 
-    public RegisterUserImpl(UserRepository userRepository, UserDomainService userService) {
-        this.userRepository = userRepository;
-        this.userService = userService;
+  public RegisterUserImpl(UserRepository userRepository, UserDomainService userService) {
+    this.userRepository = userRepository;
+    this.userService = userService;
+  }
+
+  @Override
+  @Transactional
+  public void execute(RegisterUserRequest request, RegisterUserPresenter presenter) {
+    boolean userAlreadyExists =
+        this.userRepository.existsByUsernameOrEmail(request.username(), request.email());
+
+    if (userAlreadyExists) {
+      throw new UserAlreadyExistsException(request.username(), request.email());
     }
 
-    @Override
-    @Transactional
-    public void execute(RegisterUserRequest request, RegisterUserPresenter presenter) {
-        boolean userAlreadyExists = this.userRepository.existsByUsernameOrEmail(request.username(), request.email());
+    User user =
+        this.userService.createUserWithHashedPassword(
+            request.email(), request.username(), request.password());
 
-        if (userAlreadyExists) {
-            throw new UserAlreadyExistsException(request.username(), request.email());
-        }
+    User savedUser = this.userRepository.save(user);
 
-        User user = this.userService.createUserWithHashedPassword(request.email(),
-                request.username(), request.password());
-
-        User savedUser = this.userRepository.save(user);
-
-        presenter.present(new RegisterUserResponse(savedUser));
-    }
+    presenter.present(new RegisterUserResponse(savedUser));
+  }
 }

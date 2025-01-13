@@ -22,8 +22,7 @@ import org.springframework.test.context.ContextConfiguration;
 @ContextConfiguration(classes = TestConfig.class)
 public class TestDeleteFood implements DeleteFoodPresenter {
 
-  @Autowired
-  private InMemoryFoodRepository foodRepository;
+  @Autowired private InMemoryFoodRepository foodRepository;
 
   private DeleteFoodImpl deleteFood;
   private DeleteFoodResponse response;

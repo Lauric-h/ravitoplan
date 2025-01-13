@@ -27,11 +27,7 @@ public class ShowFullRaceImpl implements ShowFullRace {
     public void execute(ShowFullRaceRequest request, ShowFullRacePresenter presenter) {
         Race race = this.raceRepository.findByIdAndUserId(request.raceId(), request.userId());
 
-        Set<Long> foodIds = race.getCheckpoints().stream()
-                .flatMap(cp -> cp.getCheckpointFoods().stream()).map(CheckpointFood::getFoodId)
-                .collect(Collectors.toSet());
-
-        Map<Long, RaceFoodDto> foods = this.foodPort.getFoodsByIds(foodIds);
+        Map<Long, RaceFoodDto> foods = this.foodPort.getFoodsByIds(race.getAllFoodIds());
 
         presenter.present(new ShowFullRaceResponse(race, foods));
     }

@@ -9,5 +9,5 @@ public interface RaceRepository {
     List<Race> findAllByUserId(Long userId);
     Race findByIdAndUserId(Long id, Long userId);
     boolean existsByIdAndUserId(Long id, Long userId);
-    Race deleteById(Long id);
+    void deleteById(Long id);
 }

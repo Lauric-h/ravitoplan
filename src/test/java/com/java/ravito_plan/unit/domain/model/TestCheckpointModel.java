@@ -6,6 +6,9 @@ import com.java.ravito_plan.TestConfig;
 import com.java.ravito_plan.race.domain.model.Checkpoint;
 import com.java.ravito_plan.race.domain.model.CheckpointFood;
 import com.java.ravito_plan.race.domain.model.CheckpointType;
+import com.java.ravito_plan.race.domain.model.FoodNutrients;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -195,5 +198,45 @@ public class TestCheckpointModel {
 
     Optional<CheckpointFood> actual = checkpoint.findCheckpointFood(2L);
     assertThat(actual.isPresent()).isFalse();
+  }
+
+  @Test
+  public void test_calculateTotalCarbs() {
+    Checkpoint checkpoint =
+            new Checkpoint("CP1", 10, "Col", CheckpointType.AID_STATION, 1000, 1000, 100, 120);
+
+    Map<Long, FoodNutrients> foodNutrientsMap = Map.of(
+      1L, new FoodNutrients(100, 100, 100),
+      2L, new FoodNutrients(200, 200, 200),
+      3L, new FoodNutrients(300, 300, 300)
+    );
+    CheckpointFood checkpointFood1 = new CheckpointFood(checkpoint, 1, 1L);
+    CheckpointFood checkpointFood2 = new CheckpointFood(checkpoint, 1, 2L);
+    CheckpointFood checkpointFood3 = new CheckpointFood(checkpoint, 1, 3L);
+    checkpoint.addFood(checkpointFood1);
+    checkpoint.addFood(checkpointFood2);
+    checkpoint.addFood(checkpointFood3);
+
+    int expected = 600;
+    int actual = checkpoint.calculateTotalCarbs(foodNutrientsMap);
+
+    assertThat(actual).isEqualTo(expected);
+  }
+
+  @Test
+  public void test_calculateTotalCarbs_with_quantity() {
+    Checkpoint checkpoint =
+            new Checkpoint("CP1", 10, "Col", CheckpointType.AID_STATION, 1000, 1000, 100, 120);
+
+    Map<Long, FoodNutrients> foodNutrientsMap = Map.of(
+            1L, new FoodNutrients(100, 100, 100)
+    );
+    CheckpointFood checkpointFood1 = new CheckpointFood(checkpoint, 3, 1L);
+    checkpoint.addFood(checkpointFood1);
+
+    int expected = 300;
+    int actual = checkpoint.calculateTotalCarbs(foodNutrientsMap);
+
+    assertThat(actual).isEqualTo(expected);
   }
 }

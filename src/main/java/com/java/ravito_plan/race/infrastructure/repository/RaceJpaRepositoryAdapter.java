@@ -36,8 +36,7 @@ public class RaceJpaRepositoryAdapter implements RaceRepository {
     }
 
     @Override
-    public Race deleteById(Long id) {
+    public void deleteById(Long id) {
         this.importedRaceRepository.deleteById(id);
-        return null;
     }
 }

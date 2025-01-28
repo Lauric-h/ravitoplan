@@ -14,6 +14,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -152,9 +153,9 @@ public class Race {
     public Race updateFields(Race race) {
         this.name = race.getName();
         this.date = race.getDate();
-        this.distance = race.getDistance();
-        this.elevationPositive = race.getElevationPositive();
-        this.elevationNegative = race.getElevationNegative();
+        this.setDistance(race.getDistance());
+        this.setElevationPositive(race.getElevationPositive());
+        this.setElevationNegative(race.getElevationNegative());
         this.city = race.getCity();
         this.postalCode = race.getPostalCode();
 
@@ -178,7 +179,12 @@ public class Race {
             checkpoint.setRace(this);
         }
 
+        this.sortCheckpoints();
         return this;
+    }
+
+    private void sortCheckpoints() {
+        this.checkpoints.sort(Comparator.comparingInt(Checkpoint::getDistanceFromStart));
     }
 
     public void removeCheckpoint(Checkpoint checkpoint) {
@@ -200,5 +206,20 @@ public class Race {
     public Set<Long> getAllFoodIds() {
         return this.getCheckpoints().stream().flatMap(cp -> cp.getCheckpointFoods().stream())
                 .map(CheckpointFood::getFoodId).collect(Collectors.toSet());
+    }
+
+    public void setDistance(int distance) {
+        this.distance = distance;
+        this.getFinishCheckpoint().setDistanceFromStart(distance);
+    }
+
+    public void setElevationPositive(int elevationPositive) {
+        this.elevationPositive = elevationPositive;
+        this.getFinishCheckpoint().setCumulatedElevationGainFromStart(elevationPositive);
+    }
+
+    public void setElevationNegative(int elevationNegative) {
+        this.elevationNegative = elevationNegative;
+        this.getFinishCheckpoint().setCumulatedElevationLossFromStart(elevationNegative);
     }
 }

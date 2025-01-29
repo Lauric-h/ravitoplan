@@ -23,19 +23,6 @@ jobs:
       - name: Build and run tests
         run: mvn -B test
 
-      - name: Generate test report
-        if: success() || failure()
-        run: mvn surefire-report:report-only
-
-      - name: Upload test results
-        if: success() || failure()
-        uses: actions/upload-artifact@v3
-        with:
-          name: test-results
-          path: |
-            target/surefire-reports/*
-            target/site/surefire-report.html
-
       - name: Cache Maven packages
         uses: actions/cache@v3
         with:

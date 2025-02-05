@@ -1,6 +1,6 @@
 package com.java.ravito_plan.race.application.exception;
 
-import com.java.ravito_plan.common.api.error.ErrorCode;
+import com.java.ravito_plan.common.rest.error.ErrorCode;
 import com.java.ravito_plan.common.exception.NotFoundException;
 
 public class CheckpointNotFoundException extends NotFoundException {

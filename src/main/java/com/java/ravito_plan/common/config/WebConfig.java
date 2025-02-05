@@ -1,6 +1,6 @@
 package com.java.ravito_plan.common.config;
 
-import com.java.ravito_plan.common.api.CurrentUserArgumentResolver;
+import com.java.ravito_plan.common.rest.CurrentUserArgumentResolver;
 import com.java.ravito_plan.race.domain.ports.UserPort;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

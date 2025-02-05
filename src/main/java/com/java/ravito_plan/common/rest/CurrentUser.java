@@ -1,4 +1,4 @@
-package com.java.ravito_plan.common.api;
+package com.java.ravito_plan.common.rest;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

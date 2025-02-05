@@ -1,6 +1,6 @@
 package com.java.ravito_plan.food.application.exception;
 
-import com.java.ravito_plan.common.api.error.ErrorCode;
+import com.java.ravito_plan.common.rest.error.ErrorCode;
 import com.java.ravito_plan.common.exception.NotFoundException;
 
 public class FoodNotFoundException extends NotFoundException {

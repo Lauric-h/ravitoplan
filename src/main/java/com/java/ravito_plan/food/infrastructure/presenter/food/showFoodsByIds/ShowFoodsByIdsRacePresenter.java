@@ -12,11 +12,11 @@ import org.springframework.stereotype.Component;
 @Getter
 public class ShowFoodsByIdsRacePresenter implements ShowFoodsByIdsPresenter {
 
-    private ShowFoodsByIdsDto viewModel;
+    private ShowFoodsByIdsViewModel viewModel;
 
     @Override
     public void present(ShowFoodsByIdsResponse response) {
-        this.viewModel = new ShowFoodsByIdsDto(response.foods().stream()
+        this.viewModel = new ShowFoodsByIdsViewModel(response.foods().stream()
                 .collect(Collectors.toMap(Food::getId, FoodMapper::toFoodDetail)));
 
     }

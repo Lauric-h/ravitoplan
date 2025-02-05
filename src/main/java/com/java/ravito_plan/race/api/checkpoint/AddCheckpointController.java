@@ -1,6 +1,6 @@
 package com.java.ravito_plan.race.api.checkpoint;
 
-import com.java.ravito_plan.common.api.CurrentUser;
+import com.java.ravito_plan.common.rest.CurrentUser;
 import com.java.ravito_plan.race.application.dto.command.CreateCheckpointCommand;
 import com.java.ravito_plan.race.application.dto.internal.RaceUserDto;
 import com.java.ravito_plan.race.application.mapper.CheckpointMapper;

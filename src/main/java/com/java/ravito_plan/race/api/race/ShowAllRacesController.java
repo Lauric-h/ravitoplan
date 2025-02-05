@@ -1,6 +1,6 @@
 package com.java.ravito_plan.race.api.race;
 
-import com.java.ravito_plan.common.api.CurrentUser;
+import com.java.ravito_plan.common.rest.CurrentUser;
 import com.java.ravito_plan.race.application.dto.internal.RaceUserDto;
 import com.java.ravito_plan.race.domain.usecase.race.showAllRaces.ShowAllRaces;
 import com.java.ravito_plan.race.domain.usecase.race.showAllRaces.ShowAllRacesRequest;

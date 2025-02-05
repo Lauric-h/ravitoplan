@@ -1,4 +1,4 @@
-package com.java.ravito_plan.common.api.error;
+package com.java.ravito_plan.common.rest.error;
 
 import com.java.ravito_plan.common.exception.NotFoundException;
 import com.java.ravito_plan.common.exception.DomainException;

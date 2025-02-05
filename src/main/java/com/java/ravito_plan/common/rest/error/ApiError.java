@@ -1,4 +1,4 @@
-package com.java.ravito_plan.common.api.error;
+package com.java.ravito_plan.common.rest.error;
 
 import java.time.LocalDateTime;
 import lombok.Getter;

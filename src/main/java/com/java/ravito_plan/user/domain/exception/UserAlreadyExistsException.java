@@ -1,6 +1,6 @@
 package com.java.ravito_plan.user.domain.exception;
 
-import com.java.ravito_plan.common.api.error.ErrorCode;
+import com.java.ravito_plan.common.rest.error.ErrorCode;
 import com.java.ravito_plan.common.exception.DomainException;
 
 public class UserAlreadyExistsException extends DomainException {

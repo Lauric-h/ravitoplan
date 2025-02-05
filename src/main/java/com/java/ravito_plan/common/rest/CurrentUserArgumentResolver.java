@@ -1,4 +1,4 @@
-package com.java.ravito_plan.common.api;
+package com.java.ravito_plan.common.rest;
 
 import com.java.ravito_plan.race.application.dto.internal.RaceUserDto;
 import com.java.ravito_plan.race.domain.ports.UserPort;

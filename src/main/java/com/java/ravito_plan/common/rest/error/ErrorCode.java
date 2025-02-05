@@ -1,4 +1,4 @@
-package com.java.ravito_plan.common.api.error;
+package com.java.ravito_plan.common.rest.error;
 
 public enum ErrorCode {
     USER_ALREADY_EXISTS,

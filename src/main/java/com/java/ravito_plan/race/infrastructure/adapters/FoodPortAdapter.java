@@ -5,7 +5,7 @@ import com.java.ravito_plan.food.domain.usecase.food.showFood.ShowFood;
 import com.java.ravito_plan.food.domain.usecase.food.showFood.ShowFoodRequest;
 import com.java.ravito_plan.food.domain.usecase.food.showFoodsByIds.ShowFoodsByIds;
 import com.java.ravito_plan.food.domain.usecase.food.showFoodsByIds.ShowFoodsByIdsRequest;
-import com.java.ravito_plan.food.infrastructure.presenter.food.showFood.ShowFoodRaceDto;
+import com.java.ravito_plan.food.infrastructure.presenter.food.showFood.ShowFoodRaceViewModel;
 import com.java.ravito_plan.food.infrastructure.presenter.food.showFood.ShowFoodRacePresenter;
 import com.java.ravito_plan.food.infrastructure.presenter.food.showFoodsByIds.ShowFoodsByIdsRacePresenter;
 import com.java.ravito_plan.race.domain.dto.RaceFoodDto;
@@ -39,7 +39,7 @@ public class FoodPortAdapter implements FoodPort {
         return this.mapToRaceFoodDto(this.showFoodPresenter.getViewModel());
     }
 
-    private RaceFoodDto mapToRaceFoodDto(ShowFoodRaceDto viewModel) {
+    private RaceFoodDto mapToRaceFoodDto(ShowFoodRaceViewModel viewModel) {
         return new RaceFoodDto(viewModel.food().id, viewModel.food().brandName,
                 viewModel.food().name, viewModel.food().carbohydrates, viewModel.food().calories,
                 viewModel.food().proteins, viewModel.food().electrolytes, viewModel.food().link,

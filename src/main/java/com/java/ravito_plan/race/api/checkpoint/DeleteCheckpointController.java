@@ -1,6 +1,6 @@
 package com.java.ravito_plan.race.api.checkpoint;
 
-import com.java.ravito_plan.common.api.CurrentUser;
+import com.java.ravito_plan.common.rest.CurrentUser;
 import com.java.ravito_plan.race.application.dto.internal.RaceUserDto;
 import com.java.ravito_plan.race.domain.usecase.checkpoint.deleteCheckpoint.DeleteCheckpoint;
 import com.java.ravito_plan.race.domain.usecase.checkpoint.deleteCheckpoint.DeleteCheckpointRequest;

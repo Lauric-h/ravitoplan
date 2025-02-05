@@ -10,10 +10,10 @@ import org.springframework.stereotype.Component;
 @Getter
 public class ShowFoodRacePresenter implements ShowFoodPresenter {
 
-    private ShowFoodRaceDto viewModel;
+    private ShowFoodRaceViewModel viewModel;
 
     @Override
     public void present(ShowFoodResponse response) {
-        this.viewModel = new ShowFoodRaceDto(FoodMapper.toFoodDetail(response.food()));
+        this.viewModel = new ShowFoodRaceViewModel(FoodMapper.toFoodDetail(response.food()));
     }
 }
